@@ -1,0 +1,23 @@
+{
+  "name": "codern",
+  "description": "A modern auto grader, focus on speed and reliability",
+  "author": "Vectier",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "clean": "turbo run clean && rimraf node_modules ./out",
+    "dev": "cross-env FORCE_COLOR=1 turbo run dev",
+    "lint": "turbo run lint",
+    "preinstall": "npx only-allow pnpm"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "eslint": "^8.26.0",
+    "rimraf": "^3.0.2",
+    "turbo": "^1.6.1"
+  },
+  "engines": {
+    "node": "^16.0.0"
+  },
+  "packageManager": "pnpm@7.14.0"
+}
