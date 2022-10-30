@@ -1,0 +1,16 @@
+::selection {
+  @apply bg-black dark:bg-white text-white dark:text-black;
+}
+
+/* .flex-center {
+  @apply flex justify-center items-center
+}
+
+.flex-col-x-center {
+  @apply flex flex-col items-center
+}
+
+.flex-col-y-center {
+  @apply flex flex-col justify-center
+}
+*/
