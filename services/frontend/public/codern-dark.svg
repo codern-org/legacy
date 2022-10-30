@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="light" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 500 500">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#linear-gradient);
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="212.31" y1="267.18" x2="287.69" y2="387.82" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff" stop-opacity=".2"/>
+      <stop offset=".2" stop-color="#fff" stop-opacity=".43"/>
+      <stop offset=".5" stop-color="#fff" stop-opacity=".69"/>
+      <stop offset=".74" stop-color="#fff" stop-opacity=".84"/>
+      <stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+  </defs>
+  <g id="object">
+    <polygon class="cls-2" points="384.23 172.5 115.77 327.5 115.77 172.5 250 95 384.23 172.5"/>
+    <polygon class="cls-1" points="384.23 327.5 250 405 115.77 327.5 250 250 384.23 327.5"/>
+  </g>
+</svg>
