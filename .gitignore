@@ -1,5 +1,6 @@
 # Logs
 .pnpm-debug.log*
+logs/
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
@@ -18,3 +19,6 @@ node_modules/
 
 # Dotenv environment variable files
 .env
+
+# Docker
+.volumes/
