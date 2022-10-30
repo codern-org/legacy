@@ -1,0 +1,7 @@
+{
+  "extends": ["vectier"],
+  "parserOptions": {
+    "tsconfigRootDir": ".",
+    "project": ["./tsconfig.json"]
+  }
+}
