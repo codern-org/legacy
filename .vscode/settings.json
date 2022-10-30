@@ -1,8 +1,4 @@
 {
   "typescript.preferences.quoteStyle": "single",
   "typescript.preferences.importModuleSpecifier": "non-relative",
-
-  "editor.codeActionsOnSave": {
-    "source.organizeImports": true,
-  },
 }
