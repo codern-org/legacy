@@ -1,0 +1,9 @@
+{
+  "parserOptions": {
+    "tsconfigRootDir": ".",
+    "project": ["./tsconfig.json"]
+  },
+  "env": {
+    "es6": true
+  }
+}
