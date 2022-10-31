@@ -1,8 +1,7 @@
-import { themeAtom } from '@/store/ThemeStore';
+import { useTheme } from '@/store/ThemeStore';
 import { classNames } from '@/utils/Classes';
 import { Popover, Transition } from '@headlessui/react'
 import { ChevronUpDownIcon, ComputerDesktopIcon, MoonIcon, SunIcon } from '@heroicons/react/24/outline';
-import { useAtom } from 'jotai';
 import { ComponentChildren } from 'preact';
 
 type SwitchThemeButtonProps = {
@@ -12,18 +11,19 @@ type SwitchThemeButtonProps = {
 export const SwitchThemeButton = ({
   direction,
 }: SwitchThemeButtonProps) => {
-  const [theme, setTheme] = useAtom(themeAtom);
+  const [theme, setTheme] = useTheme();
 
   return (
     <Popover className="relative flex">
       {({ open }: { open: boolean }) => (
         <>
-          <Popover.Button className="focus:outline-none flex flex-row items-center space-x-1 px-2 py-1 text-black dark:text-white border border-neutral-300 dark:border-neutral-600 rounded-lg transition-colors ease-in duration-200">
-            {theme === 'dark'
-              ? (<MoonIcon className="w-5 h-5" />)
-              : (<SunIcon className="w-5 h-5" />)
-            }
-            <span className="capitalize">{theme}</span>
+          <Popover.Button className="w-[7.5rem] flex flex-row justify-between items-center px-2 py-1 text-black dark:text-white border border-neutral-300 dark:border-neutral-600 rounded-lg transition-colors ease-in duration-200 focus:outline-none">
+            <div className="flex flex-row items-center space-x-1">
+              {(theme === 'system') && (<ComputerDesktopIcon className="w-5 h-5" />)}
+              {(theme === 'dark') && (<MoonIcon className="w-5 h-5" />)}
+              {(theme === 'light') && (<SunIcon className="w-5 h-5" />)}
+              <p className="capitalize">{theme}</p>
+            </div>
             <ChevronUpDownIcon className="w-5 h-5" />
           </Popover.Button>
 

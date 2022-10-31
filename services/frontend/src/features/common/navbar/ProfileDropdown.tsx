@@ -26,8 +26,8 @@ export const ProfileDropdown = () => {
             leaveTo="transform scale-80 opacity-0 -translate-y-2"
           >
             <Popover.Panel className="absolute top-0 right-0 border border-neutral-300 dark:border-neutral-700 transform translate-y-10 rounded-md shadow-lg transition-colors ease-in duration-200">
-              <div className="w-52 bg-white dark:bg-black flex flex-col p-2 rounded-lg transition-colors ease-in duration-200">
-                <Row center="secondary" className="justify-between px-4 py-2">
+              <div className="bg-white dark:bg-black flex flex-col p-2 rounded-lg transition-colors ease-in duration-200">
+                <Row center="secondary" className="justify-between space-x-2 px-4 py-2">
                   <Text color="secondary" className="text-sm">Theme</Text>
                   <SwitchThemeButton direction="down" />
                 </Row>

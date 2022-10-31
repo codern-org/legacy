@@ -17,11 +17,11 @@ export const IndexPage = ({
         <CodernLogo />
       </header>
 
-      <main className="h-screen flex flex-row dark:bg-black">
+      <main className="h-screen flex flex-row dark:bg-black transition-colors ease-in duration-200">
         <section className="w-full lg:w-1/2 max-w-lg m-auto px-10">
           <LoginForm />
         </section>
-        <section className="hidden lg:block w-1/2 h-full bg-gradient-to-tl from-neutral-400 dark:from-neutral-800 to-neutral-100 dark:to-neutral-500">
+        <section className="hidden lg:block w-1/2 h-full bg-gradient-to-tl from-neutral-400 dark:from-neutral-800 to-neutral-100 dark:to-neutral-500 transition-colors ease-in duration-200">
           <div className="h-full flex justify-center items-center text-4xl font-bold text-white">
             Advertise
           </div>
