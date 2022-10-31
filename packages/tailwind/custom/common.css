@@ -2,15 +2,20 @@
   @apply bg-black dark:bg-white text-white dark:text-black;
 }
 
-/* .flex-center {
-  @apply flex justify-center items-center
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
 }
 
-.flex-col-x-center {
-  @apply flex flex-col items-center
+::-webkit-scrollbar-track {
+  border-radius: 24px;
+  border: solid 4px transparent;
+  box-shadow: inset 0 0 12px 12px rgba(229, 229, 229, 0.5);
 }
 
-.flex-col-y-center {
-  @apply flex flex-col justify-center
+::-webkit-scrollbar-thumb {
+  border-radius: 24px;
+  border: solid 4px transparent;
+  box-shadow: inset 0 0 12px 12px rgba(163, 163, 163, 0.5);
 }
-*/
