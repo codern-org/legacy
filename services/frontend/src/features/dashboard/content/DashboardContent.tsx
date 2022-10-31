@@ -3,11 +3,12 @@ import { WorkspaceContainer } from '@/features/dashboard/content/workspace/Works
 
 export const DashboardContent = () => {
   return (
-    <main className="w-full h-screen flex flex-col transition-colors ease-in duration-200 dark:bg-neutral-900">
-      <div className="container flex flex-col w-full h-full p-6 space-y-6">
-        <DashboardHeader />
+    <main className="w-full h-full flex flex-col transition-colors ease-in duration-200 dark:bg-neutral-900 overflow-hidden">
+      <DashboardHeader />
+
+      <section className="container w-full h-full flex flex-col p-6 overflow-hidden">
         <WorkspaceContainer />
-      </div>
+      </section>
     </main>
   );
 };

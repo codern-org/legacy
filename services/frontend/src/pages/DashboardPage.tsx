@@ -10,7 +10,7 @@ export const DashboardPage = ({
   path,
 }: DashboardPageProps) => {
   return (
-    <Row className="h-screen overflow-hidden">
+    <Row className="h-screen">
       <DashboardSidebar />
       <DashboardContent />
     </Row>

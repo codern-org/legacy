@@ -4,5 +4,6 @@
 
 @import "./common.css";
 @import "./input.css";
+@import "./decoration.css";
 
 @import "tailwindcss/utilities";
