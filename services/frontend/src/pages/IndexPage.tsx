@@ -1,6 +1,8 @@
 import { CodernLogo } from '@/features/common/CodernLogo';
 import { LoginForm } from '@/features/auth/login-form/LoginForm';
 import { Text } from '@/features/common/Text';
+import { SwitchThemeButton } from '@/features/common/SwitchThemeButton';
+import { Row } from '@/features/common/layout/Row';
 
 type IndexPageProps = {
   path: string,
@@ -11,7 +13,7 @@ export const IndexPage = ({
 }: IndexPageProps) => {
   return (
     <>
-      <header className="absolute top-0 w-full flex-row-y-center p-6">
+      <header className="absolute top-0 w-full lg:w-1/2 flex-row-y-center p-6">
         <CodernLogo />
       </header>
 
@@ -26,10 +28,13 @@ export const IndexPage = ({
         </section>
       </div>
 
-      <footer className="absolute bottom-0 w-full p-6">
-        <Text color="secondary" className="text-sm">
-          © {new Date().getFullYear()} Vectier. All rights reserved.
-        </Text>
+      <footer className="absolute bottom-0 w-full lg:w-1/2 p-6">
+        <Row className="justify-between items-end">
+          <Text color="secondary" className="text-sm">
+            © {new Date().getFullYear()} Vectier. All rights reserved.
+          </Text>
+          <SwitchThemeButton />
+        </Row>
       </footer>
     </>
   );

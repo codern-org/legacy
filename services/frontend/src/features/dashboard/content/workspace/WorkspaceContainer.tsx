@@ -7,24 +7,25 @@ import { PlusSmallIcon, FunnelIcon, XMarkIcon, MagnifyingGlassIcon } from '@hero
 
 export const WorkspaceContainer = () => {
   return (
-    <div className="h-full overflow-hidden flex flex-col">
+    <div className="h-full flex flex-col">
       <Row center="secondary" className="mb-4">
         <Text color="primary" className="text-xl font-semibold mr-auto">Workspace</Text>
         <Button color="primary" size="sm">
-          <PlusSmallIcon className="w-6 h-6 -mx-2" />
-          <span>Add Workspace</span>
+          <PlusSmallIcon className="w-6 h-6 sm:-mx-2" />
+          <span className="hidden sm:block">Add Workspace</span>
         </Button>
       </Row>
 
-      <Row className="justify-between mb-6">
-        <Row className="space-x-2">
-          <Input
-            type="text"
-            icon={<MagnifyingGlassIcon />}
-            placeholder="Search workspace"
-            className=""
-          />
+      {/* TODO: make <Row> responsive */}
+      <div className="flex flex-col lg:flex-row mb-6 lg:space-x-2 space-y-4 lg:space-y-0">
+        <Input
+          type="text"
+          icon={<MagnifyingGlassIcon />}
+          placeholder="Search workspace"
+          className=""
+        />
 
+        <div className="flex flex-row space-x-2">
           <Button color="secondary" size="sm">
             <FunnelIcon className="w-5 h-5" />
             <span>Filters</span>
@@ -34,8 +35,8 @@ export const WorkspaceContainer = () => {
             <span>All time</span>
             <XMarkIcon className="w-5 h-5" />
           </Button>
-        </Row>
-      </Row>
+        </div>
+      </div>
 
       <WorkspaceDeck />
     </div>

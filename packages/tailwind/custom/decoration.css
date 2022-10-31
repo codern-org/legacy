@@ -1,0 +1,29 @@
+.border-gradient-1 {
+  --angle: 0deg;
+  border-color: transparent;
+  animation: 3s rotate linear infinite;
+}
+
+.border-gradient-1 {
+  background: linear-gradient(white, white) padding-box, linear-gradient(var(--angle),#50e3c2 0,#0070f3 100%) border-box;
+}
+
+.dark .border-gradient-1 {
+  background: linear-gradient(black, black) padding-box, linear-gradient(var(--angle),#50e3c2 0,#0070f3 100%) border-box;
+}
+
+.border-gradient-1:hover {
+  animation-duration: 1.5s;
+}
+
+@keyframes rotate {
+  to {
+    --angle: 360deg;
+  }
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
