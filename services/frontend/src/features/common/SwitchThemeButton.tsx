@@ -1,17 +1,24 @@
-import { SidebarSubButton } from '@/features/dashboard/sidebar/SidebarSubButton';
 import { themeAtom } from '@/store/ThemeStore';
+import { classNames } from '@/utils/Classes';
 import { Popover, Transition } from '@headlessui/react'
 import { ChevronUpDownIcon, ComputerDesktopIcon, MoonIcon, SunIcon } from '@heroicons/react/24/outline';
 import { useAtom } from 'jotai';
+import { ComponentChildren } from 'preact';
 
-export const SwitchThemeButton = () => {
+type SwitchThemeButtonProps = {
+  direction: 'top' | 'down',
+};
+
+export const SwitchThemeButton = ({
+  direction,
+}: SwitchThemeButtonProps) => {
   const [theme, setTheme] = useAtom(themeAtom);
 
   return (
     <Popover className="relative flex">
       {({ open }: { open: boolean }) => (
         <>
-          <Popover.Button className="focus:outline-none flex flex-row items-center space-x-1 px-2 py-1 text-black dark:text-white border border-neutral-200 dark:border-neutral-600 rounded-lg transition-colors ease-in duration-200">
+          <Popover.Button className="focus:outline-none flex flex-row items-center space-x-1 px-2 py-1 text-black dark:text-white border border-neutral-300 dark:border-neutral-600 rounded-lg transition-colors ease-in duration-200">
             {theme === 'dark'
               ? (<MoonIcon className="w-5 h-5" />)
               : (<SunIcon className="w-5 h-5" />)
@@ -23,26 +30,38 @@ export const SwitchThemeButton = () => {
           <Transition
             show={open}
             enter="transition duration-100 ease-in"
-            enterFrom="transform scale-80 opacity-0 translate-y-4"
+            enterFrom={classNames(
+              "transform scale-80 opacity-0",
+              (direction == 'top') && 'translate-y-4',
+              (direction == 'down') && '-translate-y-4',
+            )}
             enterTo="transform scale-100 opacity-100"
             leave="transition duration-100 ease-out"
             leaveFrom="transform scale-100 opacity-100"
-            leaveTo="transform scale-80 opacity-0 translate-y-4"
+            leaveTo={classNames(
+              "transform scale-80 opacity-0",
+              (direction == 'top') && 'translate-y-4',
+              (direction == 'down') && '-translate-y-4',
+            )}
           >
-            <Popover.Panel className="absolute bottom-0 right-0 border border-neutral-200 dark:border-neutral-700 rounded-md transform -translate-y-10 shadow-lg transition-colors ease-in duration-200">
-              <div className="w-52 bg-white dark:bg-black flex flex-col p-2 rounded-lg transition-colors ease-in duration-200">
-                <SidebarSubButton
-                  icon={<ComputerDesktopIcon className="w-6 h-6" />}
+            <Popover.Panel className={classNames(
+              'absolute border border-neutral-300 dark:border-neutral-700 rounded-md transform shadow-lg transition-colors ease-in duration-200',
+              (direction === 'top') && 'bottom-0 right-0 -translate-y-10',
+              (direction === 'down') && 'top-0 right-0 translate-y-10',
+            )}>
+              <div className="bg-white dark:bg-black flex flex-col p-2 rounded-lg transition-colors ease-in duration-200">
+                <ThemeSelector
+                  icon={<ComputerDesktopIcon />}
                   text="System"
                   onClick={() => setTheme('system')}
                 />
-                <SidebarSubButton
-                  icon={<MoonIcon className="w-6 h-6" />}
+                <ThemeSelector
+                  icon={<MoonIcon />}
                   text="Dark"
                   onClick={() => setTheme('dark')}
                 />
-                <SidebarSubButton
-                  icon={<SunIcon className="w-6 h-6" />}
+                <ThemeSelector
+                  icon={<SunIcon />}
                   text="Light"
                   onClick={() => setTheme('light')}
                 />
@@ -52,5 +71,28 @@ export const SwitchThemeButton = () => {
         </>
       )}
     </Popover>
+  );
+};
+
+type ThemeSelectorProps = {
+  onClick?: (event: MouseEvent) => void;
+  icon: ComponentChildren,
+  text: string,
+};
+
+const ThemeSelector = ({
+  onClick,
+  icon,
+  text,
+}: ThemeSelectorProps) => {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="w-full flex flex-row items-center space-x-2 px-3 py-2 text-sm hover:bg-neutral-300 dark:hover:bg-neutral-800 text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-white rounded-lg"
+    >
+      <span className="w-5 h-5">{icon}</span>
+      <p>{text}</p>
+    </button>
   );
 };

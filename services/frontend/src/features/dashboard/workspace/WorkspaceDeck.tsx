@@ -1,4 +1,4 @@
-import { WorkspaceCard } from '@/features/dashboard/content/workspace/WorkspaceCard';
+import { WorkspaceCard } from '@/features/dashboard/workspace/WorkspaceCard';
 
 export const WorkspaceDeck = () => {
   return (
@@ -20,7 +20,6 @@ export const WorkspaceDeck = () => {
           progress={Math.floor(Math.random() * 101)}
         />
       ))}
-
     </div>
   );
 };

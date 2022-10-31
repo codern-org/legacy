@@ -2,7 +2,7 @@ import { Button } from '@/features/common/Button';
 import { Input } from '@/features/common/Input';
 import { Row } from '@/features/common/layout/Row';
 import { Text } from '@/features/common/Text';
-import { WorkspaceDeck } from '@/features/dashboard/content/workspace/WorkspaceDeck';
+import { WorkspaceDeck } from '@/features/dashboard/workspace/WorkspaceDeck';
 import { PlusSmallIcon, FunnelIcon, XMarkIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
 export const WorkspaceContainer = () => {

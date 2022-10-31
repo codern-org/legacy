@@ -31,7 +31,7 @@ export const Input = ({
       {label && <label className="block mb-2 text-neutral-500">{label}</label>}
       <Row
         center="secondary"
-        className="w-full text-black dark:text-white dark:bg-black border border-neutral-200 dark:border-neutral-600 rounded-md focus-within:border focus-within:border-black dark:focus-within:border-neutral-200 transition-colors ease-in duration-200"
+        className="w-full text-black dark:text-white dark:bg-black border border-neutral-300 dark:border-neutral-600 rounded-md focus-within:border focus-within:border-black dark:focus-within:border-neutral-300 transition-colors ease-in duration-200"
       >
         {icon && (
           <div className="pl-3">

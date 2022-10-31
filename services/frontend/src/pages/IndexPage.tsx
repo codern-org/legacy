@@ -17,7 +17,7 @@ export const IndexPage = ({
         <CodernLogo />
       </header>
 
-      <div className="h-screen flex flex-row dark:bg-black">
+      <main className="h-screen flex flex-row dark:bg-black">
         <section className="w-full lg:w-1/2 max-w-lg m-auto px-10">
           <LoginForm />
         </section>
@@ -26,14 +26,14 @@ export const IndexPage = ({
             Advertise
           </div>
         </section>
-      </div>
+      </main>
 
       <footer className="absolute bottom-0 w-full lg:w-1/2 p-6">
         <Row className="justify-between items-end">
           <Text color="secondary" className="text-sm">
             © {new Date().getFullYear()} Vectier. All rights reserved.
           </Text>
-          <SwitchThemeButton />
+          <SwitchThemeButton direction="top" />
         </Row>
       </footer>
     </>
