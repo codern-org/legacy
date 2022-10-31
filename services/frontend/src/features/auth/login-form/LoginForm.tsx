@@ -8,6 +8,7 @@ import { useState } from 'preact/hooks';
 
 export const LoginForm = () => {
   const [isLoggingIn, setIsLoggingIn] = useState<boolean[]>([false, false]);
+
   const login = (buttonIndex: number) => {
     // TODO: add real logic
     setIsLoggingIn([buttonIndex === 0, buttonIndex === 1]);

@@ -21,7 +21,7 @@ const buttonClasses = {
   },
   color: {
     'primary': 'text-white hover:text-black dark:text-black dark:hover:text-white bg-black hover:bg-white dark:bg-white dark:hover:bg-black border-black dark:border-white',
-    'secondary': 'text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-white border-neutral-200 dark:border-neutral-700 hover:border-black dark:hover:border-white',
+    'secondary': 'text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-white border-neutral-300 dark:border-neutral-700 hover:border-black dark:hover:border-white',
   },
 };
 
