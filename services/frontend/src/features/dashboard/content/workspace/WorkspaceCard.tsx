@@ -6,7 +6,7 @@ export const WorkspaceCard = () => {
   return (
     // TODO: break down into component
   
-    <div className="flex flex-row justify-center items-center space-x-2 p-6 border rounded-md text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-white bg-white dark:bg-black border-neutral-200 dark:border-neutral-700 hover:border-black dark:hover:border-white transition-colors ease-in duration-200">
+    <div className="flex flex-row justify-center items-center space-x-2 p-6 border rounded-md text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-white bg-white dark:bg-black border-neutral-200 dark:border-neutral-700 hover:border-black dark:hover:border-white shadow-lg transition-colors ease-in duration-200">
       <div className="w-full flex flex-col">
         <Row className="space-x-2 mb-4">
           <span className="w-10 h-10 flex justify-center items-center bg-neutral-100 dark:bg-neutral-700 bg-cover bg-center bg-[url(https://bangmodhackathon.com/logo.webp)] rounded-lg transition-colors ease-in duration-200" />
