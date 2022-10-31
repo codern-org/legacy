@@ -6,10 +6,10 @@ import { BellIcon, ChatBubbleLeftRightIcon, Cog6ToothIcon } from '@heroicons/rea
 
 export const DashboardSidebar = () => {
   return (
-    <nav className="h-full flex flex-col bg-zinc-50 dark:bg-black border-r border-zinc-200 dark:border-zinc-600">
+    <nav className="w-full max-w-fit h-full flex flex-col bg-neutral-50 dark:bg-black border-r border-neutral-200 dark:border-neutral-700 transition-colors ease-in duration-200">
       <CodernLogo className="p-6" />
 
-      <div className="p-6 border-t border-zinc-200 dark:border-zinc-600">
+      <div className="p-6 border-t border-neutral-200 dark:border-neutral-700 transition-colors ease-in duration-200">
         <Text color="secondary" className="text-sm">Pinned Workspace</Text>
         {/* TODO: add more menu */}
       </div>

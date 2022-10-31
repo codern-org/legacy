@@ -15,7 +15,7 @@ export const Text = ({
   return (
     <p className={classNames(
       (color === 'primary') && 'text-black dark:text-white',
-      (color === 'secondary') && 'text-zinc-400',
+      (color === 'secondary') && 'text-neutral-400',
       className,
     )}>
       {children}

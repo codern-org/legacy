@@ -19,7 +19,7 @@ export const IndexPage = ({
         <section className="w-full lg:w-1/2 max-w-lg m-auto px-10">
           <LoginForm />
         </section>
-        <section className="hidden lg:block w-1/2 h-full bg-gradient-to-tl from-zinc-400 dark:from-zinc-800 to-zinc-100 dark:to-zinc-500">
+        <section className="hidden lg:block w-1/2 h-full bg-gradient-to-tl from-neutral-400 dark:from-neutral-800 to-neutral-100 dark:to-neutral-500">
           <div className="h-full flex justify-center items-center text-4xl font-bold text-white">
             Advertise
           </div>
