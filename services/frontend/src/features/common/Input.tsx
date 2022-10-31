@@ -40,7 +40,7 @@ export const Input = ({
         )}
         <input
           type={type} 
-          className="w-full px-3 py-2 bg-transparent focus:outline-none"
+          className="w-full px-3 py-2 bg-transparent focus:outline-none placeholder:text-neutral-400 dark:placeholder:text-neutral-600"
           placeholder={placeholder}
         />
       </Row>

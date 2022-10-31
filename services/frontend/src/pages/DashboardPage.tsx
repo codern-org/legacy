@@ -11,10 +11,10 @@ export const DashboardPage = ({
   path,
 }: DashboardPageProps) => {
   return (
-    <main className="h-screen flex flex-col bg-neutral-50">
+    <main className="h-screen flex flex-col">
       <Navbar />
 
-      <div className="w-full h-full flex flex-col transition-colors ease-in duration-200 dark:bg-neutral-900 overflow-hidden">
+      <div className="w-full h-full flex flex-col transition-colors ease-in duration-200 bg-neutral-50 dark:bg-neutral-900 overflow-hidden">
         <DashboardHeader />
 
         <section className="container w-full h-full flex flex-col p-6 overflow-hidden">
