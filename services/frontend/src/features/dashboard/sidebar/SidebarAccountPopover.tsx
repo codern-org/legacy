@@ -24,10 +24,10 @@ export const SidebarAccountPopover = () => {
 
           <Transition
             show={open}
-            enter="transition duration-200 ease-out"
+            enter="transition duration-200 ease-in"
             enterFrom="transform scale-80 opacity-0 translate-y-24"
             enterTo="transform scale-100 opacity-100"
-            leave="transition duration-200 ease-out"
+            leave="transition duration-200 ease-in"
             leaveFrom="transform scale-100 opacity-100"
             leaveTo="transform scale-80 opacity-0 translate-y-24"
           >

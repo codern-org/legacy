@@ -14,7 +14,7 @@ type ButtonProps = {
 };
 
 const buttonClasses = {
-  common: 'flex flex-row justify-center items-center space-x-2 border rounded-md ease-out duration-200',
+  common: 'flex flex-row justify-center items-center space-x-2 border rounded-md ease-in duration-200',
   size: {
     'base': 'px-4 py-2',
     'sm': 'px-2 py-1',
