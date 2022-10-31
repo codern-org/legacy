@@ -6,6 +6,7 @@ export const WorkspaceDeck = () => {
       <WorkspaceCard
         title="Bangmod Hackathon"
         creator="KMUTT"
+        creatorProfile="https://bangmodhackathon.com/logo.webp"
         progress={10}
         participants={10}
         special
@@ -16,6 +17,7 @@ export const WorkspaceDeck = () => {
           key={i}
           title={`Mock up ${Math.floor(Math.random() * 101)}`}
           creator="Vectier"
+          creatorProfile="/vectier2022-logo-white.png"
           participants={Math.floor(Math.random() * 7) + 1}
           progress={Math.floor(Math.random() * 101)}
         />
