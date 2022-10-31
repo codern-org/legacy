@@ -6,30 +6,33 @@ import { classNames } from '@/utils/Classes';
 type WorkspaceCardProps = {
   title: string,
   creator: string,
+  creatorProfile: string,
   progress: number,
   participants: number,
   special?: boolean,
 };
 
+const randomHexColor = () => (Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
+
 export const WorkspaceCard = ({
   title,
   creator,
+  creatorProfile,
   progress,
   participants,
   special,
 }: WorkspaceCardProps) => {
   return (
     // TODO: break down into component
-  
     <div className={classNames(
       "flex flex-row justify-center items-center space-x-2 p-6 border rounded-md text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-white bg-white dark:bg-black shadow-lg transition-colors ease-in duration-200",
       special ? 'border-4 border-gradient-1' : 'border-neutral-300 dark:border-neutral-700 hover:border-black dark:hover:border-white',
     )}>
       <div className="w-full flex flex-col">
         <Row center="secondary" className="space-x-2 mb-4">
-          <span className="w-10 h-10 flex justify-center items-center bg-neutral-100 dark:bg-neutral-700 bg-cover bg-center bg-[url(https://bangmodhackathon.com/logo.webp)] rounded-lg transition-colors ease-in duration-200" />
+          <span className={`w-10 h-10 flex justify-center items-center bg-neutral-100 dark:bg-neutral-700 bg-cover bg-center rounded-lg transition-colors ease-in duration-200`} style={{ backgroundImage: `url(${creatorProfile})` }} />
           <div className="flex flex-col items-start">
-            <Text className="text-lg font-semibold">{title}</Text>
+            <Text className="text-base font-semibold">{title}</Text>
             <Text color="secondary" className="text-sm font-semibold">{creator}</Text>
           </div>
         </Row>
@@ -40,7 +43,7 @@ export const WorkspaceCard = ({
           {Array(participants).fill(participants).slice(0, 5).map((_, i) => (
             <img
               key={i}
-              src={MockupAvatar}
+              src={`https://source.boringavatars.com/beam?colors=${randomHexColor()},${randomHexColor()},${randomHexColor()},${randomHexColor()},${randomHexColor()},${randomHexColor()}`}
               alt=""
               className="w-7 h-7 rounded-full border-4 border-white dark:border-black transition-colors ease-in duration-200"
             />
@@ -56,8 +59,8 @@ export const WorkspaceCard = ({
 
         <div className="flex flex-col items-start">
           <Text color="secondary" className="text-xs mb-1">Progress ({progress}%)</Text>
-          <div className="bg-neutral-300 dark:bg-neutral-700 w-full h-2.5 rounded-full transition-colors ease-in duration-200">
-            <div className="h-2.5 bg-black dark:bg-neutral-300 rounded-full transition-colors ease-in duration-200" style={`width: ${progress}%`} />
+          <div className="bg-neutral-400 dark:bg-neutral-700 w-full h-2.5 rounded-full transition-colors ease-in duration-200">
+            <div className="h-2.5 bg-black dark:bg-neutral-400 rounded-full transition-colors ease-in duration-200" style={`width: ${progress}%`} />
           </div>
         </div>
       </div>
