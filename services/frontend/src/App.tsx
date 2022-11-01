@@ -9,7 +9,7 @@ export const App = () => {
     <Router>
       <IndexPage path="/" />
       <DashboardPage path="/dashboard" />
-      <WorkspacePage path="/workspace/:workspaceId" />
+      <WorkspacePage path="/workspace/:creatorId/:workspaceId" />
     </Router>
   );
 };
