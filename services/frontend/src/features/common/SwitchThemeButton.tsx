@@ -17,7 +17,7 @@ export const SwitchThemeButton = ({
     <Popover className="relative flex">
       {({ open }: { open: boolean }) => (
         <>
-          <Popover.Button className="w-[7.5rem] flex flex-row justify-between items-center px-2 py-1 text-black dark:text-white border border-neutral-300 dark:border-neutral-600 rounded-lg transition-colors ease-in duration-200 focus:outline-none">
+          <Popover.Button className="w-[7.5rem] flex flex-row justify-between items-center px-2 py-1 text-black dark:text-white border border-neutral-300 dark:border-neutral-600 rounded-md transition-colors ease-in duration-200 focus:outline-none">
             <div className="flex flex-row items-center space-x-1">
               {(theme === 'system') && (<ComputerDesktopIcon className="w-5 h-5" />)}
               {(theme === 'dark') && (<MoonIcon className="w-5 h-5" />)}
@@ -49,7 +49,7 @@ export const SwitchThemeButton = ({
               (direction === 'top') && 'bottom-0 right-0 -translate-y-10',
               (direction === 'down') && 'top-0 right-0 translate-y-10',
             )}>
-              <div className="bg-white dark:bg-black flex flex-col p-2 rounded-lg transition-colors ease-in duration-200">
+              <div className="bg-white dark:bg-black flex flex-col p-2 rounded-md transition-colors ease-in duration-200">
                 <ThemeSelector
                   icon={<ComputerDesktopIcon />}
                   text="System"
@@ -89,7 +89,7 @@ const ThemeSelector = ({
     <button
       type="button"
       onClick={onClick}
-      className="w-full flex flex-row items-center space-x-2 px-3 py-2 text-sm hover:bg-neutral-300 dark:hover:bg-neutral-800 text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-white rounded-lg"
+      className="w-full flex flex-row items-center space-x-2 px-3 py-2 text-sm hover:bg-neutral-300 dark:hover:bg-neutral-800 text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-white rounded-md"
     >
       <span className="w-5 h-5">{icon}</span>
       <p>{text}</p>
