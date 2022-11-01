@@ -7,7 +7,7 @@ import { PlusSmallIcon, FunnelIcon, XMarkIcon, MagnifyingGlassIcon } from '@hero
 
 export const WorkspaceContainer = () => {
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col overflow-y-auto">
       <Row center="secondary" className="mb-4">
         <Text color="primary" className="text-xl font-semibold mr-auto">Workspace</Text>
         <Button color="primary" size="sm">
