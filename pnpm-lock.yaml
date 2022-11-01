@@ -49,10 +49,12 @@ importers:
     specifiers:
       autoprefixer: ^10.4.13
       postcss: ^8.4.18
+      postcss-100vh-fix: ^1.0.2
       tailwindcss: ^3.2.1
     devDependencies:
       autoprefixer: 10.4.13_postcss@8.4.18
       postcss: 8.4.18
+      postcss-100vh-fix: 1.0.2_postcss@8.4.18
       tailwindcss: 3.2.1_postcss@8.4.18
 
   packages/tsconfig:
@@ -100,7 +102,6 @@ importers:
       '@heroicons/react': ^2.0.12
       '@preact/preset-vite': ^2.4.0
       jotai: ^1.9.0
-      postcss-100vh-fix: ^1.0.2
       preact: ^10.11.2
       preact-router: ^4.1.0
       react: npm:@preact/compat
@@ -119,7 +120,6 @@ importers:
     devDependencies:
       '@babel/core': 7.19.6
       '@preact/preset-vite': 2.4.0_mkngqnbm6b4trbinqxm2u2jidy
-      postcss-100vh-fix: 1.0.2
       tailwind: link:../../packages/tailwind
       typescript: 4.8.4
       vite: 3.2.1
@@ -2845,11 +2845,13 @@ packages:
       queue-lit: 1.4.0
     dev: true
 
-  /postcss-100vh-fix/1.0.2:
+  /postcss-100vh-fix/1.0.2_postcss@8.4.18:
     resolution: {integrity: sha512-t7vqk9AfjI4fXmWlQCEiMZFFhi1hro4WlECINI1TV6Qh1XapUJE++gCmNr95F5Hen/+bz1OmO+SiSB9TZmFmSg==}
     engines: {node: '>=10.0'}
     peerDependencies:
       postcss: ^8.1.0
+    dependencies:
+      postcss: 8.4.18
     dev: true
 
   /postcss-import/14.1.0_postcss@8.4.18:
