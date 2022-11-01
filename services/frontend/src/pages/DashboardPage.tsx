@@ -1,7 +1,7 @@
 import { Copyright } from '@/features/common/Copyright';
 import { Navbar } from '@/features/common/navbar/Navbar';
 import { DashboardHeader } from '@/features/dashboard/DashboardHeader';
-import { WorkspaceContainer } from '@/features/dashboard/workspace/WorkspaceContainer';
+import { WorkspaceDeck } from '@/features/dashboard/workspace/WorkspaceDeck';
 
 type DashboardPageProps = {
   path: string,
@@ -18,7 +18,7 @@ export const DashboardPage = ({
         <DashboardHeader />
 
         <section className="container w-full h-full flex flex-col p-6 overflow-hidden">
-          <WorkspaceContainer />
+          <WorkspaceDeck />
         </section>
 
         <footer className="w-full py-2 text-center border-t border-primary">

@@ -1,8 +1,9 @@
+import { Spinner } from '@/features/common/Spinner';
 import { Text } from '@/features/common/Text';
 
 type DashboardHeaderCard = {
   label: string,
-  value: string | number,
+  value?: string | number,
 };
 
 export const DashboardHeaderCard = ({
@@ -15,7 +16,10 @@ export const DashboardHeaderCard = ({
         {label}
       </Text>
       <Text color="primary" className="text-lg md:text-xl font-bold text-right">
-        {value}
+        {(value !== undefined)
+          ? value
+          : (<Spinner className="animate-spin w-5 h-5 text-neutral-400" />)
+        }
       </Text>
     </div>
   );
