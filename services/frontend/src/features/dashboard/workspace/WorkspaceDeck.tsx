@@ -50,7 +50,7 @@ export const WorkspaceDeck = () => {
         </div>
       </div>
 
-      <div className="overflow-y-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+      <div className="overflow-y-auto space-y-4 sm:space-y-0 sm:grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
         {(!workspaces) && Array(5).fill(0).map(() => (
           <WorkspaceCardSkeleton />
         ))}
