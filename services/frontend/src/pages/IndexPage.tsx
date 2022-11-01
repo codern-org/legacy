@@ -1,8 +1,7 @@
 import { CodernLogo } from '@/features/common/CodernLogo';
 import { LoginForm } from '@/features/auth/login-form/LoginForm';
-import { Text } from '@/features/common/Text';
 import { SwitchThemeButton } from '@/features/common/SwitchThemeButton';
-import { Row } from '@/features/common/layout/Row';
+import { Copyright } from '@/features/common/Copyright';
 
 type IndexPageProps = {
   path: string,
@@ -13,15 +12,16 @@ export const IndexPage = ({
 }: IndexPageProps) => {
   return (
     <>
-      <header className="absolute top-0 w-full lg:w-1/2 flex-row-y-center p-6">
+      <header className="absolute top-0 w-full lg:w-1/2 p-6">
         <CodernLogo />
       </header>
 
-      <main className="h-screen flex flex-row dark:bg-black transition-colors ease-in duration-200">
+      <main className="h-screen flex flex-row bg-primary transition-theme">
         <section className="w-full lg:w-1/2 max-w-lg m-auto px-10">
           <LoginForm />
         </section>
-        <section className="hidden lg:block w-1/2 h-full bg-gradient-to-tl from-neutral-400 dark:from-neutral-800 to-neutral-100 dark:to-neutral-500 transition-colors ease-in duration-200">
+
+        <section className="hidden lg:block w-1/2 h-full bg-gradient-to-tl from-neutral-400 dark:from-neutral-800 to-neutral-100 dark:to-neutral-500">
           <div className="h-full flex justify-center items-center text-4xl font-bold text-white">
             Advertise
           </div>
@@ -29,12 +29,10 @@ export const IndexPage = ({
       </main>
 
       <footer className="absolute bottom-0 w-full lg:w-1/2 p-6">
-        <Row className="justify-between items-end">
-          <Text color="secondary" className="text-sm">
-            © {new Date().getFullYear()} Vectier. All rights reserved.
-          </Text>
+        <div className="flex flex-row justify-between items-end">
+          <Copyright />
           <SwitchThemeButton direction="top" />
-        </Row>
+        </div>
       </footer>
     </>
   );

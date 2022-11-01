@@ -1,4 +1,4 @@
-import { Row } from '@/features/common/layout/Row';
+import { Text } from '@/features/common/Text';
 import { classNames } from '@/utils/Classes';
 import { ComponentChildren } from 'preact';
 
@@ -29,13 +29,10 @@ export const Input = ({
   return (
     <div className={classNames('flex flex-col', className)}>
       {label && <label className="block mb-2 text-neutral-500">{label}</label>}
-      <Row
-        center="secondary"
-        className="w-full text-black dark:text-white dark:bg-black border border-neutral-300 dark:border-neutral-600 rounded-md focus-within:border focus-within:border-black dark:focus-within:border-neutral-300 transition-colors ease-in duration-200"
-      >
+      <div className="w-full flex flex-row items-center text-black dark:text-white bg-primary border border-primary rounded-md focus-within:border focus-within:border-black dark:focus-within:border-neutral-300 transition-theme">
         {icon && (
           <div className="pl-3">
-            <div className="w-4 h-4 text-black dark:text-white">{icon}</div>
+            <Text className="w-4 h-4">{icon}</Text>
           </div>
         )}
         <input
@@ -43,7 +40,7 @@ export const Input = ({
           className="w-full px-3 py-2 bg-transparent focus:outline-none placeholder:text-neutral-400 dark:placeholder:text-neutral-600"
           placeholder={placeholder}
         />
-      </Row>
+      </div>
     </div>
   );
 };
