@@ -1,8 +1,9 @@
 import { Button } from '@/features/common/Button';
 import { Navbar } from '@/features/common/navbar/Navbar';
 import { Text } from '@/features/common/Text';
-import { QuestionsTable } from '@/features/workspace/QuestionsTable';
-import { ChartBarIcon } from '@heroicons/react/24/outline';
+import { QuestionTable } from '@/features/workspace/QuestionTable';
+import { ChartBarIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
+import { route } from 'preact-router';
 
 type WorkspacePageProps = {
   path: string,
@@ -17,12 +18,16 @@ export const WorkspacePage = ({
 }: WorkspacePageProps) => {
   // TODO: breakdown into component
   return (
-    <main className="min-h-screen dark:bg-black transition-theme">
+    <main className="h-screen flex flex-col dark:bg-black transition-theme">
       <Navbar />
 
       <section className="container w-full h-full flex flex-col p-6">
         <div className="flex flex-row justify-between items-center space-x-2 mb-6 pb-6 border-b border-neutral-300 dark:border-neutral-700 transition-theme">
           <div className="flex flex-row items-center space-x-2">
+            <ChevronLeftIcon
+              className="w-6 h-6 mr-1 text-black dark:text-white hover:cursor-pointer"
+              onClick={() => route('/dashboard')}
+            />
             <span
               className="w-10 h-10 flex justify-center items-center bg-neutral-100 dark:bg-neutral-700 bg-cover bg-center rounded-md transition-theme"
               style={{ backgroundImage: `url(https://bangmodhackathon.com/logo.webp)` }}
@@ -42,7 +47,7 @@ export const WorkspacePage = ({
           </Button>
         </div>
 
-        <QuestionsTable />
+        <QuestionTable />
       </section>
     </main>
   );
