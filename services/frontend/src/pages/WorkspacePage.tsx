@@ -17,13 +17,16 @@ export const WorkspacePage = ({
 }: WorkspacePageProps) => {
   // TODO: breakdown into component
   return (
-    <main className="min-h-screen dark:bg-black transition-colors ease-in duration-200">
+    <main className="min-h-screen dark:bg-black transition-theme">
       <Navbar />
 
       <section className="container w-full h-full flex flex-col p-6">
-        <div className="flex flex-row justify-between items-center space-x-2 mb-6 pb-6 border-b border-neutral-300 dark:border-neutral-700 transition-colors ease-in duration-200">
+        <div className="flex flex-row justify-between items-center space-x-2 mb-6 pb-6 border-b border-neutral-300 dark:border-neutral-700 transition-theme">
           <div className="flex flex-row items-center space-x-2">
-            <span className={`w-10 h-10 flex justify-center items-center bg-neutral-100 dark:bg-neutral-700 bg-cover bg-center rounded-md transition-colors ease-in duration-200`} style={{ backgroundImage: `url(https://bangmodhackathon.com/logo.webp)` }} />
+            <span
+              className="w-10 h-10 flex justify-center items-center bg-neutral-100 dark:bg-neutral-700 bg-cover bg-center rounded-md transition-theme"
+              style={{ backgroundImage: `url(https://bangmodhackathon.com/logo.webp)` }}
+            />
             <div>
               <Text color="primary" className="text-lg font-semibold">{workspaceId}</Text>
               <Text color="secondary" className="text-xs">{creatorId}</Text>

@@ -1,4 +1,3 @@
-import { Row } from '@/features/common/layout/Row';
 import { SwitchThemeButton } from '@/features/common/SwitchThemeButton';
 import { Text } from '@/features/common/Text';
 import { Popover, Transition } from '@headlessui/react'
@@ -25,12 +24,12 @@ export const ProfileDropdown = () => {
             leaveFrom="transform scale-100 opacity-100"
             leaveTo="transform scale-80 opacity-0 -translate-y-2"
           >
-            <Popover.Panel className="absolute top-0 right-0 border border-neutral-300 dark:border-neutral-700 transform translate-y-10 rounded-md shadow-lg transition-colors ease-in duration-200">
-              <div className="bg-white dark:bg-black flex flex-col p-2 rounded-md transition-colors ease-in duration-200">
-                <Row center="secondary" className="justify-between space-x-2 px-4 py-2">
+            <Popover.Panel className="absolute top-0 right-0 border border-neutral-300 dark:border-neutral-700 transform translate-y-10 rounded-md shadow-lg transition-theme">
+              <div className="bg-white dark:bg-black flex flex-col p-2 rounded-md transition-theme">
+                <span className="flex flex-row justify-between items-center space-x-2 px-4 py-2">
                   <Text color="secondary" className="text-sm">Theme</Text>
                   <SwitchThemeButton direction="down" />
-                </Row>
+                </span>
 
                 <ProfileDropdownButton
                   icon={<ArrowLeftOnRectangleIcon />}

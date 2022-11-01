@@ -3,6 +3,7 @@
 @import "tailwindcss/components";
 
 @import "./common.css";
+@import "./anim.css";
 @import "./input.css";
 @import "./decoration.css";
 

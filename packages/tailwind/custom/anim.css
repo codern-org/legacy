@@ -1,0 +1,42 @@
+.transition-theme {
+  @apply transition-colors ease-in duration-200;
+}
+
+.animate-gelatine {
+  animation: gelatine 2s infinite;
+}
+
+@keyframes gelatine {
+  from, to {
+    transform: scale(1, 1);
+  }
+  5% {
+    transform: scale(0.9, 1.1);
+  }
+  20% {
+    transform: scale(1.1, 0.9);
+  }
+  30% {
+    transform: scale(0.95, 1.05);
+  }
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+  75% {
+    transform: translateY(-2.5%);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+  80% {
+    transform: translateY(-5%);
+    animation-timing-function: cubic-bezier(0, 0, 0.8, 1);
+  }
+  90% {
+    transform: translateY(-10%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  100% {
+    transform: translateY(-20%);
+    animation-timing-function: cubic-bezier(1, 0, 1, 1);
+  }
+}

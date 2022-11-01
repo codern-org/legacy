@@ -1,6 +1,5 @@
 import { Button } from '@/features/common/Button';
 import { Input } from '@/features/common/Input';
-import { Row } from '@/features/common/layout/Row';
 import { Text } from '@/features/common/Text';
 import { WorkspaceDeck } from '@/features/dashboard/workspace/WorkspaceDeck';
 import { PlusSmallIcon, FunnelIcon, XMarkIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
@@ -8,15 +7,14 @@ import { PlusSmallIcon, FunnelIcon, XMarkIcon, MagnifyingGlassIcon } from '@hero
 export const WorkspaceContainer = () => {
   return (
     <div className="h-full flex flex-col overflow-y-auto">
-      <Row center="secondary" className="mb-4">
+      <div className="flex flex-row mb-4">
         <Text color="primary" className="text-xl font-semibold mr-auto">Workspace</Text>
         <Button color="primary" size="sm">
           <PlusSmallIcon className="w-6 h-6 sm:-mx-2" />
           <span className="hidden sm:block">Add Workspace</span>
         </Button>
-      </Row>
+      </div>
 
-      {/* TODO: make <Row> responsive */}
       <div className="flex flex-col lg:flex-row mb-6 lg:space-x-2 space-y-4 lg:space-y-0">
         <Input
           type="text"

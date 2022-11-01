@@ -1,3 +1,4 @@
+import { Text } from '@/features/common/Text';
 import { useTheme } from '@/store/ThemeStore';
 import { classNames } from '@/utils/Classes';
 import { Popover, Transition } from '@headlessui/react'
@@ -17,14 +18,16 @@ export const SwitchThemeButton = ({
     <Popover className="relative flex">
       {({ open }: { open: boolean }) => (
         <>
-          <Popover.Button className="w-[7.5rem] flex flex-row justify-between items-center px-2 py-1 text-black dark:text-white border border-neutral-300 dark:border-neutral-600 rounded-md transition-colors ease-in duration-200 focus:outline-none">
-            <div className="flex flex-row items-center space-x-1">
-              {(theme === 'system') && (<ComputerDesktopIcon className="w-5 h-5" />)}
-              {(theme === 'dark') && (<MoonIcon className="w-5 h-5" />)}
-              {(theme === 'light') && (<SunIcon className="w-5 h-5" />)}
-              <p className="capitalize">{theme}</p>
-            </div>
-            <ChevronUpDownIcon className="w-5 h-5" />
+          <Popover.Button className="w-[7.5rem] border border-neutral-300 dark:border-neutral-600 rounded-md transition-theme focus:outline-none">
+            <Text className="flex flex-row justify-between items-center px-2 py-1">
+              <div className="flex flex-row items-center space-x-1">
+                {(theme === 'system') && (<ComputerDesktopIcon className="w-5 h-5" />)}
+                {(theme === 'dark') && (<MoonIcon className="w-5 h-5" />)}
+                {(theme === 'light') && (<SunIcon className="w-5 h-5" />)}
+                <p className="capitalize">{theme}</p>
+              </div>
+              <ChevronUpDownIcon className="w-5 h-5" />
+            </Text>
           </Popover.Button>
 
           <Transition
@@ -45,11 +48,11 @@ export const SwitchThemeButton = ({
             )}
           >
             <Popover.Panel className={classNames(
-              'absolute border border-neutral-300 dark:border-neutral-700 rounded-md transform shadow-lg transition-colors ease-in duration-200',
+              'absolute border border-neutral-300 dark:border-neutral-700 rounded-md transform shadow-lg transition-theme',
               (direction === 'top') && 'bottom-0 right-0 -translate-y-10',
               (direction === 'down') && 'top-0 right-0 translate-y-10',
             )}>
-              <div className="bg-white dark:bg-black flex flex-col p-2 rounded-md transition-colors ease-in duration-200">
+              <div className="bg-white dark:bg-black flex flex-col p-2 rounded-md transition-theme">
                 <ThemeSelector
                   icon={<ComputerDesktopIcon />}
                   text="System"
