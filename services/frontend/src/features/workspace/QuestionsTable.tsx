@@ -100,6 +100,28 @@ export const QuestionsTable = () => {
               <Text color="secondary">{new Date().toLocaleDateString('th-TH')}</Text>
             </td>
           </tr>
+
+          <tr className="border-b border-neutral-300 dark:border-neutral-700">
+            <td className="px-2 md:px-4 py-4">
+              <Text color="secondary">4</Text>
+            </td>
+            <td className="px-2 md:px-4 py-4">
+              <Text color="primary">Noodle</Text>
+              <Text color="secondary" className="hidden md:block text-sm">Need to eat a chicken before code</Text>
+            </td>
+            <td className="hidden md:table-cell px-2 md:px-4 py-4">
+              <Text color="secondary">Medium</Text>
+            </td>
+            <td className="px-2 md:px-4 py-4">
+              <div className="flex flex-row items-center space-x-2">
+                <div className="w-2 h-2 rounded-full bg-neutral-400" />
+                <Text color="secondary" className="text-sm md:text-base">Todo</Text>
+              </div>
+            </td>
+            <td className="hidden md:table-cell px-2 md:px-4 py-4">
+              <Text color="secondary">{new Date().toLocaleDateString('th-TH')}</Text>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
