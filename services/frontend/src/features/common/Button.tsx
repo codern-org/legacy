@@ -9,6 +9,7 @@ type ButtonProps = {
   color?: 'primary' | 'secondary',
   size?: 'base' | 'sm',
   href?: string,
+  active?: boolean,
   className?: string,
   onClick?: (event: MouseEvent) => void,
 };
@@ -23,6 +24,10 @@ const buttonClasses = {
     'primary': 'text-white hover:text-black dark:text-black dark:hover:text-white bg-black hover:bg-white dark:bg-white dark:hover:bg-black border-black dark:border-white',
     'secondary': 'text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-white border-neutral-300 dark:border-neutral-700 hover:border-black dark:hover:border-white',
   },
+  active: {
+    'primary': 'text-black dark:text-white bg-white dark:bg-black border-black dark:border-white',
+    'secondary': 'text-black dark:text-white border-black dark:border-white',
+  }
 };
 
 export const Button = ({
@@ -31,6 +36,7 @@ export const Button = ({
   color = 'primary',
   size = 'base',
   href,
+  active,
   className,
   onClick,
 }: ButtonProps) => {
@@ -48,7 +54,8 @@ export const Button = ({
         className,
         buttonClasses.common,
         buttonClasses.size[size],
-        buttonClasses.color[color],
+        !active && buttonClasses.color[color],
+        active && buttonClasses.active[color],
       )}
       onClick={handleClick}
     >
