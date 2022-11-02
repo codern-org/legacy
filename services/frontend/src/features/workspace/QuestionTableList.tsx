@@ -10,7 +10,7 @@ type QuestionTableListProps = Omit<Question, 'detail'> & {
 export const QuestionTableList = ({
   id,
   index,
-  name,
+  title,
   description,
   level,
   status,
@@ -26,12 +26,12 @@ export const QuestionTableList = ({
       </td>
 
       <td className="px-2 md:px-4 py-4">
-        <Text color="primary" className="font-medium">{name}</Text>
+        <Text color="primary" className="font-medium">{title}</Text>
         <Text color="secondary" className="hidden md:block text-sm">{description}</Text>
       </td>
 
       <td className="hidden md:table-cell px-2 md:px-4 py-4">
-        <Text color="secondary">{level}</Text>
+        <Text color="secondary" className="capitalize">{level}</Text>
       </td>
 
       <td className="px-2 md:px-4 py-4">
@@ -48,9 +48,18 @@ export const QuestionTableList = ({
           </Text>
         </div>
       </td>
-      
+
       <td className="hidden md:table-cell px-2 md:px-4 py-4">
-        <Text color="secondary">{lastSubmitted.toLocaleDateString('th-TH')}</Text>
+        {/* <Text color="secondary">
+          {lastSubmitted.toLocaleDateString('th-TH')}&nbsp;
+          {lastSubmitted.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' })}
+        </Text> */}
+        <Text color="secondary" className="text-sm">
+          {lastSubmitted.toLocaleDateString('th-TH')}
+        </Text>
+        <Text color="secondary" className="text-xs">
+          {lastSubmitted.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+        </Text>
       </td>
     </tr>
   );

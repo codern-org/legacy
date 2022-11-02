@@ -26,7 +26,7 @@ export const QuestionPage = ({
     if (!questionId) return;
     setTimeout(() => {
       setQuestion(mockQuestions.filter((question) => question.id === Number.parseInt(questionId))[0]);
-    }, 1500);
+    }, 1000);
   }, [questionId]);
 
   return (
@@ -39,8 +39,7 @@ export const QuestionPage = ({
             ? (<QuestionPane
                 creatorId={creatorId!}
                 workspaceId={workspaceId!}
-                name={question.name}
-                detail={question.detail}
+                question={question}
               />)
             : (<QuestionPangeSkeleton />)
           }

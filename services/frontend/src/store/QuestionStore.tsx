@@ -2,7 +2,7 @@ import { atom } from 'jotai';
 
 export type Question = {
   id: number,
-  name: string,
+  title: string,
   description: string,
   detail: string,
   level: 'easy' | 'medium' | 'hard',
