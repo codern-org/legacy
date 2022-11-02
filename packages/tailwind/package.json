@@ -6,6 +6,7 @@
     "clean": "rimraf ./.turbo ./dist node_modules"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.7",
     "autoprefixer": "^10.4.13",
     "postcss": "^8.4.18",
     "postcss-100vh-fix": "^1.0.2",
