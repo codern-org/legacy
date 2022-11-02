@@ -1,4 +1,5 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
+const tailwindTypographyPlugin = require('@tailwindcss/typography');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -8,11 +9,11 @@ module.exports = {
       padding: '2rem',
     },
     fontFamily: {
-      sans: ['Inter', ...defaultTheme.fontFamily.sans],
+      sans: ['Inter', 'Sarabun', ...defaultTheme.fontFamily.sans],
     },
     extend: {
     }
   },
   darkMode: 'class',
-  plugins: [],
+  plugins: [tailwindTypographyPlugin],
 };
