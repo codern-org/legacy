@@ -18,10 +18,10 @@ export const WorkspacePage = ({
 }: WorkspacePageProps) => {
   // TODO: breakdown into component
   return (
-    <main className="h-screen flex flex-col dark:bg-black transition-theme">
+    <div className="h-screen flex flex-col dark:bg-black transition-theme">
       <Navbar />
 
-      <section className="container w-full h-full flex flex-col p-6">
+      <main className="container w-full h-full flex flex-col p-6">
         <div className="flex flex-row justify-between items-center space-x-2 mb-6 pb-6 border-b border-neutral-300 dark:border-neutral-700 transition-theme">
           <div className="flex flex-row items-center space-x-2">
             <ChevronLeftIcon
@@ -48,7 +48,7 @@ export const WorkspacePage = ({
         </div>
 
         <QuestionTable />
-      </section>
-    </main>
+      </main>
+    </div>
   );
 };

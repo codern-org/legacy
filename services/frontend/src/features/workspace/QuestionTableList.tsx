@@ -1,12 +1,14 @@
 import { Text } from '@/features/common/Text';
-import { Question } from '@/features/workspace/QuestionTable';
+import { Question } from '@/store/QuestionStore';
 import { classNames } from '@/utils/Classes';
+import { getCurrentUrl, route } from 'preact-router';
 
-type QuestionTableListProps = Question & {
+type QuestionTableListProps = Omit<Question, 'detail'> & {
   index: number,
 };
 
 export const QuestionTableList = ({
+  id,
   index,
   name,
   description,
@@ -15,9 +17,12 @@ export const QuestionTableList = ({
   lastSubmitted,
 }: QuestionTableListProps) => {
   return (
-    <tr className="border-b border-neutral-300 dark:border-neutral-700">
+    <tr
+      className="border-b border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-900 hover:cursor-pointer"
+      onClick={() => route(getCurrentUrl() + '/' + id)}
+    >
       <td className="px-2 md:px-4 py-4">
-        <Text color="secondary">{index}</Text>
+        <Text color="secondary">{index + 1}</Text>
       </td>
 
       <td className="px-2 md:px-4 py-4">
