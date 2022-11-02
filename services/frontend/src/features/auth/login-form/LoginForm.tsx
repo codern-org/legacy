@@ -15,7 +15,7 @@ export const LoginForm = () => {
     setTimeout(() => {
       setIsLoggingIn([buttonIndex === 0, buttonIndex === 1]);
       route('/dashboard');
-    }, 1500);
+    }, 1000);
   };
 
   return (

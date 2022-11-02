@@ -23,7 +23,7 @@ const mockQuestionDetail = `
 export const mockQuestions: Question[] = [
   {
     id: 1,
-    name: 'Porama walker',
+    title: 'Porama walker',
     description: 'The hardest path algorithm ever',
     detail: mockQuestionDetail,
     level: 'hard',
@@ -32,7 +32,7 @@ export const mockQuestions: Question[] = [
   },
   {
     id: 2,
-    name: 'Keeratikorn Eating',
+    title: 'Keeratikorn Eating',
     description: 'The easiest noodle algorithm',
     detail: mockQuestionDetail,
     level: 'easy',
@@ -41,7 +41,7 @@ export const mockQuestions: Question[] = [
   },
   {
     id: 3,
-    name: 'Chicken',
+    title: 'Chicken',
     description: 'Need to eat a chicken before code',
     detail: mockQuestionDetail,
     level: 'easy',
@@ -50,7 +50,7 @@ export const mockQuestions: Question[] = [
   },
   {
     id: 4,
-    name: 'Noodle',
+    title: 'Noodle',
     description: 'Need to eat a chicken before code',
     detail: mockQuestionDetail,
     level: 'medium',

@@ -15,7 +15,7 @@ export const QuestionTable = () => {
   useEffect(() => {
     setTimeout(() => {
       setQuestions(mockQuestions);
-    }, 1500);
+    }, 1000);
   }, []);
 
   return (
@@ -44,7 +44,7 @@ export const QuestionTable = () => {
               <span>#</span>
               <ArrowSmallDownIcon className="w-4 h-4" />
             </th>
-            <th className="w-6/12 px-4 py-2 font-normal text-neutral-400">Question</th>
+            <th className="w-5/12 px-4 py-2 font-normal text-neutral-400">Question</th>
             <th className="hidden md:table-cell px-4 py-2 font-normal text-neutral-400">Level</th>
             <th className="px-4 py-2 font-normal text-neutral-400">Status</th>
             <th className="hidden md:table-cell px-4 py-2 font-normal text-neutral-400">Last submitted</th>
@@ -60,7 +60,7 @@ export const QuestionTable = () => {
               key={question.id}
               id={question.id}
               index={index}
-              name={question.name}
+              title={question.title}
               description={question.description}
               level={question.level}
               status={question.status}
