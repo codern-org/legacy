@@ -11,13 +11,26 @@ import { useEffect } from 'preact/hooks';
 
 export const WorkspaceDeck = () => {
   const [workspaces, setWorkspaces] = useAtom(workspacesAtom);
+  // TODO: search
+  // const [search, setSearch] = useState<string>('');
 
   // TODO: real fetch
   useEffect(() => {
     setTimeout(() => {
       setWorkspaces(mockWorkspaces);
-    }, 1500);
+    }, 1000);
   }, []);
+
+  // const handleSearchInput = (event: Event) => {
+  //   if (!(event.target instanceof HTMLInputElement)) return;
+  //   setSearch(event.target.value);
+  // };
+
+  // const filterWorkspaces = (workspaces: Workspace[]) => {
+  //   return workspaces.filter(
+  //     (workspace) => workspace.title.toLowerCase().includes(search.toLowerCase())
+  //   );
+  // };
 
   return (
     <div className="h-full flex flex-col overflow-y-auto">
@@ -34,7 +47,8 @@ export const WorkspaceDeck = () => {
           type="text"
           icon={<MagnifyingGlassIcon />}
           placeholder="Search workspace"
-          className=""
+          // onInput={handleSearchInput}
+          // value={search}
         />
 
         <div className="flex flex-row space-x-2">

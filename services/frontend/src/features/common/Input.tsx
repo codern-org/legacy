@@ -8,6 +8,8 @@ type InputProps = {
   placeholder?: string,
   icon?: ComponentChildren,
   className?: string,
+  onInput?: (event: Event) => void,
+  value?: string,
 };
 
 export const Input = ({
@@ -16,6 +18,8 @@ export const Input = ({
   placeholder,
   icon,
   className,
+  onInput,
+  value,
 }: InputProps) => {
   if (type === 'checkbox') {
     return (
@@ -39,6 +43,8 @@ export const Input = ({
           type={type} 
           className="w-full px-3 py-2 bg-transparent focus:outline-none placeholder:text-neutral-400 dark:placeholder:text-neutral-600"
           placeholder={placeholder}
+          onInput={onInput}
+          value={value}
         />
       </div>
     </div>
