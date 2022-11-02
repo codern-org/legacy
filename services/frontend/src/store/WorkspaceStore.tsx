@@ -9,9 +9,4 @@ export type Workspace = {
   special: boolean,
 };
 
-const workspacesDataAtom = atom<Workspace[] | null>(null);
-
-export const workspacesAtom = atom<Workspace[] | null, Workspace[]>(
-  (get) => get(workspacesDataAtom),
-  (get, set, update) => set(workspacesDataAtom, update),
-);
+export const workspacesAtom = atom<Workspace[] | null>(null);
