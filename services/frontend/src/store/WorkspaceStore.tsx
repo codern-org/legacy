@@ -4,7 +4,7 @@ export type Workspace = {
   title: string,
   creator: string,
   creatorProfile: string,
-  participants: number,
+  participantsProfile: string[],
   progress: number,
   special: boolean,
 };
