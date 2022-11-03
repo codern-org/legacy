@@ -24,7 +24,7 @@ export const useTheme = () => {
     } else {
       setSelectedTheme('light');
     }
-    console.log(`Switch to ${theme === 'dark' ? '🌑' : '🌞'} theme!`);
+    // console.log(`Switch to ${theme === 'dark' ? '🌑' : '🌞'} theme!`);
   }, [theme]);
 
   return [theme, setTheme, selectedTheme] as const;

@@ -1,6 +1,12 @@
-export const MojiBunMascot = () => {
+type MojiBunMascotProps = {
+  className?: string,
+};
+
+export const MojiBunMascot = ({
+  className,
+}: MojiBunMascotProps) => {
   return (
-    <svg viewBox="0 0 36 36" fill="none" role="img" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 36 36" fill="none" role="img" xmlns="http://www.w3.org/2000/svg" className={className}>
       <title>Moji Bun Mascot of Codern</title>
       <mask id="mask__beam" maskUnits="userSpaceOnUse" x="0" y="0" width="36" height="36">
         <rect width="36" height="36" fill="#ffffff"></rect>
