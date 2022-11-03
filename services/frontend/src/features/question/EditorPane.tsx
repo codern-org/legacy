@@ -23,9 +23,7 @@ export const EditorPane = () => {
 
   return (
     <div className="h-full flex flex-col">
-      <div className="h-full flex rounded-lg overflow-hidden border border-primary">
-        <Editor />
-      </div>
+      <Editor />
 
       <div className="flex flex-row justify-between space-x-2 mt-6">
         <div className="flex flex-row space-x-2">
