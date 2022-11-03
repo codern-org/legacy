@@ -75,7 +75,7 @@ export const WorkspaceDeck = () => {
             title={workspace.title}
             creator={workspace.creator}
             creatorProfile={workspace.creatorProfile}
-            participants={workspace.participants}
+            participantsProfile={workspace.participantsProfile}
             progress={workspace.progress}
           />
         ))}

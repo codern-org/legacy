@@ -3,29 +3,29 @@ import { Text } from '@/features/common/Text';
 import { classNames } from '@/utils/Classes';
 import { route } from 'preact-router';
 
+const MAX_PROFILE_DISPLAY = 5;
+
 type WorkspaceCardProps = {
   title: string,
   creator: string,
   creatorProfile: string,
   progress: number,
-  participants: number,
+  participantsProfile: string[],
   special?: boolean,
 };
-
-const randomHexColor = () => (Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
 
 export const WorkspaceCard = ({
   title,
   creator,
   creatorProfile,
   progress,
-  participants,
+  participantsProfile,
   special,
 }: WorkspaceCardProps) => {
   return (
     <div
       className={classNames(
-        "flex flex-col p-6 border rounded-md bg-primary shadow-md transition-all ease-in duration-300 hover:cursor-pointer",
+        "flex flex-col p-6 border rounded-md bg-primary shadow-md transition-theme hover:cursor-pointer",
         special ? 'border-2 border-gradient-1' : 'border-primary border-primary-hover',
       )}
       onClick={() => route(`/workspace/${creator}/${title}`)}
@@ -45,19 +45,19 @@ export const WorkspaceCard = ({
         <Text color="secondary" className="text-xs mr-auto mb-1">Participants</Text>
         <div className="flex flex-row items-center -space-x-3 mb-2 transform -translate-x-1">
           {/* TODO: real image */}
-          {Array(participants).fill(participants).slice(0, 5).map((_, i) => (
+          {participantsProfile.slice(0, MAX_PROFILE_DISPLAY).map((url, i) => (
             <img
               key={i}
-              src={`https://source.boringavatars.com/beam?colors=${randomHexColor()},${randomHexColor()},${randomHexColor()},${randomHexColor()},${randomHexColor()},${randomHexColor()}`}
+              src={url}
               alt=""
-              className="w-7 h-7 rounded-full border-4 border-white dark:border-black transition-all ease-in duration-100"
+              className="w-7 h-7 rounded-full border-4 border-white dark:border-black transition-theme"
             />
           ))}
 
-          {participants > 5 && (
-            <div className="w-7 h-7 flex justify-center items-center bg-neutral-300 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-400 rounded-full border-4 border-white dark:border-black transition-all ease-in duration-100">
+          {participantsProfile.length > MAX_PROFILE_DISPLAY && (
+            <div className="w-7 h-7 flex justify-center items-center bg-neutral-300 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-400 rounded-full border-4 border-white dark:border-black transition-theme">
               <span className="text-xs">+</span>
-              <span className="text-xs">{participants - 5}</span>
+              <span className="text-xs">{participantsProfile.length - MAX_PROFILE_DISPLAY}</span>
             </div>
           )}
         </div>
