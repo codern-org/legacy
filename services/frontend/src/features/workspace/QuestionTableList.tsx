@@ -1,6 +1,6 @@
 import { Text } from '@/features/common/Text';
+import { QuestionStatusBadge } from '@/features/workspace/QuestionStatusBadge';
 import { Question } from '@/store/QuestionStore';
-import { classNames } from '@/utils/Classes';
 import { getCurrentUrl, route } from 'preact-router';
 
 type QuestionTableListProps = Omit<Question, 'detail'> & {
@@ -35,25 +35,10 @@ export const QuestionTableList = ({
       </td>
 
       <td className="px-2 md:px-4 py-4">
-        <div className="flex flex-row items-center space-x-2">
-          <div className={classNames(
-            'w-2 h-2 rounded-full capitalize',
-            (status === 'todo') && 'bg-neutral-500',
-            (status === 'wait') && 'bg-yellow-500',
-            (status === 'error') && 'bg-red-500',
-            (status === 'done') && 'bg-green-500',
-          )} />
-          <Text color="secondary" className="text-sm md:text-base capitalize">
-            {status}
-          </Text>
-        </div>
+        <QuestionStatusBadge status={status} />
       </td>
 
       <td className="hidden md:table-cell px-2 md:px-4 py-4">
-        {/* <Text color="secondary">
-          {lastSubmitted.toLocaleDateString('th-TH')}&nbsp;
-          {lastSubmitted.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' })}
-        </Text> */}
         <Text color="secondary" className="text-sm">
           {lastSubmitted.toLocaleDateString('th-TH')}
         </Text>

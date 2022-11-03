@@ -1,8 +1,8 @@
 import { Button } from '@/features/common/Button';
 import { Markdown } from '@/features/common/Makdown';
 import { Text } from '@/features/common/Text';
+import { QuestionStatusBadge } from '@/features/workspace/QuestionStatusBadge';
 import { Question } from '@/store/QuestionStore';
-import { classNames } from '@/utils/Classes';
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { route } from 'preact-router';
 
@@ -29,18 +29,7 @@ export const QuestionPane = ({
           <Text color="secondary" className="capitalize">({question.level})</Text>
         </div>
 
-        <div className="flex flex-row items-center space-x-2 px-2 border border-primary rounded-lg">
-          <div className={classNames(
-            'w-2 h-2 rounded-full capitalize',
-            (question.status === 'todo') && 'bg-neutral-500',
-            (question.status === 'wait') && 'bg-yellow-500',
-            (question.status === 'error') && 'bg-red-500',
-            (question.status === 'done') && 'bg-green-500',
-          )} />
-          <Text color="secondary" className="text-sm md:text-base capitalize">
-            {question.status}
-          </Text>
-        </div>
+        <QuestionStatusBadge status={question.status} />
       </div>
 
       <div className="flex flex-row mb-8 space-x-2 pb-4 border-b border-primary">
