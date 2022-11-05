@@ -111,7 +111,6 @@ importers:
       marked: ^4.2.0
       monaco-editor: ^0.34.1
       preact: ^10.11.2
-      preact-async-route: ^2.2.1
       preact-router: ^4.1.0
       react: npm:@preact/compat
       react-dom: npm:@preact/compat
@@ -135,7 +134,6 @@ importers:
       '@preact/preset-vite': 2.4.0_mkngqnbm6b4trbinqxm2u2jidy
       '@types/dompurify': 2.3.4
       '@types/marked': 4.0.7
-      preact-async-route: 2.2.1
       tailwind: link:../../packages/tailwind
       typescript: 4.8.4
       vite: 3.2.1
@@ -3021,10 +3019,6 @@ packages:
       nanoid: 3.3.4
       picocolors: 1.0.0
       source-map-js: 1.0.2
-    dev: true
-
-  /preact-async-route/2.2.1:
-    resolution: {integrity: sha512-8bg1007akXs3YDmzYT4McaTe6ji2FIzcc0/NTlu+vjJaKPNQ8lNG/HQ6LP+FoIxQ4m/KH5vvJCHJN5ADp2iNGA==}
     dev: true
 
   /preact-router/4.1.0_preact@10.11.2:
