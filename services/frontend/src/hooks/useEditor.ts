@@ -1,6 +1,6 @@
 import { defaultLanguageData, EditorLanguage, editorRefAtom, editorSettingsAtom } from '@/stores/EditorStore';
+import { monaco } from '@/utils/Monaco';
 import { useAtom } from 'jotai';
-import { Range } from 'monaco-editor';
 
 export const useEditor = () => {
   const [settings, setSettings] = useAtom(editorSettingsAtom);
@@ -21,7 +21,7 @@ export const useEditor = () => {
       range: model.getFullModelRange(),
       text: languageData.code,
     }]);
-    editor.setSelection(new Range(0, 0, 0, 0));
+    editor.setSelection(new monaco.Range(0, 0, 0, 0));
     editor.setPosition(languageData.position);
     editor.focus();
   };
