@@ -2,8 +2,8 @@ import { Navbar } from '@/features/common/navbar/Navbar';
 import { EditorPane } from '@/features/question/EditorPane';
 import { QuestionPane } from '@/features/question/QuestionPane';
 import { QuestionPangeSkeleton } from '@/features/question/QuestionPaneSkeleton';
-import { mockQuestions } from '@/store/mockup/QuestionMockup';
-import { Question } from '@/store/QuestionStore';
+import { mockQuestions } from '@/stores/mockup/QuestionMockup';
+import { Question } from '@/stores/QuestionStore';
 import { useEffect, useState } from 'preact/hooks';
 
 type QuestionPageProps = {
@@ -44,7 +44,7 @@ export const QuestionPage = ({
             : (<QuestionPangeSkeleton />)
           }
         </section>
-        <section className="w-6/12 h-full">
+        <section className="w-6/12">
           <EditorPane />
         </section>
       </main>

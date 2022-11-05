@@ -1,5 +1,5 @@
 import { Text } from '@/features/common/Text';
-import { useTheme } from '@/store/ThemeStore';
+import { useTheme } from '@/hooks/useTheme';
 import { classNames } from '@/utils/Classes';
 import { route } from 'preact-router';
 

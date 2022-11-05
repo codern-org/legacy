@@ -1,6 +1,6 @@
 import { Text } from '@/features/common/Text';
 import { QuestionStatusBadge } from '@/features/workspace/QuestionStatusBadge';
-import { Question } from '@/store/QuestionStore';
+import { Question } from '@/stores/QuestionStore';
 import { getCurrentUrl, route } from 'preact-router';
 
 type QuestionTableListProps = Omit<Question, 'detail'> & {
