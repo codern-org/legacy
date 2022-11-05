@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc && vite build",
     "clean": "rimraf ./.turbo ./dist node_modules",
-    "dev": "vite --host"
+    "dev": "vite --host",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.3",
