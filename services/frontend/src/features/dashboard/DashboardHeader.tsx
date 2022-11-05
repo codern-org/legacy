@@ -1,7 +1,7 @@
 import { MojiBunMascot } from '@/features/common/MojiBunMascot';
 import { Text } from '@/features/common/Text';
 import { DashboardHeaderCard } from '@/features/dashboard/DashboardHeaderCard';
-import { workspacesAtom } from '@/store/WorkspaceStore';
+import { workspacesAtom } from '@/stores/WorkspaceStore';
 import { classNames } from '@/utils/Classes';
 import { useAtom } from 'jotai';
 

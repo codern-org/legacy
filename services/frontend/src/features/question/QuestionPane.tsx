@@ -2,7 +2,7 @@ import { Button } from '@/features/common/Button';
 import { Markdown } from '@/features/common/Makdown';
 import { Text } from '@/features/common/Text';
 import { QuestionStatusBadge } from '@/features/workspace/QuestionStatusBadge';
-import { Question } from '@/store/QuestionStore';
+import { Question } from '@/stores/QuestionStore';
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { route } from 'preact-router';
 

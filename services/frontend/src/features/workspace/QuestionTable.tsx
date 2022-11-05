@@ -3,8 +3,8 @@ import { Spinner } from '@/features/common/Spinner';
 import { Text } from '@/features/common/Text';
 import { QuestionTableList } from '@/features/workspace/QuestionTableList';
 import { QuestionTableListSkeleton } from '@/features/workspace/QuestionTableListSkeleton';
-import { mockQuestions } from '@/store/mockup/QuestionMockup';
-import { Question } from '@/store/QuestionStore';
+import { mockQuestions } from '@/stores/mockup/QuestionMockup';
+import { Question } from '@/stores/QuestionStore';
 import { MagnifyingGlassIcon, ArrowSmallDownIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'preact/hooks';
 

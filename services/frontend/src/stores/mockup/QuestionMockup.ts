@@ -1,4 +1,4 @@
-import { Question } from '@/store/QuestionStore';
+import { Question } from '@/stores/QuestionStore';
 
 const mockQuestionDetail = `
 # นายกีรติกรกับก๋วยเตี๋ยวของเขา

@@ -1,5 +1,5 @@
 import { Text } from '@/features/common/Text';
-import { useTheme } from '@/store/ThemeStore';
+import { useTheme } from '@/hooks/useTheme';
 import { classNames } from '@/utils/Classes';
 import { Popover, Transition } from '@headlessui/react'
 import { ChevronUpDownIcon, ComputerDesktopIcon, MoonIcon, SunIcon } from '@heroicons/react/24/outline';
