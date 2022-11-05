@@ -1,5 +1,5 @@
 import { Navbar } from '@/features/common/navbar/Navbar';
-import { EditorPane } from '@/features/question/EditorPane';
+import EditorPane from '@/features/question/EditorPane';
 import { QuestionPane } from '@/features/question/QuestionPane';
 import { QuestionPangeSkeleton } from '@/features/question/QuestionPaneSkeleton';
 import { mockQuestions } from '@/stores/mockup/QuestionMockup';
@@ -13,7 +13,7 @@ type QuestionPageProps = {
   questionId?: string,
 };
 
-export const QuestionPage = ({
+const QuestionPage = ({
   path,
   creatorId,
   workspaceId,
@@ -51,3 +51,5 @@ export const QuestionPage = ({
     </div>
   );
 };
+
+export default QuestionPage;

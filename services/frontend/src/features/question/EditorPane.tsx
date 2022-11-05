@@ -4,7 +4,7 @@ import { useEditor } from '@/hooks/useEditor';
 import { isSupportedEditorLanguage } from '@/stores/EditorStore';
 import { ArrowPathIcon, Cog6ToothIcon } from '@heroicons/react/24/outline';
 
-export const EditorPane = () => {
+const EditorPane = () => {
   const { resetCode, changeLanguage } = useEditor();
 
   const handleLanguageChange = (event: Event) => {
@@ -59,3 +59,5 @@ export const EditorPane = () => {
     </div>
   );
 };
+
+export default EditorPane;
