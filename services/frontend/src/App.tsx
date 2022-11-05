@@ -1,10 +1,9 @@
 import '@/assets/css/index.css';
-
 import { DashboardPage } from '@/pages/DashboardPage';
 import { IndexPage } from '@/pages/IndexPage';
 import Router from 'preact-router';
 import { WorkspacePage } from '@/pages/WorkspacePage';
-import AsyncRoute from 'preact-async-route';
+import { QuestionPage } from '@/pages/QuestionPage';
 
 export const App = () => {
   return (
@@ -12,11 +11,7 @@ export const App = () => {
       <IndexPage path="/" />
       <DashboardPage path="/dashboard" />
       <WorkspacePage path="/workspace/:creatorId/:workspaceId" />
-
-      <AsyncRoute
-        path="/workspace/:creatorId/:workspaceId/:questionId"
-        getComponent={() => import('@/pages/QuestionPage').then(module => module.default)}
-      />
+      <QuestionPage path="/workspace/:creatorId/:workspaceId/:questionId"/>
     </Router>
   );
 };
