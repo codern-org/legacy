@@ -27,6 +27,7 @@
     "@preact/preset-vite": "^2.4.0",
     "@types/dompurify": "^2.3.4",
     "@types/marked": "^4.0.7",
+    "preact-async-route": "^2.2.1",
     "tailwind": "workspace:*",
     "typescript": "^4.6.4",
     "vite": "^3.2.0"
