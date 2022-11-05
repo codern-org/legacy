@@ -1,18 +1,14 @@
+import { Monaco, monaco, MonacoEditor } from '@/utils/Monaco';
 import { atom } from 'jotai';
-import monaco, { Position } from 'monaco-editor/esm/vs/editor/editor.api';
-
-export type Monaco = typeof monaco;
-export type MonacoEditor = monaco.editor.IStandaloneCodeEditor;
-export type MonacoEditorOptions = monaco.editor.IStandaloneEditorConstructionOptions;
 
 export const defaultLanguageData = {
   'c': {
     code: `#include <stdio.h>\n\nint main() {\n\t\n\treturn 0;\n}\n`,
-    position: new Position(4, 4),
+    position: new monaco.Position(4, 4),
   },
   'cpp': {
     code: `#include <iostream>\nusing namespace std;\n\nint main() {\n\t\n\treturn 0;\n}\n`,
-    position: new Position(5, 4),
+    position: new monaco.Position(5, 4),
   },
 };
 

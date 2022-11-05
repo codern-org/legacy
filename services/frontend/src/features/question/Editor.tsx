@@ -1,11 +1,10 @@
-import { defaultLanguageData, editorCodeAtom, editorRefAtom, editorSettingsAtom, MonacoEditor, MonacoEditorOptions } from '@/stores/EditorStore';
-import MonacoEditorComponent, { Monaco, OnChange } from '@monaco-editor/react';
+import { defaultLanguageData, editorCodeAtom, editorRefAtom, editorSettingsAtom } from '@/stores/EditorStore';
 import { useAtom } from 'jotai';
 import { useEffect, useReducer } from 'preact/hooks';
-import { Uri } from 'monaco-editor/esm/vs/editor/editor.api';
 import { MojiBunMascot } from '@/features/common/MojiBunMascot';
 import { classNames } from '@/utils/Classes';
 import { useTheme } from '@/hooks/useTheme';
+import { MonacoEditorOptions, MonacoEditor, Monaco, MonacoEditorComponent } from '@/utils/Monaco';
 
 const options: MonacoEditorOptions = {
   automaticLayout: true,
@@ -51,7 +50,7 @@ export const Editor = () => {
     const editor = editorRef.monacoEditor;
     if (!monaco || !editor) return;
 
-    const currentModel = monaco.editor.getModel(Uri.file('/main'))!;
+    const currentModel = monaco.editor.getModel(monaco.Uri.file('/main'))!;
     const previousLanguage = currentModel.getLanguageId();
     const newLanguage = settings.language;
 
@@ -64,7 +63,7 @@ export const Editor = () => {
     editor.focus();
   }, [settings.language]);
 
-  const handleCodeChange: OnChange = (value) => {
+  const handleCodeChange = (value: string | undefined) => {
     // setCodes({ ...codes, [settings.language]: value });
     // TODO: debounce auto save
   };
@@ -77,7 +76,7 @@ export const Editor = () => {
 
     const defaultLanguage = settings.language;
     const defaultCode = codes[defaultLanguage];
-    const defaultModel = monaco.editor.createModel(defaultCode, defaultLanguage, Uri.file('/main'));
+    const defaultModel = monaco.editor.createModel(defaultCode, defaultLanguage, monaco.Uri.file('/main'));
 
     editor.setModel(defaultModel);
     editor.setPosition(defaultLanguageData[defaultLanguage].position);
