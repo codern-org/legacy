@@ -42,10 +42,8 @@ export const Button = ({
 }: ButtonProps) => {
   const handleClick = (event: MouseEvent) => {
     event.preventDefault();
-    if (event.target instanceof HTMLElement) {
-      if (href) return route(href);
-      if (onClick) onClick(event);
-    }
+    if (href) return route(href);
+    if (onClick) onClick(event);
   };
 
   return (
