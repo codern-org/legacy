@@ -1,7 +1,7 @@
 import { Navbar } from '@/features/common/navbar/Navbar';
 import { EditorPaneSkeleton } from '@/features/question/EditorPaneSkeleton';
 import { QuestionPane } from '@/features/question/QuestionPane';
-import { QuestionPangeSkeleton } from '@/features/question/QuestionPaneSkeleton';
+import { QuestionPaneSkeleton } from '@/features/question/QuestionPaneSkeleton';
 import { mockQuestions } from '@/stores/mockup/QuestionMockup';
 import { Question } from '@/stores/QuestionStore';
 import { Suspense, lazy } from 'preact/compat';
@@ -24,7 +24,7 @@ export const QuestionPage = ({
 }: QuestionPageProps) => {
   const [question, setQuestion] = useState<Question | null>(null);
 
-  // TOOD: real fetch
+  // TODO: real fetch
   useEffect(() => {
     if (!questionId) return;
     setTimeout(() => {
@@ -44,7 +44,7 @@ export const QuestionPage = ({
                 workspaceId={workspaceId!}
                 question={question}
               />)
-            : (<QuestionPangeSkeleton />)
+            : (<QuestionPaneSkeleton />)
           }
         </section>
         <section className="w-6/12">

@@ -1,15 +1,20 @@
 import { Button } from '@/features/common/Button';
 import { Markdown } from '@/features/common/Makdown';
 import { Text } from '@/features/common/Text';
+import { SubmissionSection } from '@/features/question/submission/SubmissionSection';
 import { QuestionStatusBadge } from '@/features/workspace/QuestionStatusBadge';
 import { Question } from '@/stores/QuestionStore';
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { route } from 'preact-router';
+import { useState } from 'preact/hooks';
+
+const sections = ['problem', 'submission'] as const;
+export type QuestionPaneSection = typeof sections[number];
 
 type QuestionPaneProps = {
-  question: Question
   creatorId: string,
   workspaceId: string,
+  question: Question,
 };
 
 export const QuestionPane = ({
@@ -17,6 +22,8 @@ export const QuestionPane = ({
   workspaceId,
   question,
 }: QuestionPaneProps) => {
+  const [currentSection, setCurrentSection] = useState<QuestionPaneSection>('problem');
+
   return (
     <div className="h-full flex flex-col p-6 border border-primary rounded-lg">
       <div className="flex flex-row justify-between items-center mb-4 pb-4 border-b border-primary">
@@ -33,13 +40,23 @@ export const QuestionPane = ({
       </div>
 
       <div className="flex flex-row mb-8 space-x-2 pb-4 border-b border-primary">
-        <Button color="secondary" size="sm" active>Problem</Button>
-        <Button color="secondary" size="sm">Submissions</Button>
+        {sections.map((section) => (
+          <Button
+            key={section}
+            color="secondary"
+            size="sm"
+            onClick={() => setCurrentSection(section)}
+            active={currentSection === section}
+            className="capitalize"
+          >
+            {section}
+          </Button>
+        ))}
       </div>
-
       <div className="py-4 overflow-y-auto">
-        <Markdown markdown={question.detail} />
+        {currentSection === 'problem' && (<Markdown markdown={question.detail} />)}
+        {currentSection === 'submission' && (<SubmissionSection />)}
       </div>
-    </div >
+    </div>
   );
 };
