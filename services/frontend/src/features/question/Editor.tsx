@@ -1,20 +1,19 @@
-import { editorCodeAtom, editorSettingsAtom } from '@/store/EditorStore';
-import { useTheme } from '@/store/ThemeStore';
-import MonacoEditorComponent from '@monaco-editor/react';
+import { defaultLanguageData, editorCodeAtom, editorRefAtom, editorSettingsAtom } from '@/stores/EditorStore';
 import { useAtom } from 'jotai';
-import { useEffect, useReducer, useRef, useState } from 'preact/hooks';
-import monaco from 'monaco-editor/esm/vs/editor/editor.api';
+import { useEffect, useReducer } from 'preact/hooks';
 import { MojiBunMascot } from '@/features/common/MojiBunMascot';
 import { classNames } from '@/utils/Classes';
-
-type Monaco = typeof monaco;
-type MonacoEditor = monaco.editor.IStandaloneCodeEditor;
-type MonacoEditorOptions = monaco.editor.IStandaloneEditorConstructionOptions;
+import { useTheme } from '@/hooks/useTheme';
+import { MonacoEditorOptions, MonacoEditor, Monaco, MonacoEditorComponent } from '@/utils/Monaco';
 
 const options: MonacoEditorOptions = {
   automaticLayout: true,
 
-  fontFamily: 'Jetbrains Mono',
+  // Quality of life
+  mouseWheelZoom: true,
+
+  // Decoration
+  fontFamily: "'Jetbrains Mono', Menlo, Monaco, 'Courier New', monospace",
 
   minimap: { enabled: false },
   cursorSmoothCaretAnimation: true,
@@ -24,52 +23,66 @@ const options: MonacoEditorOptions = {
 export const Editor = () => {
   const forceRender = useReducer(() => ({}), {})[1] as () => void;
 
-  const editorRef = useRef<MonacoEditor | null>(null);
-  const monacoRef = useRef<Monaco | null>(null);
-
   const [, , selectedTheme] = useTheme();
-  const editorTheme = (selectedTheme === 'dark') ? 'vs-dark' : 'vs';
-
-  const [isEditorLoaded, setIsEditorLoaded] = useState<boolean>(false);
-  const [settings] = useAtom(editorSettingsAtom);
+  const [settings, setSettings] = useAtom(editorSettingsAtom);
   const [codes, setCodes] = useAtom(editorCodeAtom);
+  const [editorRef, setEditorRef] = useAtom(editorRefAtom);
 
   // Sync theme after monaco instance initiated
   useEffect(() => {
-    if (!monacoRef.current) return;
-    monacoRef.current.editor.setTheme('vs-' + selectedTheme);
-  
-    if (isEditorLoaded) return;
-    const currentEditorTheme = ((editorRef.current as any)?._themeService._theme.id);
-    setIsEditorLoaded(currentEditorTheme === editorTheme);
-  }, [monacoRef.current, selectedTheme]);
+    if (settings.isLoaded === 'unload') return;
+    if (!editorRef.monaco) return; // For hot reloading error
+
+    const monaco = editorRef.monaco;
+    monaco.editor.setTheme('vs-' + selectedTheme);
+
+    // Disable editor overlay when monaco theme sync with web theme
+    if (settings.isLoaded === 'loading') {
+      setSettings({ ...settings, isLoaded: 'loaded' });
+    }
+  }, [settings.isLoaded, selectedTheme]);
 
   // Update monaco language model when settings changes
-  // TODO: optimize model creation (reuse)
   useEffect(() => {
-    const editor = editorRef.current;
-    const monaco = monacoRef.current;
-    if (!editor || !monaco) return;
+    if (settings.isLoaded !== 'loaded') return;
 
-    const code = editor.getValue();
-    const previousLanguage = editor.getModel()!.getLanguageId();
+    const monaco = editorRef.monaco;
+    const editor = editorRef.monacoEditor;
+    if (!monaco || !editor) return;
+
+    const currentModel = monaco.editor.getModel(monaco.Uri.file('/main'))!;
+    const previousLanguage = currentModel.getLanguageId();
     const newLanguage = settings.language;
 
-    setCodes({ ...codes, [previousLanguage]: code });
+    setCodes({ ...codes, [previousLanguage]: currentModel.getValue() });
 
-    const newLanguageModel = monaco.editor.createModel(codes[newLanguage], newLanguage);
-    editor.setModel(newLanguageModel);
+    monaco.editor.setModelLanguage(currentModel, newLanguage);
+    currentModel.setValue(codes[newLanguage]);
+
+    editor.setPosition(defaultLanguageData[newLanguage].position);
+    editor.focus();
   }, [settings.language]);
 
-  useEffect(() => {
-    if (!(editorRef.current)) return;
-    console.log(settings.language);
-    editorRef.current.setValue(codes[settings.language]);
-  }, [codes]);
+  const handleCodeChange = (value: string | undefined) => {
+    // setCodes({ ...codes, [settings.language]: value });
+    // TODO: debounce auto save
+  };
 
+  // Initialize monaco and set the reference to retrieve editor/monaco instance later
+  // Set `isLoaded` in editor setting atom to `loading` for creating side-effect to theme useEffect
+  // before showing editor to the user (anti-flicker)
   const handleEditorDidMount = (editor: MonacoEditor, monaco: Monaco) => {
-    editorRef.current = editor;
-    monacoRef.current = monaco;
+    setEditorRef({ monacoEditor: editor, monaco: monaco });
+
+    const defaultLanguage = settings.language;
+    const defaultCode = codes[defaultLanguage];
+    const defaultModel = monaco.editor.createModel(defaultCode, defaultLanguage, monaco.Uri.file('/main'));
+
+    editor.setModel(defaultModel);
+    editor.setPosition(defaultLanguageData[defaultLanguage].position);
+    editor.focus();
+
+    setSettings({ ...settings, isLoaded: 'loading' });
     forceRender();
   };
 
@@ -78,16 +91,15 @@ export const Editor = () => {
       <div className="relative w-full h-full">
         <span className={classNames(
           "z-10 absolute top-0 w-full h-full bg-white dark:bg-neutral-900 transition-theme",
-          isEditorLoaded ? 'opacity-0 -z-50' : 'z-50',
+          (settings.isLoaded === 'loaded') && 'invisible',
         )}>
           <MojiBunMascot className="absolute top-1/2 left-1/2 w-24 h-24 -translate-x-1/2 -translate-y-1/2 animate-pulse" />
         </span>
 
         <MonacoEditorComponent
           options={options}
-          defaultLanguage={settings.language}
-          defaultValue={codes[settings.language]}
           onMount={handleEditorDidMount}
+          onChange={handleCodeChange}
         />
       </div>
     </div>

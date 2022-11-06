@@ -1,10 +1,13 @@
 import { Navbar } from '@/features/common/navbar/Navbar';
-import { EditorPane } from '@/features/question/EditorPane';
+import { EditorPaneSkeleton } from '@/features/question/EditorPaneSkeleton';
 import { QuestionPane } from '@/features/question/QuestionPane';
 import { QuestionPaneSkeleton } from '@/features/question/QuestionPaneSkeleton';
-import { mockQuestions } from '@/store/mockup/QuestionMockup';
-import { Question } from '@/store/QuestionStore';
+import { mockQuestions } from '@/stores/mockup/QuestionMockup';
+import { Question } from '@/stores/QuestionStore';
+import { Suspense, lazy } from 'preact/compat';
 import { useEffect, useState } from 'preact/hooks';
+
+const EditorPane = lazy(() => import('@/features/question/EditorPane'));
 
 type QuestionPageProps = {
   path: string,
@@ -44,8 +47,10 @@ export const QuestionPage = ({
             : (<QuestionPaneSkeleton />)
           }
         </section>
-        <section className="w-6/12 h-full">
-          <EditorPane />
+        <section className="w-6/12">
+          <Suspense fallback={<EditorPaneSkeleton />}>
+            <EditorPane />
+          </Suspense>
         </section>
       </main>
     </div>

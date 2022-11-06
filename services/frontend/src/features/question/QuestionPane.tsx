@@ -3,7 +3,7 @@ import { Markdown } from '@/features/common/Makdown';
 import { Text } from '@/features/common/Text';
 import { SubmissionSection } from '@/features/question/submission/SubmissionSection';
 import { QuestionStatusBadge } from '@/features/workspace/QuestionStatusBadge';
-import { Question } from '@/store/QuestionStore';
+import { Question } from '@/stores/QuestionStore';
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { route } from 'preact-router';
 import { useState } from 'preact/hooks';

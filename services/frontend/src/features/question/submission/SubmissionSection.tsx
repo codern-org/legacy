@@ -1,7 +1,7 @@
 import { SubmissionList } from '@/features/question/submission/SubmissionList';
 import { SubmissionListSkeleton } from '@/features/question/submission/SubmissionListSkeleton';
-import { mockSubmissions } from '@/store/mockup/SubmissionMockup';
-import { Submission } from '@/store/SubmissionStore';
+import { mockSubmissions } from '@/stores/mockup/SubmissionMockup';
+import { Submission } from '@/stores/SubmissionStore';
 import { useEffect, useState } from 'preact/hooks';
 
 export const SubmissionSection = () => {

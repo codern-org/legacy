@@ -1,24 +1,21 @@
 import { Button } from '@/features/common/Button';
 import { Editor } from '@/features/question/Editor';
-import { editorCodeAtom, editorSettingsAtom, isSupportedEditorLanguage } from '@/store/EditorStore';
-import { defaultCodeByLanguage } from '@/store/mockup/EditorMockup';
+import { useEditor } from '@/hooks/useEditor';
+import { isSupportedEditorLanguage } from '@/stores/EditorStore';
 import { ArrowPathIcon, Cog6ToothIcon } from '@heroicons/react/24/outline';
-import { useAtom } from 'jotai';
 
-export const EditorPane = () => {
-  const [editorCodes, setEditorCodes] = useAtom(editorCodeAtom);
-  const [editorSettings, setEditorSettings] = useAtom(editorSettingsAtom);
+const EditorPane = () => {
+  const { resetCode, changeLanguage } = useEditor();
 
   const handleLanguageChange = (event: Event) => {
     if (!(event.target instanceof HTMLSelectElement)) return;
     const language = event.target.value;
     if (!isSupportedEditorLanguage(language)) return;
-    setEditorSettings({ ...editorSettings, language: language });
+    changeLanguage(language);
   };
 
   const handleResetCode = () => {
-    const language = editorSettings.language;
-    setEditorCodes({ ...editorCodes, [language]: defaultCodeByLanguage[language] });
+    resetCode();
   };
 
   return (
@@ -62,3 +59,5 @@ export const EditorPane = () => {
     </div>
   );
 };
+
+export default EditorPane;

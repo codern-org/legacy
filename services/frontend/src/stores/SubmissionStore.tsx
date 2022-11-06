@@ -1,4 +1,4 @@
-import { EditorLanguage } from '@/store/EditorStore'
+import { EditorLanguage } from '@/stores/EditorStore'
 
 export type Testcase = {
   pass: boolean,

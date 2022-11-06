@@ -1,16 +1,6 @@
-import { atom, useAtom } from 'jotai';
-import { atomWithStorage } from 'jotai/utils';
+import { getSystemTheme, selectedThemeAtom, themeAtom } from '@/stores/ThemeStore';
+import { useAtom } from 'jotai';
 import { useEffect } from 'preact/hooks';
-
-type ThemeSettings = 'system' | 'light' | 'dark';
-type SelectedThemeSettings = Omit<ThemeSettings, 'system'>;
-
-const getSystemTheme = (): ThemeSettings => {
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-};
-
-const themeAtom = atomWithStorage<ThemeSettings>('theme', getSystemTheme());
-const selectedThemeAtom = atom<SelectedThemeSettings>('light');
 
 export const useTheme = () => {
   const [theme, setTheme] = useAtom(themeAtom);

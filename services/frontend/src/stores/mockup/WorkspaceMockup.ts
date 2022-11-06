@@ -1,4 +1,4 @@
-import { Workspace } from '@/store/WorkspaceStore';
+import { Workspace } from '@/stores/WorkspaceStore';
 
 const randomHexColor = () => (Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
 
