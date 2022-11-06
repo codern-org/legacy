@@ -51,7 +51,6 @@ const EditorPane = () => {
           >
             <option value="c">C</option>
             <option value="cpp">C++</option>
-            <option value="javascript">JavaScript (For testing only)</option>
           </select>
         </div>
         <Button className="px-8">Submit</Button>
