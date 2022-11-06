@@ -8,10 +8,10 @@ module.exports = {
       center: true,
       padding: '2rem',
     },
-    fontFamily: {
-      sans: ['Inter', 'Sarabun', ...defaultTheme.fontFamily.sans],
-    },
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'Sarabun', ...defaultTheme.fontFamily.sans],
+      },
     }
   },
   darkMode: 'class',
