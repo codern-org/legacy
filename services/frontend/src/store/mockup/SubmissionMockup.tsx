@@ -3,50 +3,48 @@ import { Submission } from '@/store/SubmissionStore';
 export const mockSubmissions: Submission[] = [
   {
     id: 1,
-    questionId: 2,
     date: new Date(),
-    testcase: [true, true, true, true],
+    language: 'c',
+    testcases: [
+      { pass: true },
+      { pass: true },
+      { pass: false, info: 'Time out' },
+    ],
   },
   {
     id: 2,
-    questionId: 2,
     date: new Date(),
-    testcase: [true, false, true, false],
+    language: 'cpp',
+    testcases: [
+      { pass: true },
+      { pass: false, info: 'Out of memory' },
+    ],
   },
   {
     id: 3,
-    questionId: 2,
     date: new Date(),
-    testcase: [true, false, true, false],
+    language: 'cpp',
+    testcases: [
+      { pass: true },
+      { pass: true },
+    ],
   },
   {
     id: 4,
-    questionId: 2,
     date: new Date(),
-    testcase: [true, false, true, false],
+    language: 'c',
+    testcases: [
+      { pass: true },
+      { pass: true },
+    ],
   },
   {
     id: 5,
-    questionId: 2,
     date: new Date(),
-    testcase: [true, true, true, true],
-  },
-  {
-    id: 6,
-    questionId: 2,
-    date: new Date(),
-    testcase: [true, false, true, false],
-  },
-  {
-    id: 7,
-    questionId: 2,
-    date: new Date(),
-    testcase: [true, false, true, false],
-  },
-  {
-    id: 8,
-    questionId: 2,
-    date: new Date(),
-    testcase: [true, false, true, false],
-  },
+    language: 'c',
+    testcases: [
+      { pass: true },
+      { pass: true },
+    ],
+  }
 ]
