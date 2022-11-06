@@ -1,19 +1,20 @@
 import { Text } from '@/features/common/Text';
+import { Question } from '@/store/QuestionStore';
 import { classNames } from '@/utils/Classes';
 
-const getColorByStatus = (status: string) => ({
+const getColorByStatus = (status: Question['status']) => ({
   todo: 'bg-neutral-500',
   wait: 'bg-yellow-500',
   error: 'bg-red-500',
   done: 'bg-green-500',
-}[status] || '');
+}[status]);
 
 type QuestionStatusBadgeProps = {
-  status: string,
+  status: Question['status'],
 };
 
 export const QuestionStatusBadge = ({
-  status = 'default',
+  status,
 }: QuestionStatusBadgeProps) => {
   return (
     <div className="w-fit flex flex-row items-center space-x-2 px-2 border border-primary rounded-lg">
