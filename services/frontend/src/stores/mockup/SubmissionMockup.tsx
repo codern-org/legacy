@@ -1,4 +1,4 @@
-import { Submission } from '@/store/SubmissionStore';
+import { Submission } from '@/stores/SubmissionStore';
 
 export const mockSubmissions: Submission[] = [
   {

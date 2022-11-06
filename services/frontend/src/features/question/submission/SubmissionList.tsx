@@ -1,6 +1,6 @@
 import { Text } from '@/features/common/Text';
 import { SubmissionStatusBadge } from '@/features/question/submission/SubmissionStatusBadge';
-import { Submission } from '@/store/SubmissionStore';
+import { Submission } from '@/stores/SubmissionStore';
 import { classNames } from '@/utils/Classes';
 import { Disclosure, Transition } from '@headlessui/react';
 import { ChevronUpIcon } from '@heroicons/react/24/outline';
