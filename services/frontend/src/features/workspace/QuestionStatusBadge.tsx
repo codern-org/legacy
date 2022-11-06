@@ -1,5 +1,5 @@
 import { Text } from '@/features/common/Text';
-import { Question } from '@/store/QuestionStore';
+import { Question } from '@/stores/QuestionStore';
 import { classNames } from '@/utils/Classes';
 
 const getColorByStatus = (status: Question['status']) => ({
