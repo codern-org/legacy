@@ -50,7 +50,10 @@ export const Editor = () => {
     const editor = editorRef.monacoEditor;
     if (!monaco || !editor) return;
 
-    const currentModel = monaco.editor.getModel(monaco.Uri.file('/main'))!;
+    const currentModel = monaco.editor.getModel(monaco.Uri.file('/main'));
+
+    if (!currentModel) return;
+
     const previousLanguage = currentModel.getLanguageId();
     const newLanguage = settings.language;
 
@@ -76,9 +79,11 @@ export const Editor = () => {
 
     const defaultLanguage = settings.language;
     const defaultCode = codes[defaultLanguage];
-    const defaultModel = monaco.editor.createModel(defaultCode, defaultLanguage, monaco.Uri.file('/main'));
+    const defaultModel = monaco.editor.getModel(monaco.Uri.file('/main'))!;
 
-    editor.setModel(defaultModel);
+    defaultModel.setValue(defaultCode);
+    monaco.editor.setModelLanguage(defaultModel, defaultLanguage);
+
     editor.setPosition(defaultLanguageData[defaultLanguage].position);
     editor.focus();
 
@@ -100,6 +105,7 @@ export const Editor = () => {
           options={options}
           onMount={handleEditorDidMount}
           onChange={handleCodeChange}
+          defaultPath="/main"
         />
       </div>
     </div>
