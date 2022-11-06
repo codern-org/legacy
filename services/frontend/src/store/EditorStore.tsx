@@ -2,7 +2,7 @@ import { defaultCodeByLanguage } from '@/store/mockup/EditorMockup';
 import { atom } from 'jotai';
 
 const editorLanguages = ['c', 'cpp', 'javascript'] as const;
-type EditorLanguage = typeof editorLanguages[number];
+export type EditorLanguage = typeof editorLanguages[number];
 type CodeByLanguage = Record<EditorLanguage, string>;
 
 type EditorSettings = {
