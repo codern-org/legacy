@@ -55,7 +55,7 @@ export const SubmissionList = ({
             >
               <Disclosure.Panel className="px-4 py-2 rounded-lg">
                 {testcases.map((testcase, index) => (
-                  <span className="flex flex-row space-x-2">
+                  <span className="flex flex-row space-x-2 font-mono text-xs">
                     <Text color="secondary">
                       Case {index + 1}
                     </Text>
