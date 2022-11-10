@@ -1,47 +1,44 @@
 import { Controller } from '@nestjs/common';
-import { MessagePattern } from '@nestjs/microservices';
+import { GrpcMethod } from '@nestjs/microservices';
+import { GoogleAuthResponse, GoogleAuthUrlResponse } from 'api-types';
 import { AuthService } from '@/services/AuthService';
+import { GoogleService } from '@/services/GoogleService';
 
-type LoginPayload = {
-  username: string,
-  password: string,
-};
-
-type HealthCheckPayload = {
-  pingTime: [number, number],
-};
-
-type HealthCheckResponse = {
-  uptime: number,
-  destRecvTime: number,
-  srcRecvTime: number,
-  timestamp: number,
-};
-
-@Controller()
+@Controller('/auth')
 export class AuthController {
 
   private readonly authService: AuthService;
+  private readonly googleService: GoogleService;
 
-  public constructor(authService: AuthService) {
+  public constructor(
+    authService: AuthService,
+    googleService: GoogleService,
+  ) {
     this.authService = authService;
+    this.googleService = googleService;
   }
 
-  @MessagePattern({ cmd: 'login' })
-  public async login(data: LoginPayload): Promise<boolean> {
-    return (data.username === data.password);
+  @GrpcMethod('GoogleService')
+  public getGoogleOAuthUrl(): GoogleAuthUrlResponse {
+    return { url: this.googleService.getOAuthUrl() };
   }
 
-  @MessagePattern({ cmd: 'healthcheck' })
-  public async healthCheck(data: HealthCheckPayload): Promise<HealthCheckResponse> {
-    const { pingTime } = data;
-    const pongTime = process.hrtime(pingTime);
-    return {
-      uptime: process.uptime(),
-      destRecvTime: pongTime[0] * 1_000_000_000 + pongTime[1] / 1_000_000,
-      srcRecvTime: 0,
-      timestamp: Date.now(),
-    };
+  @GrpcMethod('GoogleService')
+  public async authWithGoogle(code: string): Promise<GoogleAuthResponse> {
+    try {
+      const token = await this.googleService.getToken(code);
+      await this.googleService.getGoogleUser(token);
+
+      return {
+        success: true,
+        redirectUrl: 'https://www.google.com/',
+      };
+    } catch {
+      return {
+        success: false,
+        redirectUrl: 'https://www.youtube.com/',
+      };
+    }
   }
 
 }

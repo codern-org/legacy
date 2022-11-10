@@ -1,14 +1,14 @@
-import { Module } from '@nestjs/common';
-import { ClientsModule, Transport } from '@nestjs/microservices';
+import { Logger, Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from '@/modules/AuthModule';
+import { configuration } from '@/utils/Configuration';
 
 @Module({
   imports: [
-    ClientsModule.register([
-      { name: 'AUTH_SERVICE', transport: Transport.TCP },
-    ]),
+    ConfigModule.forRoot({ load: [configuration] }),
 
     AuthModule,
   ],
+  providers: [Logger],
 })
 export class AppModule {}

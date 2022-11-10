@@ -1,0 +1,17 @@
+syntax = "proto3";
+package codern.auth;
+
+message GoogleAuthUrlRequest {}
+
+message GoogleAuthUrlResponse {
+  string url = 1;
+}
+
+message GoogleAuthRequest {
+  string code = 1;
+}
+
+message GoogleAuthResponse {
+  bool success = 1;
+  string redirectUrl = 2;
+}

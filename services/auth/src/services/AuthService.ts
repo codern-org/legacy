@@ -1,17 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '@/services/PrismaService';
+import { SessionRepository } from '@/repositories/SessionRepository';
 
 @Injectable()
 export class AuthService {
 
-  private readonly prismaService: PrismaService;
+  private readonly sessionRepository: SessionRepository;
 
-  public constructor(prismaService: PrismaService) {
-    this.prismaService = prismaService;
-  }
-
-  public getSession(userId: number): number {
-    return userId + 1;
+  public constructor(
+    sessionRepository: SessionRepository,
+  ) {
+    this.sessionRepository = sessionRepository;
   }
 
 }

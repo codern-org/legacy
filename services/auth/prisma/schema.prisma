@@ -8,14 +8,58 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String
-  role      Role     @default(USER)
-  createdAt DateTime @default(now())
+  id             Int              @id @default(autoincrement())
+  email          String
+  password       String?
+  profileUrl     String
+  provider       AuthProvider
+  createdAt      DateTime         @default(now())
+  Session        Session[]
+  UserPermission UserPermission[]
 }
 
-enum Role {
-  ADMIN
-  TEACHER
-  USER
+enum AuthProvider {
+  GOOGLE
+  SELF
+}
+
+model Session {
+  id         String   @id
+  user       User     @relation(fields: [userId], references: [id])
+  userId     Int
+  ipAddress  String
+  userAgent  String
+  expiryDate DateTime
+  createdAt  DateTime @default(now())
+}
+
+model Organization {
+  id   Int    @id @default(autoincrement())
+  name String
+}
+
+model Workspace {
+  id   Int    @id @default(autoincrement())
+  name String
+}
+
+model Privilege {
+  name        String @id
+  description String
+  permission  String @unique
+}
+
+model Role {
+  name       String @id
+  permission String
+}
+
+model UserPermission {
+  user         User   @relation(fields: [userId], references: [id])
+  userId       Int
+  organization String
+  workspace    String
+  permission   String
+
+  @@id([userId, organization, workspace, permission])
 }
