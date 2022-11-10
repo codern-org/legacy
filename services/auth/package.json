@@ -5,17 +5,26 @@
   "scripts": {
     "build": "tsc && tsc-alias",
     "clean": "rimraf ./.turbo ./dist node_modules",
-    "dev": "tsnd --respawn --transpile-only --watch src -r tsconfig-paths/register src/App.ts",
-    "lint": "eslint . --ext .ts"
+    "dev": "tsnd --respawn --transpile-only --exit-child --watch src -r tsconfig-paths/register src/App.ts",
+    "lint": "eslint . --ext .ts",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@grpc/grpc-js": "^1.7.3",
+    "@grpc/proto-loader": "^0.7.3",
+    "@nestjs/axios": "^1.0.0",
     "@nestjs/common": "^9.1.6",
+    "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.1.6",
     "@nestjs/microservices": "^9.1.6",
     "@prisma/client": "^4.5.0",
+    "api-types": "workspace:*",
+    "axios": "^1.1.3",
     "logger": "workspace:*",
+    "nest-winston": "^1.8.0",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.5.7"
+    "rxjs": "^7.5.7",
+    "winston": "^3.8.2"
   },
   "devDependencies": {
     "@types/node": "^18.11.4",

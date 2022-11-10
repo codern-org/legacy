@@ -1,0 +1,9 @@
+syntax = "proto3";
+package codern.auth;
+
+import "auth/message.proto"; 
+
+service GoogleService {
+  rpc GetGoogleOAuthUrl(GoogleAuthUrlRequest) returns (GoogleAuthUrlResponse);
+  rpc AuthWithGoogle(GoogleAuthRequest) returns (GoogleAuthResponse);
+}
