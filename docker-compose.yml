@@ -6,7 +6,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - ./.volumes/:/var/lib/mysql/
+      - ./.volumes/mysql/:/var/lib/mysql/
     environment:
       MYSQL_DATABASE: $DB_NAME
       MYSQL_ROOT_PASSWORD: $DB_PASS
@@ -14,8 +14,60 @@ services:
   phpmyadmin:
     image: phpmyadmin
     ports:
-      - 8080:80
+      - 81:80
     environment:
       PMA_HOST: mysql
       PMA_USER: $DB_USER
       PMA_PASSWORD: $DB_PASS
+
+  rabbitmq:
+    image: rabbitmq:3.11.2-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: $RABBITMQ_USER
+      RABBITMQ_DEFAULT_PASS: $RABBITMQ_PASS
+
+  seaweedfs-master:
+    image: chrislusf/seaweedfs:3.34
+    ports:
+      - 9333:9333   # Assign a file key
+      - 19333:19333 # gRPC calls
+      - 9324:9324   # Metric 
+    command:
+      master
+      -ip=seaweedfs-master -ip.bind=0.0.0.0
+      -metricsPort=9324
+    
+  seaweedfs-volume:
+    image: chrislusf/seaweedfs:3.34
+    ports:
+      - 8080:8080   # Retrieve file
+      - 18080:18080 # gPRC calls
+      - 9325:9325   # Metric
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    volumes:
+      # persistent volume
+      - ./.volumes/storage/:/data/
+    command:
+      volume
+      -mserver="seaweedfs-master:9333" -ip.bind=0.0.0.0 -port=8080
+      -publicUrl=host.docker.internal:8080
+      -metricsPort=9325
+    depends_on:
+      - seaweedfs-master
+
+  seaweedfs-filer:
+    image: chrislusf/seaweedfs:3.34
+    ports:
+      - 8888:8888   # Filer server
+      - 18888:18888 # gRPC calls
+      - 9326:9326   # Metric
+    command:
+      filer
+      -master="seaweedfs-master:9333" -ip.bind=0.0.0.0
+      -metricsPort=9326
+    tty: true
+    stdin_open: true
+    depends_on:
+      - seaweedfs-master
+      - seaweedfs-volume
