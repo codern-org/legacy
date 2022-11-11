@@ -1,0 +1,15 @@
+.git
+.github
+.volumes
+.vscode
+
+.editorconfig
+.eslintignore
+.gitignore
+
+**/Dockerfile
+docker-compose.yml
+
+**/node_modules
+**/dist
+**/logs

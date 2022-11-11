@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  gateway:
+    build:
+      context: .
+      dockerfile: ./services/gateway/Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - ./.volumes/gateway/logs/:/app/logs/
+
+  auth:
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: ./services/auth/Dockerfile
+    ports:
+      - 3001:3001
+    volumes:
+      - ./.volumes/auth/logs/:/app/logs/
