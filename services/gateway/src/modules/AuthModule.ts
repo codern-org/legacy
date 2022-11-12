@@ -13,7 +13,11 @@ import { AuthController } from '@/controllers/AuthController';
           package: 'codern.auth',
           protoPath: 'root.proto',
           loader: {
-            includeDirs: [join(__dirname, '../../../../packages/proto')],
+            includeDirs: [
+              (process.env.NODE_ENV === 'production')
+                ? join(process.cwd(), 'proto')
+                : join(__dirname, '../../../../packages/proto'),
+            ],
             keepCase: true,
           },
         },

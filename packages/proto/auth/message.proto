@@ -9,9 +9,12 @@ message GoogleAuthUrlResponse {
 
 message GoogleAuthRequest {
   string code = 1;
+  string ipAddress = 2;
+  string userAgent = 3;
 }
 
 message GoogleAuthResponse {
   bool success = 1;
   string redirectUrl = 2;
+  optional string cookie = 3;
 }
