@@ -6,6 +6,8 @@ import { AuthService } from '@/services/AuthService';
 import { PrismaModule } from '@/modules/PrismaModule';
 import { SessionRepository } from '@/repositories/SessionRepository';
 import { GoogleService } from '@/services/GoogleService';
+import { UserRepository } from '@/repositories/UserRepository';
+import { UserService } from '@/services/UserService';
 
 @Module({
   imports: [
@@ -17,10 +19,12 @@ import { GoogleService } from '@/services/GoogleService';
     Logger,
     ConfigService,
 
-    GoogleService,
-    AuthService,
-
     SessionRepository,
+    UserRepository,
+
+    AuthService,
+    GoogleService,
+    UserService,
   ],
 })
 export class AuthModule {}
