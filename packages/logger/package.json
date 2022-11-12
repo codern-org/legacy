@@ -2,14 +2,20 @@
   "name": "logger",
   "version": "0.0.0",
   "private": true,
-  "main": "src/Logger.ts",
+  "main": "dist/Logger.js",
   "types": "src/Logger.ts",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf ./.turbo ./dist node_modules",
+    "dev": "tsc -w"
+  },
   "dependencies": {
     "winston": "^3.8.2"
   },
   "devDependencies": {
     "@types/node": "^18.11.4",
     "eslint-config-vectier": "workspace:*",
-    "tsconfig": "workspace:*"
+    "tsconfig": "workspace:*",
+    "typescript": "^4.8.4"
   }
 }
