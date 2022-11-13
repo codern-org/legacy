@@ -27,7 +27,7 @@ export class AuthService {
     const session = await this.sessionService.getSession(incomingSession);
     if (!session) throw new Error('Session is invalid');
 
-    if (session.expiryDate >= new Date()) {
+    if (new Date() >= session.expiryDate) {
       this.sessionService.destroySession(session.id);
       throw new Error('Session expired');
     }
