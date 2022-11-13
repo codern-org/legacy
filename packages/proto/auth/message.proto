@@ -7,18 +7,14 @@ message AuthRequest {
   string session = 1;
 }
 
-message LogoutRequest {
-  string session = 1;
-}
-
-message AuthUserRequest {
-  string session = 1;
-}
-
-message AuthUserResponse {
+message AuthResponse {
   string id = 1;
   string email = 2;
   string profileUrl = 3;
+}
+
+message LogoutRequest {
+  string session = 1;
 }
 
 message GoogleAuthUrlResponse {

@@ -1,10 +1,8 @@
 import { Controller, Logger } from '@nestjs/common';
 import { GrpcMethod, RpcException } from '@nestjs/microservices';
 import {
-  AuthRequest, AuthUserRequest,
-  AuthUserResponse, GrpcError, GoogleAuthRequest, GoogleAuthResponse,
-  GoogleAuthUrlResponse,
-  LogoutRequest,
+  AuthRequest, GrpcError, GoogleAuthRequest,
+  GoogleAuthResponse, GoogleAuthUrlResponse, LogoutRequest, AuthResponse,
 } from 'api-types';
 import { GoogleService } from '@/services/GoogleService';
 import { AuthService } from '@/services/AuthService';
@@ -27,9 +25,10 @@ export class AuthController {
   }
 
   @GrpcMethod('AuthService')
-  public async authenticate(data: AuthRequest): Promise<void> {
+  public async authenticate(data: AuthRequest): Promise<AuthResponse> {
     try {
-      await this.authService.authenticate(data.session);
+      const user = await this.authService.authenticate(data.session);
+      return user;
     } catch (error: Error | unknown) {
       if (error instanceof Error) this.logger.error(error.message, error, 'AuthController');
       throw new RpcException({
@@ -48,19 +47,6 @@ export class AuthController {
       throw new RpcException({
         code: GrpcError.ABORTED,
         message: 'Cannot logout',
-      });
-    }
-  }
-
-  @GrpcMethod('AuthService')
-  public async getUserFromSession(data: AuthUserRequest): Promise<AuthUserResponse> {
-    try {
-      return this.authService.getUserFromSession(data.session);
-    } catch (error: Error | unknown) {
-      if (error instanceof Error) this.logger.error(error.message, error, 'AuthController');
-      throw new RpcException({
-        code: GrpcError.UNAUTHENTICATED,
-        message: 'Cannot get an user data from the session',
       });
     }
   }

@@ -2,18 +2,14 @@ export type AuthRequest = {
   session: string,
 };
 
-export type LogoutRequest = {
-  session: string,
-};
-
-export type AuthUserRequest = {
-  session: string,
-};
-
-export type AuthUserResponse = {
+export type AuthResponse = {
   id: string,
   email: string,
   profileUrl: string,
+};
+
+export type LogoutRequest = {
+  session: string,
 };
 
 export type GoogleAuthUrlResponse = {

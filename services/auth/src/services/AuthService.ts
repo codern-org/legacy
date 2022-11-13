@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import { Injectable } from '@nestjs/common';
-import { Session, User } from '@prisma/client';
-import { AuthUserResponse, GoogleAuthRequest } from 'api-types';
+import { User } from '@prisma/client';
+import { AuthResponse, GoogleAuthRequest } from 'api-types';
 import { GoogleService } from '@/services/GoogleService';
 import { UserService } from '@/services/UserService';
 import { SessionService } from '@/services/SessionService';
@@ -23,25 +23,8 @@ export class AuthService {
     this.userService = userService;
   }
 
-  public async authenticate(incomingSession: string): Promise<Session> {
-    const session = await this.sessionService.getSession(incomingSession);
-    if (!session) throw new Error('Session is invalid');
-
-    if (new Date() >= session.expiryDate) {
-      this.sessionService.destroySession(session.id);
-      throw new Error('Session expired');
-    }
-
-    return session;
-  }
-
-  public async logout(incomingSession: string): Promise<void> {
-    const session = await this.authenticate(incomingSession);
-    await this.sessionService.destroySession(session.id);
-  }
-
-  public async getUserFromSession(incomingSession: string): Promise<AuthUserResponse> {
-    const session = await this.authenticate(incomingSession);
+  public async authenticate(incomingSession: string): Promise<AuthResponse> {
+    const session = await this.sessionService.validateSession(incomingSession);
     const user = await this.userService.getUserFromSessionId(session.id);
     if (!user) throw new Error('User not found');
     return {
@@ -49,6 +32,11 @@ export class AuthService {
       email: user.email,
       profileUrl: user.profileUrl,
     };
+  }
+
+  public async logout(incomingSession: string): Promise<void> {
+    const session = await this.sessionService.validateSession(incomingSession);
+    await this.sessionService.destroySession(session.id);
   }
 
   public async login(email: string, password: string): Promise<User> {

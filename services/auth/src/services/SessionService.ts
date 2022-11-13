@@ -60,6 +60,18 @@ export class SessionService {
     return session;
   }
 
+  public async validateSession(incomingSession: string): Promise<Session> {
+    const session = await this.getSession(incomingSession);
+    if (!session) throw new Error('Session is invalid');
+
+    if (new Date() >= session.expiryDate) {
+      this.destroySession(session.id);
+      throw new Error('Session expired');
+    }
+
+    return session;
+  }
+
   public async createSession(
     userId: string,
     userAgent: string,
