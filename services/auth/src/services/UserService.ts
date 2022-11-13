@@ -32,7 +32,7 @@ export class UserService {
       .digest('hex');
   }
 
-  public getUserFromSession(id: string): Promise<User | null> {
+  public getUserFromSessionId(id: string): Promise<User | null> {
     return this.userRepository.getUserBySessionId(id);
   }
 

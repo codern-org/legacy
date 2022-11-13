@@ -40,8 +40,9 @@ export class AuthService {
     await this.sessionService.destroySession(session.id);
   }
 
-  public async getUserFromSession(id: string): Promise<AuthUserResponse> {
-    const user = await this.userService.getUserFromSession(id);
+  public async getUserFromSession(incomingSession: string): Promise<AuthUserResponse> {
+    const session = await this.authenticate(incomingSession);
+    const user = await this.userService.getUserFromSessionId(session.id);
     if (!user) throw new Error('User not found');
     return {
       id: user.id,
