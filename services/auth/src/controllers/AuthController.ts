@@ -1,7 +1,11 @@
 import { Controller, Logger } from '@nestjs/common';
-import { GrpcMethod } from '@nestjs/microservices';
-import { GoogleAuthRequest, GoogleAuthResponse, GoogleAuthUrlResponse } from 'api-types';
-import { ConfigService } from '@nestjs/config';
+import { GrpcMethod, RpcException } from '@nestjs/microservices';
+import {
+  AuthRequest, AuthUserRequest,
+  AuthUserResponse, GrpcError, GoogleAuthRequest, GoogleAuthResponse,
+  GoogleAuthUrlResponse,
+  LogoutRequest,
+} from 'api-types';
 import { GoogleService } from '@/services/GoogleService';
 import { AuthService } from '@/services/AuthService';
 
@@ -9,40 +13,75 @@ import { AuthService } from '@/services/AuthService';
 export class AuthController {
 
   private readonly logger: Logger;
-  private readonly configService: ConfigService;
   private readonly authService: AuthService;
   private readonly googleService: GoogleService;
 
   public constructor(
     logger: Logger,
-    configService: ConfigService,
     authService: AuthService,
     googleService: GoogleService,
   ) {
     this.logger = logger;
-    this.configService = configService;
     this.authService = authService;
     this.googleService = googleService;
   }
 
-  @GrpcMethod('GoogleService')
+  @GrpcMethod('AuthService')
+  public async authenticate(data: AuthRequest): Promise<void> {
+    try {
+      await this.authService.authenticate(data.session);
+    } catch (error: Error | unknown) {
+      if (error instanceof Error) this.logger.error(error.message, error, 'AuthController');
+      throw new RpcException({
+        code: GrpcError.UNAUTHENTICATED,
+        message: 'Unauthorized user',
+      });
+    }
+  }
+
+  @GrpcMethod('AuthService')
+  public async logout(data: LogoutRequest): Promise<void> {
+    try {
+      await this.authService.logout(data.session);
+    } catch (error: Error | unknown) {
+      if (error instanceof Error) this.logger.error(error.message, error, 'AuthController');
+      throw new RpcException({
+        code: GrpcError.ABORTED,
+        message: 'Cannot logout',
+      });
+    }
+  }
+
+  @GrpcMethod('AuthService')
+  public async getUserFromSession(data: AuthUserRequest): Promise<AuthUserResponse> {
+    try {
+      return this.authService.getUserFromSession(data.session);
+    } catch (error: Error | unknown) {
+      if (error instanceof Error) this.logger.error(error.message, error, 'AuthController');
+      throw new RpcException({
+        code: GrpcError.UNAUTHENTICATED,
+        message: 'Cannot get an user data from the session',
+      });
+    }
+  }
+
+  @GrpcMethod('AuthService')
   public getGoogleOAuthUrl(): GoogleAuthUrlResponse {
     return { url: this.googleService.getOAuthUrl() };
   }
 
-  @GrpcMethod('GoogleService')
-  public async authWithGoogle(data: GoogleAuthRequest): Promise<GoogleAuthResponse> {
-    const loginUrl = this.configService.get('frontendLoginUrl');
-    const homeUrl = this.configService.get('frontendHomeUrl');
+  @GrpcMethod('AuthService')
+  public async loginWithGoogle(data: GoogleAuthRequest): Promise<GoogleAuthResponse> {
     try {
-      const user = await this.authService.loginWithGoogle(data.code);
-      const cookie = await this.authService.createSession(user.id, data.userAgent, data.ipAddress);
-      return { success: true, redirectUrl: homeUrl, cookie };
+      const cookieHeader = await this.authService.loginWithGoogle(data);
+      return { cookieHeader };
     } catch (error: Error | unknown) {
       if (error instanceof Error) this.logger.error(error.message, error, 'AuthController');
-      return { success: false, redirectUrl: loginUrl };
+      throw new RpcException({
+        code: GrpcError.UNAUTHENTICATED,
+        message: 'Cannot authenticate with Google OAuth',
+      });
     }
-
   }
 
 }

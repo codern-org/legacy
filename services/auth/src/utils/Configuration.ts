@@ -1,7 +1,5 @@
 export type Configuration = {
   port: number,
-  frontendLoginUrl: string,
-  frontendHomeUrl: string,
   gatewayUrl: string,
   sessionSecret: string,
   googleApp: {
@@ -12,8 +10,6 @@ export type Configuration = {
 
 export const configuration = (): Configuration => ({
   port: Number.parseInt(process.env.PORT || '3001', 10),
-  frontendLoginUrl: process.env.FRONTEND_LOGIN_URL || '',
-  frontendHomeUrl: process.env.FRONTEND_HOME_URL || '',
   gatewayUrl: process.env.GATEWAY_URL || '',
   sessionSecret: process.env.SESSION_SECRET || 'secret',
   googleApp: {

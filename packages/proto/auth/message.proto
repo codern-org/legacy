@@ -1,7 +1,25 @@
 syntax = "proto3";
 package codern.auth;
 
-message GoogleAuthUrlRequest {}
+message Empty {}
+
+message AuthRequest {
+  string session = 1;
+}
+
+message LogoutRequest {
+  string session = 1;
+}
+
+message AuthUserRequest {
+  string session = 1;
+}
+
+message AuthUserResponse {
+  string id = 1;
+  string email = 2;
+  string profileUrl = 3;
+}
 
 message GoogleAuthUrlResponse {
   string url = 1;
@@ -14,7 +32,5 @@ message GoogleAuthRequest {
 }
 
 message GoogleAuthResponse {
-  bool success = 1;
-  string redirectUrl = 2;
-  optional string cookie = 3;
+  string cookieHeader = 1;
 }

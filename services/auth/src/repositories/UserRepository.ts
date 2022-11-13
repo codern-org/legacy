@@ -19,6 +19,13 @@ export class UserRepository {
     return this.prismaService.user.findUnique({ where: { id } });
   }
 
+  public async getUserBySessionId(id: string): Promise<User | null> {
+    const sessionWithUser = await this.prismaService.session
+      .findUnique({ where: { id }, include: { user: true } });
+    if (!sessionWithUser) return null;
+    return sessionWithUser.user;
+  }
+
   public getFirstUserWhere(where: Prisma.UserWhereInput): Promise<User | null> {
     return this.prismaService.user.findFirst({ where });
   }

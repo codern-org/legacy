@@ -32,6 +32,10 @@ export class UserService {
       .digest('hex');
   }
 
+  public getUserFromSession(id: string): Promise<User | null> {
+    return this.userRepository.getUserBySessionId(id);
+  }
+
   public async getUserWithSelfProvider(email: string): Promise<SelfProviderUser | null> {
     const user = await this.userRepository
       .getFirstUserWhere({ email, provider: 'SELF' }) as SelfProviderUser;
@@ -40,7 +44,7 @@ export class UserService {
 
   public async registerUser(email: string, password: string): Promise<void> {
     const registeredUser = await this.getUserWithSelfProvider(email);
-    if (registeredUser) throw new Error('User with this email already registered');
+    if (registeredUser) throw new Error('This user already registered');
 
     if (!Validator.validateEmail(email)) throw new Error('Email is invalid');
 

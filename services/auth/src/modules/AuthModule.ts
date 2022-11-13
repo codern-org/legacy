@@ -8,6 +8,7 @@ import { SessionRepository } from '@/repositories/SessionRepository';
 import { GoogleService } from '@/services/GoogleService';
 import { UserRepository } from '@/repositories/UserRepository';
 import { UserService } from '@/services/UserService';
+import { SessionService } from '@/services/SessionService';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { UserService } from '@/services/UserService';
 
     AuthService,
     GoogleService,
+    SessionService,
     UserService,
   ],
 })
