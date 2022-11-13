@@ -1,9 +1,9 @@
 import {
-  Controller, Get, Headers, Inject, Ip, Query, Redirect, Req, Res,
+  Controller, Get, Headers, Inject, Ip, Query, Redirect, Req, Res, UnauthorizedException,
 } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { firstValueFrom, Observable } from 'rxjs';
-import { GoogleAuthUrlResponse } from 'api-types';
+import { AuthResponse, GoogleAuthUrlResponse } from 'api-types';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { ConfigService } from '@nestjs/config';
 import { AuthService } from '@/services/AuthService';
@@ -22,13 +22,24 @@ export class AuthController {
     this.configService = configService;
   }
 
+  @Get('/me')
+  public authenticate(
+    @Req() request: FastifyRequest,
+  ): Observable<AuthResponse> {
+    const session = request.cookies.sid;
+    if (!session) throw new UnauthorizedException();
+
+    const service = this.client.getService<AuthService>('AuthService');
+    return service.authenticate({ session });
+  }
+
   @Get('/logout')
   public async logout(
     @Req() request: FastifyRequest,
     @Res({ passthrough: true }) response: FastifyReply,
   ): Promise<void> {
     const session = request.cookies.sid;
-    if (!session) return;
+    if (!session) throw new UnauthorizedException();
 
     const service = this.client.getService<AuthService>('AuthService');
     await firstValueFrom(service.logout({ session }));
