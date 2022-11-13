@@ -8,6 +8,7 @@
     "clean": "rimraf node_modules"
   },
   "devDependencies": {
+    "eslint-config-vectier": "workspace:*",
     "typescript": "^4.8.4"
   }
 }

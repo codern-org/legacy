@@ -16,8 +16,10 @@ importers:
 
   packages/api-types:
     specifiers:
+      eslint-config-vectier: workspace:*
       typescript: ^4.8.4
     devDependencies:
+      eslint-config-vectier: link:../eslist-config-vectier
       typescript: 4.8.4
 
   packages/eslist-config-vectier:
@@ -801,7 +803,7 @@ packages:
         optional: true
     dependencies:
       '@nestjs/common': 9.1.6_yzt46al3aifnexifjjdb4dxxja
-      '@nestjs/microservices': 9.1.6_abdwileke2hqrs3f5gykhzlvd4
+      '@nestjs/microservices': 9.1.6_hga4b3bo3a6pfsryj5ex4zoeoy
       '@nuxtjs/opencollective': 0.3.2
       fast-safe-stringify: 2.1.1
       iterare: 1.2.1
