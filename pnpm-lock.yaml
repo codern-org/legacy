@@ -17,9 +17,11 @@ importers:
   packages/api-types:
     specifiers:
       eslint-config-vectier: workspace:*
+      tsconfig: workspace:*
       typescript: ^4.8.4
     devDependencies:
       eslint-config-vectier: link:../eslist-config-vectier
+      tsconfig: link:../tsconfig
       typescript: 4.8.4
 
   packages/eslist-config-vectier:
