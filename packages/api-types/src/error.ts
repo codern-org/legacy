@@ -21,8 +21,8 @@ export class ExpectedError extends Error {
 
 }
 
-export class NotFoundExpectedError extends ExpectedError {}
+export class ExpectedNotFoundError extends ExpectedError {}
 
-export class InvalidExpectedError extends ExpectedError {}
+export class ExpectedInvalidError extends ExpectedError {}
 
-export class DuplicatedExpectedError extends ExpectedError {}
+export class ExpectedDuplicatedError extends ExpectedError {}

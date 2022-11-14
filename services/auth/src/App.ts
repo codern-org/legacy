@@ -6,6 +6,7 @@ import { WinstonModule } from 'nest-winston';
 import { join } from 'path';
 import { ConfigService } from '@nestjs/config';
 import { AppModule } from '@/modules/AppModule';
+import { AllExceptionFilter } from '@/utils/errors/AllExceptionFilter';
 
 const bootstrap = async (): Promise<void> => {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
@@ -22,9 +23,12 @@ const bootstrap = async (): Promise<void> => {
   });
 
   const configService = app.get(ConfigService);
+  const logger = app.get(Logger);
 
+  app.useGlobalFilters(new AllExceptionFilter(logger));
   await app.listen();
-  Logger.log(`Auth service is listening on ${configService.get('port')}`, 'App');
+
+  logger.log(`Auth service is listening on ${configService.get('port')}`, 'App');
 };
 
 bootstrap();

@@ -3,7 +3,9 @@ import cookie from 'cookie';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Session, User } from '@prisma/client';
+import { ExpectedInvalidError } from 'api-types';
 import { SessionRepository } from '@/repositories/SessionRepository';
+import { SessionError } from '@/utils/errors/SessionError';
 
 export type SessionWithUser = Session & { user: User };
 
@@ -60,13 +62,13 @@ export class SessionService {
     return session;
   }
 
-  public async validateSession(incomingSession: string): Promise<Session> {
+  public async validateSessionOrThrow(incomingSession: string): Promise<Session> {
     const session = await this.getSession(incomingSession);
-    if (!session) throw new Error('Session is invalid');
+    if (!session) throw new ExpectedInvalidError(SessionError.Invalid);
 
     if (new Date() >= session.expiryDate) {
       this.destroySession(session.id);
-      throw new Error('Session expired');
+      throw new ExpectedInvalidError(SessionError.Expired);
     }
 
     return session;

@@ -5,9 +5,11 @@ import { firstValueFrom } from 'rxjs';
 import FormData from 'form-data';
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
+import { ExpectedDuplicatedError, ExpectedInvalidError } from 'api-types';
 import { UserRepository } from '@/repositories/UserRepository';
 import { generateAvatar } from '@/utils/AvatarGenerator';
 import { Validator } from '@/utils/Validator';
+import { UserError } from '@/utils/errors/UserError';
 
 export type SelfProviderUser = Omit<User, 'password'> & { password: string };
 
@@ -42,17 +44,17 @@ export class UserService {
     return user;
   }
 
-  public async registerUser(email: string, password: string): Promise<void> {
+  public async registerUserOrThrow(email: string, password: string): Promise<void> {
     const registeredUser = await this.getUserWithSelfProvider(email);
-    if (registeredUser) throw new Error('This user already registered');
+    if (registeredUser) throw new ExpectedDuplicatedError(UserError.Duplicated);
 
-    if (!Validator.validateEmail(email)) throw new Error('Email is invalid');
+    if (!Validator.validateEmail(email)) throw new ExpectedInvalidError(UserError.InvalidEmail);
 
     // TODO: secure password validation
 
     const userId = this.hashUserId(email, 'SELF');
     const hashedPassword = await bcrypt.hash(password, 10);
-    const avatarUrl = await this.generateAvatar(userId);
+    const avatarUrl = await this.generateAvatarOrThrow(userId);
 
     await this.userRepository.createUser({
       id: userId,
@@ -67,7 +69,7 @@ export class UserService {
     const retrievedUser = await this.userRepository.getUserById(id);
     if (retrievedUser) return retrievedUser;
 
-    const avatarUrl = await this.generateAvatar(id);
+    const avatarUrl = await this.generateAvatarOrThrow(id);
     const user: Prisma.UserCreateInput = {
       id,
       email: '',
@@ -77,12 +79,12 @@ export class UserService {
     return this.userRepository.createUser(user);
   }
 
-  public async updateEmail(id: string, email: string): Promise<void> {
-    if (!Validator.validateEmail(email)) throw new Error('Email is invalid');
+  public async updateEmailOrThrow(id: string, email: string): Promise<void> {
+    if (!Validator.validateEmail(email)) throw new ExpectedInvalidError(UserError.InvalidEmail);
     await this.userRepository.updateUser(id, { email });
   }
 
-  public async generateAvatar(id: string): Promise<string> {
+  public async generateAvatarOrThrow(id: string): Promise<string> {
     const rawAvatarSvg = generateAvatar(id, 150);
 
     const svgBuffer = Buffer.from(rawAvatarSvg, 'utf-8');
