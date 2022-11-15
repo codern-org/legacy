@@ -1,5 +1,4 @@
 export type Configuration = {
-  port: number,
   gatewayUrl: string,
   sessionSecret: string,
   googleApp: {
@@ -9,7 +8,6 @@ export type Configuration = {
 };
 
 export const configuration = (): Configuration => ({
-  port: Number.parseInt(process.env.PORT || '3001', 10),
   gatewayUrl: process.env.GATEWAY_URL || '',
   sessionSecret: process.env.SESSION_SECRET || 'secret',
   googleApp: {
