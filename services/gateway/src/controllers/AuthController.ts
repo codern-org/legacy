@@ -1,5 +1,8 @@
 import {
-  Controller, Get, Headers, Inject, Ip, Query, Redirect, Req, Res, UnauthorizedException,
+  Controller, Get, Headers,
+  Inject, Ip, Query,
+  Redirect, Req, Res,
+  UseGuards,
 } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { firstValueFrom, Observable } from 'rxjs';
@@ -7,6 +10,8 @@ import { AuthResponse, GoogleAuthUrlResponse } from 'api-types';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { ConfigService } from '@nestjs/config';
 import { AuthService } from '@/services/AuthService';
+import { AuthGuard } from '@/utils/AuthGuard';
+import { SessionId } from '@/utils/decorators/AuthDecorator';
 
 @Controller('/auth')
 export class AuthController {
@@ -22,25 +27,22 @@ export class AuthController {
     this.configService = configService;
   }
 
+  @UseGuards(AuthGuard)
   @Get('/me')
   public authenticate(
-    @Req() request: FastifyRequest,
+    @SessionId() session: string,
   ): Observable<AuthResponse> {
-    const session = request.cookies.sid;
-    if (!session) throw new UnauthorizedException();
-
     const service = this.client.getService<AuthService>('AuthService');
     return service.authenticate({ session });
   }
 
+  @UseGuards(AuthGuard)
   @Get('/logout')
   public async logout(
     @Req() request: FastifyRequest,
     @Res({ passthrough: true }) response: FastifyReply,
+    @SessionId() session: string,
   ): Promise<void> {
-    const session = request.cookies.sid;
-    if (!session) throw new UnauthorizedException();
-
     const service = this.client.getService<AuthService>('AuthService');
     await firstValueFrom(service.logout({ session }));
     response.header('Set-Cookie', 'sid=; path=/ expires=Thu, 01 Jan 1970 00:00:00 GMT');
