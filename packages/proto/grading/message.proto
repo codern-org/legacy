@@ -1,0 +1,41 @@
+syntax = "proto3";
+package codern.grading;
+import "common.proto"; 
+
+message GetSubmissionByIdRequest {
+  int32 id = 1;
+}
+
+message Submission {
+  int32 id = 1;
+  int32 questionId = 2;
+  int32 userId = 3;
+  string language = 4;
+  string filePath = 5;
+  string result = 6;
+  int64 uploadedAt = 7;
+}
+
+message GetSubmissionsByIdResponse {
+  repeated Submission submissions = 1;
+}
+
+message SaveCodeRequest {
+  int32 userId = 1;
+  int32 questionId = 2;
+  string language = 3;
+  string codePath = 4;
+}
+
+message UploadRequest {
+  bytes content = 1;
+}
+
+enum UploadStatus {
+  OK = 0;
+  FAILED = 1;
+}
+
+message UploadResponse {
+  UploadStatus code = 1;
+}

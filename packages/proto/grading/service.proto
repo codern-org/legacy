@@ -1,0 +1,10 @@
+syntax = "proto3";
+package codern.grading;
+
+import "grading/message.proto"; 
+
+service GradingService {
+  rpc GetSubmissionsById(GetSubmissionByIdRequest) return (GetSubmissionsByIdResponse);
+  rpc SaveCode(SaveCodeRequest) return (Empty);
+  rpc Upload(stream UploadRequest) returns (UploadResponse);
+}

@@ -1,7 +1,6 @@
 syntax = "proto3";
 package codern.auth;
-
-message Empty {}
+import "common.proto"; 
 
 message AuthRequest {
   string session = 1;
