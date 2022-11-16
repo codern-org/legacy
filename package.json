@@ -5,7 +5,10 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
-    "clean": "turbo run clean && rimraf node_modules ./out",
+    "clean": "turbo run clean && rimraf node_modules out",
+    "db:dev": "turbo run db:dev",
+    "db:generate": "turbo run db:generate",
+    "db:push": "turbo run db:push",
     "dev": "cross-env FORCE_COLOR=1 turbo run dev",
     "lint": "turbo run lint",
     "preinstall": "npx only-allow pnpm"
