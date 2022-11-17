@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Language {
+  C
+  CPP
+}
+
+model Submission {
+  id         Int      @id @default(autoincrement())
+  questionId Int
+  userId     String
+  language   Language
+  filePath   String
+  result     String
+  uploadedAt DateTime @default(now())
+}
+
+model Editor {
+  userId     String
+  questionId Int
+  language   Language
+  codePath   String
+  savedAt    DateTime @default(now())
+
+  @@id([userId, questionId, language])
+}
