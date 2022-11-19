@@ -1,0 +1,68 @@
+syntax = "proto3";
+package codern.workspace;
+
+message Empty {}
+
+message Workspace {
+  int32 id = 1;
+  string name = 2;
+  string profilePath = 3;
+  int32 ownerId = 4;
+  int64 createdAt = 5;
+}
+
+enum QuestionLevel {
+  Easy = 0;
+  Medium = 1;
+  Hard = 2;
+}
+
+message Question {
+  int32 id = 1;
+  string name = 2;
+  string description = 3;
+  string detailPath = 4;
+  QuestionLevel level = 5;
+  int32 workspaceId = 6;
+  int64 createdAt = 7;
+}
+
+message GetWorkspaceByIdRequest {
+  int32 id = 1;
+}
+
+message GetWorkspaceByIdResponse {
+  Workspace workspace = 1;
+}
+
+message GetWorkspaceAllRequest {
+  Empty empty = 1;
+}
+
+message GetWorkspaceAllResponse {
+  repeated Workspace workspaces = 1;
+}
+
+message GetQuestionByIdRequest {
+  int32 id = 1;
+}
+
+message GetQuestionByIdResponse {
+  Question question = 1;
+}
+
+message GetQuestionByWorkspaceIdRequest {
+  int32 id = 1;
+}
+
+message GetQuestionByWorkspaceIdResponse {
+  repeated Question question = 1;
+}
+
+message GetQuestionAllRequest {
+  Empty empty = 1;
+}
+
+message GetQuestionAllResponse {
+  repeated Question question = 1;
+}
