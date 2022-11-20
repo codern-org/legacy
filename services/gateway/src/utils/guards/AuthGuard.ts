@@ -4,6 +4,7 @@ import {
 import { ClientGrpc } from '@nestjs/microservices';
 import { FastifyRequest } from 'fastify';
 import { firstValueFrom } from 'rxjs';
+import { AuthResponse } from 'api-types';
 import { AuthService } from '@/services/AuthService';
 
 @Injectable()
@@ -31,3 +32,5 @@ export class AuthGuard implements CanActivate {
   }
 
 }
+
+export type UserData = AuthResponse;
