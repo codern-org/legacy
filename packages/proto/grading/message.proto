@@ -2,7 +2,7 @@ syntax = "proto3";
 package codern.grading;
 import "common.proto"; 
 
-message GetSubmissionByIdRequest {
+message GetSubmissionsRequest {
   int32 id = 1;
 }
 
@@ -16,26 +16,34 @@ message Submission {
   int64 uploadedAt = 7;
 }
 
-message GetSubmissionsByIdResponse {
+message GetSubmissionsResponse {
   repeated Submission submissions = 1;
 }
 
 message SaveCodeRequest {
-  int32 userId = 1;
+  string userId = 1;
   int32 questionId = 2;
   string language = 3;
-  string codePath = 4;
 }
 
-message UploadRequest {
-  bytes content = 1;
+message SubmitRequest {
+  string userId = 1;
+  int32 questionId = 2;
+  string language = 3;
 }
 
-enum UploadStatus {
-  OK = 0;
-  FAILED = 1;
+message SubmitResponse {
+  int32 submissionId = 1;
+  string filePath = 2;
 }
 
-message UploadResponse {
-  UploadStatus code = 1;
+message GradeRequest {
+  int32 submissionId = 1;
+}
+
+message GradeResponse {
+  int32 submissionId = 1;
+  int32 questionId = 2;
+  string language = 3;
+  string filePath = 4;
 }

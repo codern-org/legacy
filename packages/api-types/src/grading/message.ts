@@ -1,33 +1,50 @@
-export type GetSubmissionByIdRequest = {
+export type GetSubmissionsRequest = {
   id: number,
 };
+
+export enum Language {
+  C = 'C',
+  CPP = 'CPP',
+}
 
 export type Submission = {
   id: number,
   questionId: number,
   userId: number,
-  language: string,
+  language: Language,
   filePath: string,
   result: string,
   uploadedAt: number,
 };
 
-export type GetSubmissionsByIdResponse = {
-  sumissions: Submission[],
+export type GetSubmissionsResponse = {
+  submissions: Submission[],
 };
 
 export type SaveCodeRequest = {
-  userId: number,
+  userId: string,
   questionId: number,
-  language: string,
-  codePath: string,
+  language: Language,
 };
 
-export enum UploadStatus {
-  OK,
-  FAILED,
-}
+export type SubmitRequest = {
+  userId: string,
+  questionId: number,
+  language: Language,
+};
 
-export type UploadResponse = {
-  code: UploadStatus,
+export type SubmitResponse = {
+  submissionId: number,
+  filePath: string,
+};
+
+export type GradeRequest = {
+  submissionId: number,
+};
+
+export type GradeResponse = {
+  submissionId: number,
+  questionId: number,
+  language: Language,
+  filePath: string,
 };

@@ -4,7 +4,8 @@ package codern.grading;
 import "grading/message.proto"; 
 
 service GradingService {
-  rpc GetSubmissionsById(GetSubmissionByIdRequest) return (GetSubmissionsByIdResponse);
-  rpc SaveCode(SaveCodeRequest) return (Empty);
-  rpc Upload(stream UploadRequest) returns (UploadResponse);
+  rpc GetSubmissions(GetSubmissionsRequest) returns (GetSubmissionsResponse);
+  rpc SaveCode(SaveCodeRequest) returns (Empty);
+  rpc Submit(SubmitRequest) returns (SubmitResponse);
+  rpc Grade(GradeRequest) returns (GradeResponse);
 }
