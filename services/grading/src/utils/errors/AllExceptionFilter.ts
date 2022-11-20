@@ -1,9 +1,6 @@
 import { Catch, ExceptionFilter, Logger } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
-import {
-  PrismaClientInitializationError, PrismaClientKnownRequestError, PrismaClientRustPanicError,
-  PrismaClientUnknownRequestError, PrismaClientValidationError,
-} from '@prisma/client/runtime';
+import { Prisma } from '@prisma/client';
 import {
   ExpectedDuplicatedError, ExpectedError, GrpcStatus,
   ExpectedInvalidError, ExpectedNotFoundError,
@@ -58,11 +55,11 @@ export class AllExceptionFilter implements ExceptionFilter {
 
   private isPrismaError(error: unknown): error is Error {
     const possiblePrimaErrors = [
-      PrismaClientRustPanicError,
-      PrismaClientValidationError,
-      PrismaClientKnownRequestError,
-      PrismaClientInitializationError,
-      PrismaClientUnknownRequestError,
+      Prisma.PrismaClientRustPanicError,
+      Prisma.PrismaClientValidationError,
+      Prisma.PrismaClientKnownRequestError,
+      Prisma.PrismaClientInitializationError,
+      Prisma.PrismaClientUnknownRequestError,
     ];
     return possiblePrimaErrors.some((prismaError) => error instanceof prismaError);
   }
