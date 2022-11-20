@@ -1,8 +1,10 @@
-import { Logger, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
-import { ConfigService } from '@nestjs/config';
 import { PrismaModule } from '@/modules/PrismaModule';
 import { GradingController } from '@/controllers/GradingController';
+import { QuestionRepository } from '@/repositories/QuestionRepository';
+import { SubmissionRepository } from '@/repositories/SubmissionRepository';
+import { GradingService } from '@/services/GradingService';
 
 @Module({
   imports: [
@@ -11,8 +13,10 @@ import { GradingController } from '@/controllers/GradingController';
   ],
   controllers: [GradingController],
   providers: [
-    Logger,
-    ConfigService,
+    QuestionRepository,
+    SubmissionRepository,
+
+    GradingService,
   ],
 })
 export class GradingModule {}

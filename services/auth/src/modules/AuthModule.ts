@@ -1,6 +1,5 @@
-import { Logger, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
-import { ConfigService } from '@nestjs/config';
 import { AuthController } from '@/controllers/AuthController';
 import { AuthService } from '@/services/AuthService';
 import { PrismaModule } from '@/modules/PrismaModule';
@@ -17,9 +16,6 @@ import { SessionService } from '@/services/SessionService';
   ],
   controllers: [AuthController],
   providers: [
-    Logger,
-    ConfigService,
-
     SessionRepository,
     UserRepository,
 
