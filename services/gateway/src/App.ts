@@ -20,6 +20,7 @@ const bootstrap = async (): Promise<void> => {
 
   const configService = app.get(ConfigService);
   const port = configService.get('port');
+  const logger = app.get(Logger);
 
   const logger = app.get(WINSTON_MODULE_NEST_PROVIDER);
   app.useLogger(logger);
