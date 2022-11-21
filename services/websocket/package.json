@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "tsc && tsc-alias",
-    "clean": "rimraf ./.turbo ./dist node_modules",
+    "clean": "rimraf node_modules .turbo dist logs",
     "dev": "tsnd --respawn --transpile-only --watch src -r tsconfig-paths/register src/App.ts",
     "lint": "eslint . --ext .ts"
   },

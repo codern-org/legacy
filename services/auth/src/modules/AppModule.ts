@@ -1,14 +1,16 @@
-import { Logger, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { LoggerConfig } from 'logger';
+import { WinstonModule } from 'nest-winston';
 import { AuthModule } from '@/modules/AuthModule';
 import { configuration } from '@/utils/Configuration';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ load: [configuration] }),
+    ConfigModule.forRoot({ isGlobal: true, load: [configuration] }),
+    WinstonModule.forRoot(LoggerConfig),
 
     AuthModule,
   ],
-  providers: [Logger],
 })
 export class AppModule {}

@@ -6,6 +6,18 @@
     "clean": {
       "cache": false
     },
+    "db:dev": {
+      "cache": false
+    },
+    "db:generate": {
+      "cache": false
+    },
+    "db:migrate": {
+      "cache": false
+    },
+    "db:push": {
+      "cache": false
+    },
     "dev": {
       "cache": false
     },

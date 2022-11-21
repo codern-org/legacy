@@ -1,7 +1,8 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AxiosError, AxiosResponse } from 'axios';
+import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import querystring from 'querystring';
 import { catchError, firstValueFrom, OperatorFunction } from 'rxjs';
 
@@ -34,9 +35,9 @@ export class GoogleService {
   private readonly configService: ConfigService;
 
   public constructor(
-    logger: Logger,
     httpService: HttpService,
     configService: ConfigService,
+    @Inject(WINSTON_MODULE_PROVIDER) logger: Logger,
   ) {
     this.logger = logger;
     this.httpService = httpService;

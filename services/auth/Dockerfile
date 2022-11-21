@@ -41,7 +41,7 @@ RUN pnpm --filter auth db:generate
 RUN pnpm turbo run build --filter=auth...
 
 # Prevent generated Prisma client from dev dependencies cleaning in the next instruction
-RUN mv /app/node_modules/.pnpm/@prisma+client@4.5.0_prisma@4.5.0/node_modules/.prisma /tmp/
+RUN mv /app/services/auth/node_modules/.prisma /tmp/
 
 # Install only production dependencies
 RUN rm -rf node_modules && pnpm recursive exec -- rm -rf ./node_modules ./src
@@ -49,7 +49,7 @@ RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store pnpm fetch
 RUN pnpm install --offline --frozen-lockfile --prod
 
 # Move Prisma client into production node modules
-RUN mv /tmp/.prisma /app/node_modules/.pnpm/@prisma+client@4.5.0_prisma@4.5.0/node_modules/
+RUN mv /tmp/.prisma /app/services/auth/node_modules/
 
 # Copy protocol buffer language (.proto) for gRPC
 COPY ./packages/proto/ ./proto
