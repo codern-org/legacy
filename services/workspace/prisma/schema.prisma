@@ -1,27 +1,11 @@
 generator client {
   provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
 }
 
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
-}
-
-enum QuestionLevel {
-  Easy
-  Medium
-  Hard
-}
-
-model Question {
-  id          Int           @id @default(autoincrement())
-  name        String
-  description String
-  detailPath  String
-  level       QuestionLevel
-  workspace   Workspace     @relation(fields: [workspaceId], references: [id])
-  workspaceId Int
-  createdAt   DateTime      @default(now())
 }
 
 model Workspace {
@@ -41,4 +25,21 @@ model WorkspaceParticipants {
   joinedAt    DateTime  @default(now())
 
   @@id([workspaceId, userId])
+}
+
+enum QuestionLevel {
+  Easy
+  Medium
+  Hard
+}
+
+model Question {
+  id          Int           @id @default(autoincrement())
+  name        String
+  description String
+  detailPath  String
+  level       QuestionLevel
+  workspace   Workspace     @relation(fields: [workspaceId], references: [id])
+  workspaceId Int
+  createdAt   DateTime      @default(now())
 }

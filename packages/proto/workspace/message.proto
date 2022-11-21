@@ -1,20 +1,33 @@
 syntax = "proto3";
 package codern.workspace;
+import "common.proto";
 
-message Empty {}
+message GetAllWorkspacesRequest {
+  string userId = 1;
+}
 
 message Workspace {
   int32 id = 1;
   string name = 2;
   string profilePath = 3;
-  int32 ownerId = 4;
+  string ownerId = 4;
   int64 createdAt = 5;
 }
 
-enum QuestionLevel {
-  Easy = 0;
-  Medium = 1;
-  Hard = 2;
+message GetAllWorkspacesResponse {
+  repeated Workspace workspaces = 1;
+}
+
+message GetWorkspaceByIdRequest {
+  int32 workspaceId = 1;
+}
+
+message GetWorkspaceByIdResponse {
+  Workspace workspace = 1;
+}
+
+message GetQuestionsByWorkspaceIdRequest {
+  int32 id = 1;
 }
 
 message Question {
@@ -22,25 +35,14 @@ message Question {
   string name = 2;
   string description = 3;
   string detailPath = 4;
-  QuestionLevel level = 5;
+  int32 level = 5;
   int32 workspaceId = 6;
   int64 createdAt = 7;
 }
 
-message GetWorkspaceByIdRequest {
-  int32 id = 1;
-}
-
-message GetWorkspaceByIdResponse {
+message GetQuestionsByWorkspaceIdResponse {
   Workspace workspace = 1;
-}
-
-message GetWorkspaceAllRequest {
-  Empty empty = 1;
-}
-
-message GetWorkspaceAllResponse {
-  repeated Workspace workspaces = 1;
+  repeated Question questions = 2;
 }
 
 message GetQuestionByIdRequest {
@@ -49,20 +51,4 @@ message GetQuestionByIdRequest {
 
 message GetQuestionByIdResponse {
   Question question = 1;
-}
-
-message GetQuestionByWorkspaceIdRequest {
-  int32 id = 1;
-}
-
-message GetQuestionByWorkspaceIdResponse {
-  repeated Question question = 1;
-}
-
-message GetQuestionAllRequest {
-  Empty empty = 1;
-}
-
-message GetQuestionAllResponse {
-  repeated Question question = 1;
 }
