@@ -8,29 +8,29 @@ datasource db {
 }
 
 model User {
-  id             Int              @id @default(autoincrement())
+  id             String           @id
   email          String
   password       String?
   profileUrl     String
   provider       AuthProvider
   createdAt      DateTime         @default(now())
-  Session        Session[]
-  UserPermission UserPermission[]
+  session        Session[]
+  userPermission UserPermission[]
 }
 
 enum AuthProvider {
-  GOOGLE
   SELF
+  GOOGLE
 }
 
 model Session {
-  id         String   @id
-  user       User     @relation(fields: [userId], references: [id])
-  userId     Int
-  ipAddress  String
-  userAgent  String
-  expiryDate DateTime
-  createdAt  DateTime @default(now())
+  id           String       @id
+  user         User         @relation(fields: [userId], references: [id])
+  userId       String
+  ipAddress    String
+  userAgent    String
+  expiryDate   DateTime
+  createdAt    DateTime     @default(now())
 }
 
 model Organization {
@@ -55,8 +55,8 @@ model Role {
 }
 
 model UserPermission {
-  user         User   @relation(fields: [userId], references: [id])
-  userId       Int
+  user         User         @relation(fields: [userId], references: [id])
+  userId       String
   organization String
   workspace    String
   permission   String

@@ -3,7 +3,9 @@ package codern.auth;
 
 import "auth/message.proto"; 
 
-service GoogleService {
-  rpc GetGoogleOAuthUrl(GoogleAuthUrlRequest) returns (GoogleAuthUrlResponse);
-  rpc AuthWithGoogle(GoogleAuthRequest) returns (GoogleAuthResponse);
+service AuthService {
+  rpc Authenticate(AuthRequest) returns (AuthResponse);
+  rpc Logout(LogoutRequest) returns (Empty);
+  rpc GetGoogleOAuthUrl(Empty) returns (GoogleAuthUrlResponse);
+  rpc LoginWithGoogle(GoogleAuthRequest) returns (GoogleAuthResponse);
 }

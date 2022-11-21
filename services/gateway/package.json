@@ -9,12 +9,14 @@
     "lint": "eslint . --ext .ts"
   },
   "dependencies": {
+    "@fastify/cookie": "^8.3.0",
     "@nestjs/common": "^9.1.6",
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.1.6",
     "@nestjs/microservices": "^9.1.6",
     "@nestjs/platform-fastify": "^9.1.6",
     "api-types": "workspace:*",
+    "fastify": "^4.9.2",
     "logger": "workspace:*",
     "nest-winston": "^1.8.0",
     "reflect-metadata": "^0.1.13",

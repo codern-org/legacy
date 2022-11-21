@@ -32,6 +32,19 @@ module.exports = {
       { 'exceptAfterSingleLine': true },
     ],
 
+    // Fix decorator and type union buggy
+    '@typescript-eslint/indent': [
+      'error',
+      2,
+      {
+        "ignoredNodes": [
+          "FunctionExpression > .params[decorators.length > 0]",
+          "FunctionExpression > .params > :matches(Decorator, :not(:first-child))",
+          "ClassBody.body > PropertyDefinition[decorators.length > 0] > .key",
+        ],
+      },
+    ],
+
     'class-methods-use-this': 'off',
   },
 };

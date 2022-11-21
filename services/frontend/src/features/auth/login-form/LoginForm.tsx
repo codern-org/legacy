@@ -3,19 +3,35 @@ import { AnchorLink } from '@/features/common/AnchorLink';
 import { Button } from '@/features/common/Button';
 import { Input } from '@/features/common/Input';
 import { Text } from '@/features/common/Text';
+import { fetch } from '@/utils/Fetch';
+import { GoogleAuthUrlResponse } from 'api-types';
 import { route } from 'preact-router';
 import { useState } from 'preact/hooks';
 
-export const LoginForm = () => {
-  const [isLoggingIn, setIsLoggingIn] = useState<boolean[]>([false, false]);
+enum LoginProvider {
+  SELF,
+  GOOGLE,
+};
 
-  const login = (buttonIndex: number) => {
+export const LoginForm = () => {
+  const [isLoggingIn, setIsLoggingIn] = useState<LoginProvider>();
+
+  const login = () => {
     // TODO: add real logic
-    setIsLoggingIn([buttonIndex === 0, buttonIndex === 1]);
+    setIsLoggingIn(LoginProvider.SELF);
     setTimeout(() => {
-      setIsLoggingIn([buttonIndex === 0, buttonIndex === 1]);
+      setIsLoggingIn(undefined);
       route('/dashboard');
     }, 1000);
+  };
+
+  const loginWithGoogle = () => {
+    // TODO: error handling
+    setIsLoggingIn(LoginProvider.GOOGLE);
+    fetch
+      .get<GoogleAuthUrlResponse>('/auth/google')
+      .then((response) => window.location.href = response.data.url)
+      .catch(() => {});
   };
 
   return (
@@ -41,15 +57,15 @@ export const LoginForm = () => {
       />
 
       <Button
-        loading={isLoggingIn[0]}
-        onClick={() => login(0)}
+        loading={isLoggingIn === LoginProvider.SELF}
+        onClick={login}
       >
         Login
       </Button>
       <Button
         color="secondary"
-        loading={isLoggingIn[1]}
-        onClick={() => login(1)}
+        loading={isLoggingIn === LoginProvider.GOOGLE}
+        onClick={loginWithGoogle}
       >
         <img src={GoogleIcon} alt="" className="w-4 h-4" />
         <span>Login with Google</span>

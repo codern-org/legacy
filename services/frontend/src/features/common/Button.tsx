@@ -42,9 +42,28 @@ export const Button = ({
 }: ButtonProps) => {
   const handleClick = (event: MouseEvent) => {
     event.preventDefault();
-    if (href) return route(href);
     if (onClick) onClick(event);
   };
+
+  if (href) {
+    return (
+      <a
+        className={classNames(
+          className,
+          buttonClasses.common,
+          buttonClasses.size[size],
+          !active && buttonClasses.color[color],
+          active && buttonClasses.active[color],
+        )}
+        href={href}
+      >
+        {loading && (
+          <div className="w-4 h-4 mr-2 animate-spin"><Spinner /></div>
+        )}
+        {children}
+      </a>
+    );
+  }
 
   return (
     <button
