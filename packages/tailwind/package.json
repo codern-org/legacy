@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "clean": "rimraf ./.turbo ./dist node_modules"
+    "clean": "rimraf node_modules .turbo dist"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.7",
