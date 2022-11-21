@@ -14,19 +14,16 @@ export const Logger = createLogger({
   transports: [
     new transports.File({ filename: path.resolve(baseLogPath, 'error.log'), level: 'error' }),
     new transports.File({ filename: path.resolve(baseLogPath, 'system.log') }),
+    new transports.Console({
+      format: format.combine(
+        format.colorize(),
+        format.printf((info) => {
+          const timestamp = new Date().toUTCString();
+          const context = info.context || __filename.split('/').at(-1);
+          const message = `${timestamp} | ${info.level} | ${context} | ${info.message}`;
+          return message;
+        }),
+      ),
+    })
   ],
 });
-
-if (process.env.NODE_ENV !== 'production') {
-  Logger.add(new transports.Console({
-    format: format.combine(
-      format.colorize(),
-      format.printf((info) => {
-        const timestamp = new Date().toUTCString();
-        const context = info.context || __filename.split('/').at(-1);
-        const message = `${timestamp} | ${info.level} | ${context} | ${info.message}`;
-        return message;
-      }),
-    ),
-  }));
-}

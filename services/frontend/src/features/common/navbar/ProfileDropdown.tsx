@@ -5,8 +5,15 @@ import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/outline';
 import { route } from 'preact-router';
 import MockupAvatar from '@/assets/mockup-avatar.svg';
 import { ProfileDropdownButton } from '@/features/common/navbar/ProfileDropdownButton';
+import { fetch } from '@/utils/Fetch';
 
 export const ProfileDropdown = () => {
+  const logout = () => {
+    fetch
+      .get('/auth/logout')
+      .finally(() => route('/'));
+  };
+
   return (
     <Popover className="relative flex z-[9999]">
       {({ open }: { open: boolean }) => (
@@ -34,7 +41,7 @@ export const ProfileDropdown = () => {
                 <ProfileDropdownButton
                   icon={<ArrowLeftOnRectangleIcon />}
                   text="Logout"
-                  onClick={() => route('/')}
+                  onClick={logout}
                 />
               </div>
             </Popover.Panel>

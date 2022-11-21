@@ -22,3 +22,7 @@ node_modules/
 
 # Docker
 .volumes/
+
+# Output
+dist
+.turbo
