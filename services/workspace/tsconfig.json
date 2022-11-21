@@ -3,7 +3,10 @@
   "compilerOptions": {
     "outDir": "./dist",
     "baseUrl": ".",
-    "paths": { "@/*": ["src/*"] },
+    "paths": {
+      "@/*": ["src/*"],
+      "@prisma/client": ["./node_modules/.prisma/client"],
+    },
 
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,

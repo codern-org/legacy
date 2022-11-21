@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc && vite build",
-    "clean": "rimraf ./.turbo ./dist node_modules",
+    "clean": "rimraf node_modules .turbo dist",
     "dev": "vite --host",
     "preview": "vite preview"
   },

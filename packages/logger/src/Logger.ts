@@ -1,9 +1,9 @@
 import path from 'path';
-import { createLogger, format, transports } from 'winston';
+import { format, transports } from 'winston';
 
 const baseLogPath = path.resolve(process.cwd(), 'logs');
 
-export const Logger = createLogger({
+export const LoggerConfig = {
   level: 'info',
   format: format.combine(
     format.timestamp(),
@@ -26,4 +26,4 @@ export const Logger = createLogger({
       ),
     })
   ],
-});
+};

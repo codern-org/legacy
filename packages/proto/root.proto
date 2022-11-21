@@ -2,3 +2,4 @@ syntax = "proto3";
 package codern;
 
 import public "auth/service.proto";
+import public "grading/service.proto";
