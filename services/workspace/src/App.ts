@@ -11,7 +11,7 @@ const bootstrap = async (): Promise<void> => {
     transport: Transport.GRPC,
     options: {
       url: '0.0.0.0:3002',
-      package: 'codern.auth',
+      package: 'codern.workspace',
       protoPath: 'root.proto',
       loader: {
         includeDirs: [join(__dirname, '../../../packages/proto')],
@@ -27,7 +27,7 @@ const bootstrap = async (): Promise<void> => {
   app.useGlobalFilters(new AllExceptionFilter(logger));
 
   await app.listen();
-  logger.log('Auth service is listening on 3002', 'App');
+  logger.log('Workspace service is listening on 3002', 'App');
 };
 
 bootstrap();

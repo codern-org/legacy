@@ -23,6 +23,23 @@ import { join } from 'path';
         },
       },
       {
+        name: 'WORKSPACE_PACKAGE',
+        transport: Transport.GRPC,
+        options: {
+          url: 'localhost:3002',
+          package: 'codern.workspace',
+          protoPath: 'root.proto',
+          loader: {
+            includeDirs: [
+              (process.env.NODE_ENV === 'production')
+                ? join(process.cwd(), 'proto')
+                : join(__dirname, '../../../../packages/proto'),
+            ],
+            keepCase: true,
+          },
+        },
+      },
+      {
         name: 'GRADING_PACKAGE',
         transport: Transport.GRPC,
         options: {
