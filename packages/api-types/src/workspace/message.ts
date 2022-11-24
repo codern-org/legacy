@@ -7,7 +7,7 @@ export type Workspace = {
   name: string,
   profilePath: string,
   ownerId: string,
-  createdAt: number,
+  createdAt: bigint,
 };
 
 export type GetAllWorkspacesResponse = {
@@ -39,7 +39,7 @@ export type Question = {
   detailPath: string,
   level: string,
   workspaceId: number,
-  createdAt: number,
+  createdAt: bigint,
 };
 
 export type GetQuestionsByWorkspaceIdResponse = {
