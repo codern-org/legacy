@@ -35,7 +35,7 @@ message Question {
   string name = 2;
   string description = 3;
   string detailPath = 4;
-  int32 level = 5;
+  string level = 5;
   int32 workspaceId = 6;
   int64 createdAt = 7;
 }

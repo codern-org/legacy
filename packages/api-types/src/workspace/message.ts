@@ -27,16 +27,17 @@ export type GetQuestionsByWorkspaceIdRequest = {
 };
 
 export enum QuestionLevel {
-  EASY,
-  MEDIUM,
-  HARD,
+  EASY = 'Easy',
+  MEDIUM = 'Medium',
+  HARD = 'Hard',
 }
 
 export type Question = {
   id: number,
   name: string,
   description: string,
-  level: number,
+  detailPath: string,
+  level: string,
   workspaceId: number,
   createdAt: number,
 };
