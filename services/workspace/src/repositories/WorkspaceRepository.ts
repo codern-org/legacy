@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { Prisma, Workspace } from '@prisma/client';
 import { PrismaService } from '@/services/PrismaService';
 
 @Injectable()
@@ -9,6 +9,18 @@ export class WorkspaceRepository {
 
   public constructor(prismaService: PrismaService) {
     this.prismaService = prismaService;
+  }
+
+  public createWorkspace(workspace: Prisma.WorkspaceCreateInput): Promise<Workspace> {
+    return this.prismaService.workspace.create({ data: workspace });
+  }
+
+  public getAllWorkspaces(userId: string): Promise<Workspace[]> {
+    return this.prismaService.workspace.findMany({ where: { ownerId: userId } });
+  }
+
+  public getWorkspaceById(id: number): Promise<Workspace | null> {
+    return this.prismaService.workspace.findUnique({ where: { id } });
   }
 
 }
