@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import {
-  Workspace, Question, ExpectedNotFoundError,
+  Workspace, Question, ExpectedNotFoundError, ExpectedInvalidError,
 } from 'api-types';
 import { QuestionRepository } from '@/repositories/QuestionRepository';
 import { WorkspaceRepository } from '@/repositories/WorkspaceRepository';
@@ -28,6 +28,11 @@ export class WorkspaceService {
   public async getWorkspaceByIdOrThrow(workspaceId: number): Promise<Workspace> {
     const workspace = await this.workspaceRepository.getWorkspaceById(workspaceId);
     if (!workspace) throw new ExpectedNotFoundError(WorkspaceError.NotFoundFromWorkspaceId);
+    const workspaceParticipants = await this.workspaceRepository
+      .getAllUserIdByWorkspaceId(workspaceId);
+    const inWorkspace = workspaceParticipants
+      .some((workspaceParticipant) => workspaceParticipant.workspaceId === workspaceId);
+    if (!inWorkspace) throw new ExpectedInvalidError(WorkspaceError.NoPermissionToAccess);
     return workspace;
   }
 

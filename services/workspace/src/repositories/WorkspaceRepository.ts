@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, Workspace } from '@prisma/client';
+import { Prisma, Workspace, WorkspaceParticipants } from '@prisma/client';
 import { PrismaService } from '@/services/PrismaService';
 
 @Injectable()
@@ -21,6 +21,12 @@ export class WorkspaceRepository {
 
   public getWorkspaceById(id: number): Promise<Workspace | null> {
     return this.prismaService.workspace.findUnique({ where: { id } });
+  }
+
+  public getAllUserIdByWorkspaceId(workspaceId: number): Promise<WorkspaceParticipants[]> {
+    return this.prismaService.workspaceParticipants.findMany(
+      { where: { workspaceId } },
+    );
   }
 
 }
