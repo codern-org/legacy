@@ -66,7 +66,7 @@ export class SessionService {
     const session = await this.getSession(incomingSession);
     if (!session) throw new ExpectedInvalidError(SessionError.Invalid);
 
-    if (new Date() >= session.expiryDate) {
+    if (Date.now() >= session.expiryDate) {
       this.destroySession(session.id);
       throw new ExpectedInvalidError(SessionError.Expired);
     }
@@ -83,11 +83,12 @@ export class SessionService {
 
     const sessionId = crypto.randomUUID();
     const signedSessionId = this.signSessionId(sessionId);
-    const expiryDate = new Date(Date.now() + SessionService.SESSION_MAX_AGE);
+    const createdAt = Date.now();
+    const expiryDate = (createdAt + SessionService.SESSION_MAX_AGE);
     const cookieHeader = cookie.serialize('sid', signedSessionId, {
       path: '/',
       httpOnly: true,
-      maxAge: expiryDate.getTime(),
+      maxAge: expiryDate,
     });
 
     await this.sessionRepository.createSession({
@@ -96,6 +97,7 @@ export class SessionService {
       ipAddress,
       userAgent,
       expiryDate,
+      createdAt,
     });
 
     return cookieHeader;
