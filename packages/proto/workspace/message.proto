@@ -41,8 +41,7 @@ message Question {
 }
 
 message GetQuestionsByWorkspaceIdResponse {
-  Workspace workspace = 1;
-  repeated Question questions = 2;
+  repeated Question questions = 1;
 }
 
 message GetQuestionByIdRequest {

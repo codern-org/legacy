@@ -43,7 +43,6 @@ export type Question = {
 };
 
 export type GetQuestionsByWorkspaceIdResponse = {
-  workspace: Workspace,
   questions: Question[],
 };
 
