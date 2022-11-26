@@ -1,11 +1,14 @@
 import {
   GetAllWorkspacesRequest, GetAllWorkspacesResponse, GetQuestionByIdRequest,
   GetQuestionByIdResponse, GetQuestionsByWorkspaceIdRequest, GetQuestionsByWorkspaceIdResponse,
-  GetWorkspaceByIdRequest, GetWorkspaceByIdResponse,
+  GetWorkspaceByIdRequest, GetWorkspaceByIdResponse, IsInWorkspaceRequest,
+  IsInWorkspaceResponse,
 } from 'api-types/src/workspace/message';
 import { Observable } from 'rxjs';
 
 export interface WorkspaceService {
+
+  IsInWorkspace(data: IsInWorkspaceRequest): Observable<IsInWorkspaceResponse>;
 
   getAllWorkspaces(data: GetAllWorkspacesRequest): Observable<GetAllWorkspacesResponse>;
 

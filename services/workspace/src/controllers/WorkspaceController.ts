@@ -4,6 +4,7 @@ import {
   GetAllWorkspacesRequest, GetAllWorkspacesResponse, GetQuestionByIdRequest,
   GetQuestionByIdResponse, GetQuestionsByWorkspaceIdRequest,
   GetQuestionsByWorkspaceIdResponse, GetWorkspaceByIdRequest, GetWorkspaceByIdResponse,
+  IsInWorkspaceRequest, IsInWorkspaceResponse,
 } from 'api-types';
 import { WorkspaceService } from '@/services/WorkspaceService';
 
@@ -14,6 +15,12 @@ export class WorkspaceController {
 
   public constructor(workspaceService: WorkspaceService) {
     this.workspaceService = workspaceService;
+  }
+
+  @GrpcMethod('WorkspaceService')
+  public async isInWorkspace(data: IsInWorkspaceRequest): Promise<IsInWorkspaceResponse> {
+    const isInWorkspace = await this.workspaceService.isInWorkspace(data.userId, data.workspaceId);
+    return { isInWorkspace };
   }
 
   @GrpcMethod('WorkspaceService')

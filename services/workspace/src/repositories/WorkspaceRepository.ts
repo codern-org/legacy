@@ -23,10 +23,8 @@ export class WorkspaceRepository {
     return this.prismaService.workspace.findUnique({ where: { id } });
   }
 
-  public getAllUserIdByWorkspaceId(workspaceId: number): Promise<WorkspaceParticipants[]> {
-    return this.prismaService.workspaceParticipants.findMany(
-      { where: { workspaceId } },
-    );
+  public getParticipantsByWorkspaceId(workspaceId: number): Promise<WorkspaceParticipants[]> {
+    return this.prismaService.workspaceParticipants.findMany({ where: { workspaceId } });
   }
 
 }

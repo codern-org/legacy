@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import {
-  Workspace, Question, ExpectedNotFoundError, ExpectedInvalidError,
+  Workspace, Question, ExpectedNotFoundError,
 } from 'api-types';
 import { QuestionRepository } from '@/repositories/QuestionRepository';
 import { WorkspaceRepository } from '@/repositories/WorkspaceRepository';
@@ -21,6 +21,11 @@ export class WorkspaceService {
     this.workspaceRepository = workspaceRepository;
   }
 
+  public async isInWorkspace(userId: string, workspaceId: number): Promise<boolean> {
+    const participants = await this.workspaceRepository.getParticipantsByWorkspaceId(workspaceId);
+    return participants.some((participant) => participant.userId === userId);
+  }
+
   public getAllWorkspaces(userId: string): Promise<Workspace[]> {
     return this.workspaceRepository.getAllWorkspaces(userId);
   }
@@ -28,15 +33,10 @@ export class WorkspaceService {
   public async getWorkspaceByIdOrThrow(workspaceId: number): Promise<Workspace> {
     const workspace = await this.workspaceRepository.getWorkspaceById(workspaceId);
     if (!workspace) throw new ExpectedNotFoundError(WorkspaceError.NotFoundFromWorkspaceId);
-    const workspaceParticipants = await this.workspaceRepository
-      .getAllUserIdByWorkspaceId(workspaceId);
-    const inWorkspace = workspaceParticipants
-      .some((workspaceParticipant) => workspaceParticipant.workspaceId === workspaceId);
-    if (!inWorkspace) throw new ExpectedInvalidError(WorkspaceError.NoPermissionToAccess);
     return workspace;
   }
 
-  public async getQuestionsByWorkspaceId(workspaceId: number): Promise<Question[]> {
+  public getQuestionsByWorkspaceId(workspaceId: number): Promise<Question[]> {
     return this.questionRepository.getQuestionsByWorkspaceId(workspaceId);
   }
 

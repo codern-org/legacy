@@ -1,3 +1,12 @@
+export type IsInWorkspaceRequest = {
+  userId: string,
+  workspaceId: number,
+};
+
+export type IsInWorkspaceResponse = {
+  isInWorkspace: boolean,
+};
+
 export type GetAllWorkspacesRequest = {
   userId: string,
 };
