@@ -7,6 +7,11 @@ import { FastifyRequest } from 'fastify';
 import { firstValueFrom } from 'rxjs';
 import { WorkspaceService } from '@/services/WorkspaceService';
 
+type WorkspaceGuardParams = {
+  workspaceId: string | undefined,
+  questionId: string | undefined,
+};
+
 @Injectable()
 export class WorkspaceGuard implements CanActivate {
 
@@ -21,11 +26,19 @@ export class WorkspaceGuard implements CanActivate {
 
     const userId = request.user.id;
 
-    const { workspaceId } = request.params as { workspaceId: string | undefined };
+    const { workspaceId, questionId } = request.params as WorkspaceGuardParams;
     if (!workspaceId) throw new BadRequestException();
 
     const workspaceService = this.client.getService<WorkspaceService>('WorkspaceService');
-    const result = await firstValueFrom(workspaceService.IsInWorkspace(
+
+    if (questionId) {
+      const result = await firstValueFrom(workspaceService.isQuestionInWorkspace(
+        { questionId: +questionId, workspaceId: +workspaceId },
+      ));
+      if (!result.isQuestionInWorkspace) throw new BadRequestException();
+    }
+
+    const result = await firstValueFrom(workspaceService.isInWorkspace(
       { userId, workspaceId: +workspaceId },
     ));
 

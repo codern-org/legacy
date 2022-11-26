@@ -7,6 +7,15 @@ export type IsInWorkspaceResponse = {
   isInWorkspace: boolean,
 };
 
+export type IsQuestionInWorkspaceRequest = {
+  questionId: number,
+  workspaceId: number,
+};
+
+export type IsQuestionInWorkspaceResponse = {
+  isQuestionInWorkspace: boolean,
+};
+
 export type GetAllWorkspacesByUserIdRequest = {
   userId: string,
 };
