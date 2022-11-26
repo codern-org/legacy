@@ -5,7 +5,7 @@ import "workspace/message.proto";
 
 service WorkspaceService {
   rpc IsInWorkspace(IsInWorkspaceRequest) returns (IsInWorkspaceResponse);
-  rpc GetAllWorkspaces(GetAllWorkspacesRequest) returns (GetAllWorkspacesResponse);
+  rpc GetAllWorkspacesByUserId(GetAllWorkspacesByUserIdRequest) returns (GetAllWorkspacesByUserIdResponse);
   rpc GetWorkspaceById(GetWorkspaceByIdRequest) returns (GetWorkspaceByIdResponse);
   rpc GetQuestionsByWorkspaceId(GetQuestionsByWorkspaceIdRequest) returns (GetQuestionsByWorkspaceIdResponse);
   rpc GetQuestionById(GetQuestionByIdRequest) returns (GetQuestionByIdResponse);

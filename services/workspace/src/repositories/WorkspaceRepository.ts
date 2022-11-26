@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma, Workspace, WorkspaceParticipants } from '@prisma/client';
+import { WorkspaceWithParticipants } from 'api-types';
 import { PrismaService } from '@/services/PrismaService';
 
 @Injectable()
@@ -15,8 +16,27 @@ export class WorkspaceRepository {
     return this.prismaService.workspace.create({ data: workspace });
   }
 
-  public getAllWorkspaces(userId: string): Promise<Workspace[]> {
-    return this.prismaService.workspace.findMany({ where: { ownerId: userId } });
+  public async getAllWorkspacesByUserId(userId: string): Promise<WorkspaceWithParticipants[]> {
+    const userWorkspaces = await this.prismaService.workspaceParticipants.findMany({
+      where: { userId },
+      include: { workspace: true },
+    });
+
+    const workspaceIds = userWorkspaces.map((workspace) => workspace.workspaceId);
+    const participantsIncludeUser = await this.prismaService.workspaceParticipants.findMany({
+      where: { workspaceId: { in: workspaceIds } },
+    });
+
+    const workspaceWithParticipants = userWorkspaces.map((workspace) => {
+      const participants = participantsIncludeUser
+        .filter((participant) => participant.workspaceId === workspace.workspaceId);
+      return {
+        ...workspace.workspace,
+        participants,
+      };
+    });
+
+    return workspaceWithParticipants;
   }
 
   public getWorkspaceById(id: number): Promise<Workspace | null> {

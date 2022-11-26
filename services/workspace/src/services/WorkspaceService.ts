@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import {
   Workspace, Question, ExpectedNotFoundError,
+  WorkspaceWithParticipants,
 } from 'api-types';
 import { QuestionRepository } from '@/repositories/QuestionRepository';
 import { WorkspaceRepository } from '@/repositories/WorkspaceRepository';
@@ -26,8 +27,8 @@ export class WorkspaceService {
     return participants.some((participant) => participant.userId === userId);
   }
 
-  public getAllWorkspaces(userId: string): Promise<Workspace[]> {
-    return this.workspaceRepository.getAllWorkspaces(userId);
+  public getAllWorkspacesByUserId(userId: string): Promise<WorkspaceWithParticipants[]> {
+    return this.workspaceRepository.getAllWorkspacesByUserId(userId);
   }
 
   public async getWorkspaceByIdOrThrow(workspaceId: number): Promise<Workspace> {

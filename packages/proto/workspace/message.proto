@@ -11,7 +11,7 @@ message IsInWorkspaceResponse {
   bool isInWorkspace = 1;
 }
 
-message GetAllWorkspacesRequest {
+message GetAllWorkspacesByUserIdRequest {
   string userId = 1;
 }
 
@@ -23,8 +23,19 @@ message Workspace {
   int64 createdAt = 5;
 }
 
-message GetAllWorkspacesResponse {
-  repeated Workspace workspaces = 1;
+message WorkspaceParticipants {
+  int32 workspaceId = 1;
+  string userId = 2;
+  int64 joinedAt = 3;
+}
+
+message WorkspaceWithParticipants = {
+  Workspace workspace = 1;
+  repeated WorkspaceParticipants participants = 2;
+};
+
+message GetAllWorkspacesByUserIdResponse {
+  repeated WorkspaceWithParticipants workspaces = 1;
 }
 
 message GetWorkspaceByIdRequest {

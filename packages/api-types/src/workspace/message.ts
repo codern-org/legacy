@@ -7,7 +7,7 @@ export type IsInWorkspaceResponse = {
   isInWorkspace: boolean,
 };
 
-export type GetAllWorkspacesRequest = {
+export type GetAllWorkspacesByUserIdRequest = {
   userId: string,
 };
 
@@ -19,8 +19,16 @@ export type Workspace = {
   createdAt: bigint,
 };
 
-export type GetAllWorkspacesResponse = {
-  workspaces: Workspace[],
+export type WorkspaceParticipants = {
+  workspaceId: number,
+  userId: string,
+  joinedAt: bigint,
+};
+
+export type WorkspaceWithParticipants = Workspace & { participants: WorkspaceParticipants[] };
+
+export type GetAllWorkspacesByUserIdResponse = {
+  workspaces: WorkspaceWithParticipants[],
 };
 
 export type GetWorkspaceByIdRequest = {

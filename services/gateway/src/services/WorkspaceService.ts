@@ -1,5 +1,5 @@
 import {
-  GetAllWorkspacesRequest, GetAllWorkspacesResponse, GetQuestionByIdRequest,
+  GetAllWorkspacesByUserIdRequest, GetAllWorkspacesByUserIdResponse, GetQuestionByIdRequest,
   GetQuestionByIdResponse, GetQuestionsByWorkspaceIdRequest, GetQuestionsByWorkspaceIdResponse,
   GetWorkspaceByIdRequest, GetWorkspaceByIdResponse, IsInWorkspaceRequest,
   IsInWorkspaceResponse,
@@ -10,7 +10,9 @@ export interface WorkspaceService {
 
   IsInWorkspace(data: IsInWorkspaceRequest): Observable<IsInWorkspaceResponse>;
 
-  getAllWorkspaces(data: GetAllWorkspacesRequest): Observable<GetAllWorkspacesResponse>;
+  getAllWorkspacesByUserId(
+    data: GetAllWorkspacesByUserIdRequest
+  ): Observable<GetAllWorkspacesByUserIdResponse>;
 
   getWorkspaceById(data: GetWorkspaceByIdRequest): Observable<GetWorkspaceByIdResponse>;
 

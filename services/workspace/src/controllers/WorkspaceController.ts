@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import {
-  GetAllWorkspacesRequest, GetAllWorkspacesResponse, GetQuestionByIdRequest,
+  GetAllWorkspacesByUserIdRequest, GetAllWorkspacesByUserIdResponse, GetQuestionByIdRequest,
   GetQuestionByIdResponse, GetQuestionsByWorkspaceIdRequest,
   GetQuestionsByWorkspaceIdResponse, GetWorkspaceByIdRequest, GetWorkspaceByIdResponse,
   IsInWorkspaceRequest, IsInWorkspaceResponse,
@@ -24,8 +24,10 @@ export class WorkspaceController {
   }
 
   @GrpcMethod('WorkspaceService')
-  public async getAllWorkspaces(data: GetAllWorkspacesRequest): Promise<GetAllWorkspacesResponse> {
-    const workspaces = await this.workspaceService.getAllWorkspaces(data.userId);
+  public async getAllWorkspacesByUserId(
+    data: GetAllWorkspacesByUserIdRequest,
+  ): Promise<GetAllWorkspacesByUserIdResponse> {
+    const workspaces = await this.workspaceService.getAllWorkspacesByUserId(data.userId);
     return { workspaces };
   }
 

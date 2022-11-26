@@ -1,15 +1,17 @@
 import {
   Controller, Inject, Get,
   UseGuards,
+  Param,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ClientGrpc } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
-import { GetAllWorkspacesResponse } from 'api-types/src/workspace/message';
+import { GetAllWorkspacesByUserIdResponse, GetWorkspaceByIdResponse } from 'api-types/src/workspace/message';
 import { AuthGuard } from '@/utils/AuthGuard';
 import { WorkspaceService } from '@/services/WorkspaceService';
 import { User } from '@/utils/decorators/AuthDecorator';
 import { UserData } from '@/utils/guards/AuthGuard';
+import { WorkspaceGuard } from '@/utils/guards/WorkspaceGuard';
 
 @Controller('/workspace')
 export class WorkspaceController {
@@ -29,9 +31,17 @@ export class WorkspaceController {
   @UseGuards(AuthGuard)
   public getAllWorkspaces(
     @User() user: UserData,
-  ): Observable<GetAllWorkspacesResponse> {
+  ): Observable<GetAllWorkspacesByUserIdResponse> {
     const userId = user.id;
-    return this.workspaceService.getAllWorkspaces({ userId });
+    return this.workspaceService.getAllWorkspacesByUserId({ userId });
+  }
+
+  @Get('/:workspaceId')
+  @UseGuards(AuthGuard, WorkspaceGuard)
+  public getWorkspaceById(
+    @Param('workspaceId') params: number,
+  ): Observable<GetWorkspaceByIdResponse> {
+    return this.workspaceService.getWorkspaceById({ workspaceId: params });
   }
 
 }
