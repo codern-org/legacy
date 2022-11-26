@@ -1,0 +1,86 @@
+syntax = "proto3";
+package codern.workspace;
+import "common.proto";
+
+message IsInWorkspaceRequest {
+  string userId = 1;
+  int32 workspaceId = 2;
+}
+
+message IsInWorkspaceResponse {
+  bool isInWorkspace = 1;
+}
+
+message IsQuestionInWorkspaceRequest {
+  int32 questionId = 1;
+  int32 workspaceId = 2;
+}
+
+message IsQuestionInWorkspaceResponse {
+  bool isQuestionInWorkspace = 1;
+}
+
+message GetAllWorkspacesByUserIdRequest {
+  string userId = 1;
+}
+
+message Workspace {
+  int32 id = 1;
+  string name = 2;
+  string profilePath = 3;
+  string ownerId = 4;
+  int64 createdAt = 5;
+}
+
+message WorkspaceParticipants {
+  int32 workspaceId = 1;
+  string userId = 2;
+  int64 joinedAt = 3;
+}
+
+message WorkspaceWithParticipants {
+  int32 id = 1;
+  string name = 2;
+  string profilePath = 3;
+  string ownerId = 4;
+  int64 createdAt = 5;
+  repeated WorkspaceParticipants participants = 6;
+};
+
+message GetAllWorkspacesByUserIdResponse {
+  repeated WorkspaceWithParticipants workspaces = 1;
+}
+
+message GetWorkspaceByIdRequest {
+  int32 workspaceId = 1;
+}
+
+message GetWorkspaceByIdResponse {
+  Workspace workspace = 1;
+}
+
+message GetQuestionsByWorkspaceIdRequest {
+  int32 id = 1;
+}
+
+message Question {
+  int32 id = 1;
+  string name = 2;
+  string description = 3;
+  string detailPath = 4;
+  string level = 5;
+  int32 workspaceId = 6;
+  int64 createdAt = 7;
+}
+
+message GetQuestionsByWorkspaceIdResponse {
+  repeated Question questions = 1;
+}
+
+message GetQuestionByIdRequest {
+  int32 id = 1;
+}
+
+message GetQuestionByIdResponse {
+  Question question = 1;
+}

@@ -5,6 +5,11 @@
   "scripts": {
     "build": "tsc && tsc-alias",
     "clean": "rimraf node_modules .turbo dist logs",
+    "db:dev": "pnpm db:generate & pnpm db:push",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:push": "prisma db push",
+    "db:seed": "prisma db seed",
     "dev": "tsnd --respawn --transpile-only --exit-child --watch src -r tsconfig-paths/register src/App.ts",
     "lint": "eslint . --ext .ts"
   },
@@ -29,10 +34,14 @@
     "@types/node": "^18.11.4",
     "eslint-config-vectier": "workspace:*",
     "prisma": "^4.5.0",
+    "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
     "tsc-alias": "^1.7.0",
     "tsconfig": "workspace:*",
     "tsconfig-paths": "^4.1.0",
     "typescript": "^4.8.4"
+  },
+  "prisma": {
+    "seed": "ts-node --transpile-only -r tsconfig-paths/register prisma/seed.ts"
   }
 }

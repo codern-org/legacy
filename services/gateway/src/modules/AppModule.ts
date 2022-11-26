@@ -6,6 +6,7 @@ import { AuthModule } from '@/modules/AuthModule';
 import { GatewayModule } from '@/modules/GatewayModule';
 import { GradingModule } from '@/modules/GradingModule';
 import { configuration } from '@/utils/Configuration';
+import { WorkspaceModule } from '@/modules/WorkspaceModule';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { configuration } from '@/utils/Configuration';
     GatewayModule,
     AuthModule,
     GradingModule,
+    WorkspaceModule,
   ],
 })
 export class AppModule {}

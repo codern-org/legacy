@@ -3,3 +3,4 @@ export * from './error';
 
 export * from './auth/message';
 export * from './grading/message';
+export * from './workspace/message';

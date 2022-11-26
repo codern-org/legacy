@@ -1,0 +1,13 @@
+syntax = "proto3";
+package codern.workspace;
+
+import "workspace/message.proto";
+
+service WorkspaceService {
+  rpc IsInWorkspace(IsInWorkspaceRequest) returns (IsInWorkspaceResponse);
+  rpc IsQuestionInWorkspace(IsQuestionInWorkspaceRequest) returns (IsQuestionInWorkspaceResponse);
+  rpc GetAllWorkspacesByUserId(GetAllWorkspacesByUserIdRequest) returns (GetAllWorkspacesByUserIdResponse);
+  rpc GetWorkspaceById(GetWorkspaceByIdRequest) returns (GetWorkspaceByIdResponse);
+  rpc GetQuestionsByWorkspaceId(GetQuestionsByWorkspaceIdRequest) returns (GetQuestionsByWorkspaceIdResponse);
+  rpc GetQuestionById(GetQuestionByIdRequest) returns (GetQuestionByIdResponse);
+}

@@ -8,8 +8,8 @@ import { firstValueFrom, Observable } from 'rxjs';
 import { AuthResponse, GoogleAuthUrlResponse } from 'api-types';
 import { FastifyReply } from 'fastify';
 import { ConfigService } from '@nestjs/config';
-import { AuthService, UserData } from '@/services/AuthService';
-import { AuthGuard } from '@/utils/guards/AuthGuard';
+import { AuthService } from '@/services/AuthService';
+import { AuthGuard, UserData } from '@/utils/guards/AuthGuard';
 import { Session, User } from '@/utils/decorators/AuthDecorator';
 
 @Controller('/auth')
