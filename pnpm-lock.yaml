@@ -331,6 +331,7 @@ importers:
       prisma: ^4.5.0
       reflect-metadata: ^0.1.13
       rxjs: ^7.5.7
+      ts-node: ^10.9.1
       ts-node-dev: ^2.0.0
       tsc-alias: ^1.7.0
       tsconfig: workspace:*
@@ -357,6 +358,7 @@ importers:
       '@types/node': 18.11.4
       eslint-config-vectier: link:../../packages/eslist-config-vectier
       prisma: 4.5.0
+      ts-node: 10.9.1_6hf6ijjdmrvgn4gwd23tocsh2m
       ts-node-dev: 2.0.0_6hf6ijjdmrvgn4gwd23tocsh2m
       tsc-alias: 1.7.0
       tsconfig: link:../../packages/tsconfig
