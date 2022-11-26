@@ -7,3 +7,39 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model Workspace {
+  id                    Int                     @id @default(autoincrement())
+  name                  String
+  profilePath           String
+  ownerId               String
+  createdAt             BigInt
+  WorkspaceParticipants WorkspaceParticipants[]
+  Question              Question[]
+}
+
+model WorkspaceParticipants {
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspaceId Int
+  userId      String
+  joinedAt    BigInt
+
+  @@id([workspaceId, userId])
+}
+
+enum QuestionLevel {
+  Easy
+  Medium
+  Hard
+}
+
+model Question {
+  id          Int           @id @default(autoincrement())
+  name        String
+  description String
+  detailPath  String
+  level       QuestionLevel
+  workspace   Workspace     @relation(fields: [workspaceId], references: [id])
+  workspaceId Int
+  createdAt   BigInt
+}

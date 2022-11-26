@@ -19,6 +19,25 @@ import { join } from 'path';
                 : join(__dirname, '../../../../packages/proto'),
             ],
             keepCase: true,
+            arrays: true,
+          },
+        },
+      },
+      {
+        name: 'WORKSPACE_PACKAGE',
+        transport: Transport.GRPC,
+        options: {
+          url: 'localhost:3002',
+          package: 'codern.workspace',
+          protoPath: 'root.proto',
+          loader: {
+            includeDirs: [
+              (process.env.NODE_ENV === 'production')
+                ? join(process.cwd(), 'proto')
+                : join(__dirname, '../../../../packages/proto'),
+            ],
+            keepCase: true,
+            arrays: true,
           },
         },
       },
@@ -36,6 +55,7 @@ import { join } from 'path';
                 : join(__dirname, '../../../../packages/proto'),
             ],
             keepCase: true,
+            arrays: true,
           },
         },
       },

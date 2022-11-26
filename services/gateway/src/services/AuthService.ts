@@ -15,5 +15,3 @@ export interface AuthService {
   loginWithGoogle(data: GoogleAuthRequest): Observable<GoogleAuthResponse>;
 
 }
-
-export type UserData = AuthResponse;

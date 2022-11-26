@@ -9,6 +9,7 @@
     "db:dev": "turbo run db:dev",
     "db:generate": "turbo run db:generate",
     "db:push": "turbo run db:push",
+    "db:seed": "turbo run db:seed",
     "dev": "cross-env FORCE_COLOR=1 turbo run dev",
     "lint": "turbo run lint",
     "preinstall": "npx only-allow pnpm"

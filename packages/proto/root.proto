@@ -3,3 +3,4 @@ package codern;
 
 import public "auth/service.proto";
 import public "grading/service.proto";
+import public "workspace/service.proto";
