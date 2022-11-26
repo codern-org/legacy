@@ -22,7 +22,7 @@ Codern allows the lecturer to create their study workspace for their student wit
 
 ## Contributing
 
-Refer to our [contribution guildines]() and [Coding standards]().
+Refer to our [contribution guildines](https://github.com/vectier/codern/blob/main/docs/contribution.md) and [Coding standards]().
 
 ## Backers
 
