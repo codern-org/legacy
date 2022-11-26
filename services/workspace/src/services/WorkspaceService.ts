@@ -27,9 +27,12 @@ export class WorkspaceService {
     return participants.some((participant) => participant.userId === userId);
   }
 
-  public async isQuestionInWorkspace(questionId: number, workspaceId: number): Promise<boolean> {
-    const questions = await this.questionRepository.getQuestionsByWorkspaceId(workspaceId);
-    return questions.some((question) => question.id === questionId);
+  public async isQuestionInWorkspaceOrThrow(
+    questionId: number,
+    workspaceId: number,
+  ): Promise<boolean> {
+    const question = await this.getQuestionByIdOrThrow(questionId);
+    return question.workspaceId === workspaceId;
   }
 
   public getAllWorkspacesByUserId(userId: string): Promise<WorkspaceWithParticipants[]> {

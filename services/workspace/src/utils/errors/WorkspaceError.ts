@@ -7,6 +7,6 @@ export const WorkspaceError = {
   NoPermissionToAccess: {
     code: 'W-002-001',
     error: 'No permission to access this workspace',
-    message: 'This user does not have access',
+    message: 'This user does not have permission to access the workspace',
   },
 };

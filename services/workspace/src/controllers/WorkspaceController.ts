@@ -29,7 +29,7 @@ export class WorkspaceController {
     data: IsQuestionInWorkspaceRequest,
   ): Promise<IsQuestionInWorkspaceResponse> {
     const isQuestionInWorkspace = await this.workspaceService
-      .isQuestionInWorkspace(data.questionId, data.workspaceId);
+      .isQuestionInWorkspaceOrThrow(data.questionId, data.workspaceId);
     return { isQuestionInWorkspace };
   }
 
