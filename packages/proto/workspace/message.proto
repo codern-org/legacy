@@ -7,6 +7,10 @@ message IsInWorkspaceRequest {
   int32 workspaceId = 2;
 }
 
+message IsInWorkspaceResponse {
+  bool isInWorkspace = 1;
+}
+
 message GetAllWorkspacesRequest {
   string userId = 1;
 }
