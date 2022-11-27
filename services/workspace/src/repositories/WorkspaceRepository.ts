@@ -47,4 +47,10 @@ export class WorkspaceRepository {
     return this.prismaService.workspaceParticipants.findMany({ where: { workspaceId } });
   }
 
+  public getFirstWorkspaceParticipantsWhere(
+    where: Prisma.WorkspaceParticipantsWhereInput,
+  ): Promise<WorkspaceParticipants | null> {
+    return this.prismaService.workspaceParticipants.findFirst({ where });
+  }
+
 }

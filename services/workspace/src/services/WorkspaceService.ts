@@ -23,9 +23,9 @@ export class WorkspaceService {
   }
 
   public async validateUserInWorkspace(userId: string, workspaceId: number): Promise<void> {
-    const participants = await this.workspaceRepository.getParticipantsByWorkspaceId(workspaceId);
-    const isUserInWorkspace = participants.some((participant) => participant.userId === userId);
-    if (!isUserInWorkspace) throw new ExpectedForbiddenError(WorkspaceError.Forbidden);
+    const userInWorkspace = await this.workspaceRepository
+      .getFirstWorkspaceParticipantsWhere({ userId, workspaceId });
+    if (!userInWorkspace) throw new ExpectedForbiddenError(WorkspaceError.Forbidden);
   }
 
   public async validateQuestionInWorkspace(questionId: number, workspaceId: number): Promise<void> {
