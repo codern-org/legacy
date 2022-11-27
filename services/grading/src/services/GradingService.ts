@@ -43,7 +43,7 @@ export class GradingService {
       language,
       status: SubmissionStatus.UPLOADING,
       filePath,
-      uploadedAt,
+      uploadedAt: Date.now(),
     });
 
     return {
