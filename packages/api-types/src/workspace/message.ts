@@ -1,19 +1,11 @@
-export type IsInWorkspaceRequest = {
+export type ValidateUserInWorkspaceRequest = {
   userId: string,
   workspaceId: number,
 };
 
-export type IsInWorkspaceResponse = {
-  isInWorkspace: boolean,
-};
-
-export type IsQuestionInWorkspaceRequest = {
+export type ValidateQuestionInWorkspaceRequest = {
   questionId: number,
   workspaceId: number,
-};
-
-export type IsQuestionInWorkspaceResponse = {
-  isQuestionInWorkspace: boolean,
 };
 
 export type GetAllWorkspacesByUserIdRequest = {
@@ -34,10 +26,17 @@ export type WorkspaceParticipants = {
   joinedAt: bigint,
 };
 
-export type WorkspaceWithParticipants = Workspace & { participants: WorkspaceParticipants[] };
+export type WorkspaceWithParticipants = {
+  workspace: Workspace,
+  participants: WorkspaceParticipants[],
+};
 
 export type GetAllWorkspacesByUserIdResponse = {
   workspaces: WorkspaceWithParticipants[],
+};
+
+export type PublicWorkspaceWithParticipants = Workspace & {
+  participants: Omit<WorkspaceParticipants, 'workspaceId'>[],
 };
 
 export type GetWorkspaceByIdRequest = {

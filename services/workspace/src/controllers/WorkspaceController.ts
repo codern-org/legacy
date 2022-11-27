@@ -4,8 +4,7 @@ import {
   GetAllWorkspacesByUserIdRequest, GetAllWorkspacesByUserIdResponse, GetQuestionByIdRequest,
   GetQuestionByIdResponse, GetQuestionsByWorkspaceIdRequest,
   GetQuestionsByWorkspaceIdResponse, GetWorkspaceByIdRequest, GetWorkspaceByIdResponse,
-  IsInWorkspaceRequest, IsInWorkspaceResponse, IsQuestionInWorkspaceRequest,
-  IsQuestionInWorkspaceResponse,
+  ValidateUserInWorkspaceRequest, ValidateQuestionInWorkspaceRequest,
 } from 'api-types';
 import { WorkspaceService } from '@/services/WorkspaceService';
 
@@ -19,18 +18,17 @@ export class WorkspaceController {
   }
 
   @GrpcMethod('WorkspaceService')
-  public async isInWorkspace(data: IsInWorkspaceRequest): Promise<IsInWorkspaceResponse> {
-    const isInWorkspace = await this.workspaceService.isInWorkspace(data.userId, data.workspaceId);
-    return { isInWorkspace };
+  public async validateUserInWorkspace(data: ValidateUserInWorkspaceRequest): Promise<void> {
+    const { userId, workspaceId } = data;
+    await this.workspaceService.validateUserInWorkspace(userId, workspaceId);
   }
 
   @GrpcMethod('WorkspaceService')
-  public async isQuestionInWorkspace(
-    data: IsQuestionInWorkspaceRequest,
-  ): Promise<IsQuestionInWorkspaceResponse> {
-    const isQuestionInWorkspace = await this.workspaceService
-      .isQuestionInWorkspaceOrThrow(data.questionId, data.workspaceId);
-    return { isQuestionInWorkspace };
+  public async validateQuestionInWorkspace(
+    data: ValidateQuestionInWorkspaceRequest,
+  ): Promise<void> {
+    const { questionId, workspaceId } = data;
+    await this.workspaceService.validateQuestionInWorkspace(questionId, workspaceId);
   }
 
   @GrpcMethod('WorkspaceService')

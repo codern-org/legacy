@@ -31,7 +31,7 @@ export class WorkspaceRepository {
       const participants = participantsIncludeUser
         .filter((participant) => participant.workspaceId === workspace.workspaceId);
       return {
-        ...workspace.workspace,
+        workspace: workspace.workspace,
         participants,
       };
     });

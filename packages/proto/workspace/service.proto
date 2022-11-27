@@ -4,8 +4,8 @@ package codern.workspace;
 import "workspace/message.proto";
 
 service WorkspaceService {
-  rpc IsInWorkspace(IsInWorkspaceRequest) returns (IsInWorkspaceResponse);
-  rpc IsQuestionInWorkspace(IsQuestionInWorkspaceRequest) returns (IsQuestionInWorkspaceResponse);
+  rpc ValidateUserInWorkspace(ValidateUserInWorkspaceRequest) returns (Empty);
+  rpc ValidateQuestionInWorkspace(ValidateQuestionInWorkspaceRequest) returns (Empty);
   rpc GetAllWorkspacesByUserId(GetAllWorkspacesByUserIdRequest) returns (GetAllWorkspacesByUserIdResponse);
   rpc GetWorkspaceById(GetWorkspaceByIdRequest) returns (GetWorkspaceByIdResponse);
   rpc GetQuestionsByWorkspaceId(GetQuestionsByWorkspaceIdRequest) returns (GetQuestionsByWorkspaceIdResponse);

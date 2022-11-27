@@ -15,35 +15,31 @@ type WorkspaceGuardParams = {
 @Injectable()
 export class WorkspaceGuard implements CanActivate {
 
-  private readonly client: ClientGrpc;
+  private readonly workspaceService: WorkspaceService;
 
   public constructor(@Inject('WORKSPACE_PACKAGE') client: ClientGrpc) {
-    this.client = client;
+    this.workspaceService = client.getService<WorkspaceService>('WorkspaceService');
   }
 
   public async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<FastifyRequest>();
 
-    const userId = request.user.id;
-
     const { workspaceId, questionId } = request.params as WorkspaceGuardParams;
     if (!workspaceId) throw new BadRequestException();
 
-    const workspaceService = this.client.getService<WorkspaceService>('WorkspaceService');
+    const userId = request.user.id;
+
+    await firstValueFrom(
+      this.workspaceService.validateUserInWorkspace({ userId, workspaceId: +workspaceId }),
+    );
 
     if (questionId) {
-      const result = await firstValueFrom(workspaceService.isQuestionInWorkspace(
+      await firstValueFrom(this.workspaceService.validateQuestionInWorkspace(
         { questionId: +questionId, workspaceId: +workspaceId },
       ));
-      if (!result.isQuestionInWorkspace) throw new BadRequestException();
     }
 
-    const result = await firstValueFrom(workspaceService.isInWorkspace(
-      { userId, workspaceId: +workspaceId },
-    ));
-
-    return result.isInWorkspace;
-
+    return true;
   }
 
 }
