@@ -6,7 +6,9 @@ import {
   GetQuestionsByWorkspaceIdResponse, GetWorkspaceByIdRequest, GetWorkspaceByIdResponse,
   ValidateUserInWorkspaceRequest, ValidateQuestionInWorkspaceRequest,
 } from 'api-types';
+import { from, map, Observable } from 'rxjs';
 import { WorkspaceService } from '@/services/WorkspaceService';
+import { convertDateToNumber } from '@/utils/Utils';
 
 @Controller('/workspace')
 export class WorkspaceController {
@@ -32,31 +34,31 @@ export class WorkspaceController {
   }
 
   @GrpcMethod('WorkspaceService')
-  public async getAllWorkspacesByUserId(
+  public getAllWorkspacesByUserId(
     data: GetAllWorkspacesByUserIdRequest,
-  ): Promise<GetAllWorkspacesByUserIdResponse> {
-    const workspaces = await this.workspaceService.getAllWorkspacesByUserId(data.userId);
-    return { workspaces };
+  ): Observable<GetAllWorkspacesByUserIdResponse> {
+    return from(this.workspaceService.getAllWorkspacesByUserId(data.userId))
+      .pipe(map((workspaces) => ({ workspaces: convertDateToNumber(workspaces) })));
   }
 
   @GrpcMethod('WorkspaceService')
-  public async getWorkspaceById(data: GetWorkspaceByIdRequest): Promise<GetWorkspaceByIdResponse> {
-    const workspace = await this.workspaceService.getWorkspaceByIdOrThrow(data.workspaceId);
-    return { workspace };
+  public getWorkspaceById(data: GetWorkspaceByIdRequest): Observable<GetWorkspaceByIdResponse> {
+    return from(this.workspaceService.getWorkspaceByIdOrThrow(data.workspaceId))
+      .pipe(map((workspace) => ({ workspace: convertDateToNumber(workspace) })));
   }
 
   @GrpcMethod('WorkspaceService')
-  public async getQuestionsByWorkspaceId(
+  public getQuestionsByWorkspaceId(
     data: GetQuestionsByWorkspaceIdRequest,
-  ): Promise<GetQuestionsByWorkspaceIdResponse> {
-    const questions = await this.workspaceService.getQuestionsByWorkspaceId(data.id);
-    return { questions };
+  ): Observable<GetQuestionsByWorkspaceIdResponse> {
+    return from(this.workspaceService.getQuestionsByWorkspaceId(data.id))
+      .pipe(map((questions) => ({ questions: convertDateToNumber(questions) })));
   }
 
   @GrpcMethod('WorkspaceService')
-  public async getQuestionById(data: GetQuestionByIdRequest): Promise<GetQuestionByIdResponse> {
-    const question = await this.workspaceService.getQuestionByIdOrThrow(data.id);
-    return { question };
+  public getQuestionById(data: GetQuestionByIdRequest): Observable<GetQuestionByIdResponse> {
+    return from(this.workspaceService.getQuestionByIdOrThrow(data.id))
+      .pipe(map((questions) => ({ question: convertDateToNumber(questions) })));
   }
 
 }
