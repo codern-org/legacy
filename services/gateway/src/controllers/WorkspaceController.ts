@@ -1,16 +1,10 @@
 import {
   Controller, Inject, Get,
-  UseGuards,
-  Param,
+  UseGuards, Param,
 } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { ClientGrpc } from '@nestjs/microservices';
 import { map, Observable } from 'rxjs';
-import {
-  GetAllWorkspacesByUserIdResponse, GetQuestionsByWorkspaceIdResponse,
-  Question,
-  Workspace,
-} from 'api-types';
+import { PublicWorkspaceWithParticipants, Question, Workspace } from 'api-types';
 import { AuthGuard } from '@/utils/AuthGuard';
 import { WorkspaceService } from '@/services/WorkspaceService';
 import { User } from '@/utils/decorators/AuthDecorator';
@@ -20,14 +14,9 @@ import { WorkspaceGuard } from '@/utils/guards/WorkspaceGuard';
 @Controller('/workspaces')
 export class WorkspaceController {
 
-  private readonly configService: ConfigService;
   private readonly workspaceService: WorkspaceService;
 
-  public constructor(
-    configService: ConfigService,
-    @Inject('WORKSPACE_PACKAGE') client: ClientGrpc,
-  ) {
-    this.configService = configService;
+  public constructor(@Inject('WORKSPACE_PACKAGE') client: ClientGrpc) {
     this.workspaceService = client.getService('WorkspaceService');
   }
 
@@ -35,9 +24,21 @@ export class WorkspaceController {
   @UseGuards(AuthGuard)
   public getAllWorkspacesByUserId(
     @User() user: UserData,
-  ): Observable<GetAllWorkspacesByUserIdResponse> {
+  ): Observable<PublicWorkspaceWithParticipants[]> {
     const userId = user.id;
-    return this.workspaceService.getAllWorkspacesByUserId({ userId });
+    return this.workspaceService
+      .getAllWorkspacesByUserId({ userId })
+      .pipe(
+        map((response) => response.workspaces),
+        map((workspace) => workspace.map((data) => ({
+          ...data.workspace,
+          participants: data.participants
+            .map((participant) => ({
+              ...participant,
+              workspaceId: undefined,
+            })),
+        }))),
+      );
   }
 
   @Get('/:workspaceId')
@@ -54,8 +55,10 @@ export class WorkspaceController {
   @UseGuards(AuthGuard, WorkspaceGuard)
   public getQuestionsByWorkspaceId(
     @Param('workspaceId') id: number,
-  ): Observable<GetQuestionsByWorkspaceIdResponse> {
-    return this.workspaceService.getQuestionsByWorkspaceId({ id });
+  ): Observable<Question[]> {
+    return this.workspaceService
+      .getQuestionsByWorkspaceId({ id })
+      .pipe(map((response) => response.questions));
   }
 
   @Get('/:workspaceId/questions/:questionId')

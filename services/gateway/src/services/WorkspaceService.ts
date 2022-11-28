@@ -1,18 +1,16 @@
 import {
   GetAllWorkspacesByUserIdRequest, GetAllWorkspacesByUserIdResponse, GetQuestionByIdRequest,
   GetQuestionByIdResponse, GetQuestionsByWorkspaceIdRequest, GetQuestionsByWorkspaceIdResponse,
-  GetWorkspaceByIdRequest, GetWorkspaceByIdResponse, IsInWorkspaceRequest,
-  IsInWorkspaceResponse, IsQuestionInWorkspaceRequest, IsQuestionInWorkspaceResponse,
+  GetWorkspaceByIdRequest, GetWorkspaceByIdResponse, ValidateQuestionInWorkspaceRequest,
+  ValidateUserInWorkspaceRequest,
 } from 'api-types';
 import { Observable } from 'rxjs';
 
 export interface WorkspaceService {
 
-  isInWorkspace(data: IsInWorkspaceRequest): Observable<IsInWorkspaceResponse>;
+  validateUserInWorkspace(data: ValidateUserInWorkspaceRequest): Observable<void>;
 
-  isQuestionInWorkspace(
-    data: IsQuestionInWorkspaceRequest
-  ): Observable<IsQuestionInWorkspaceResponse>;
+  validateQuestionInWorkspace(data: ValidateQuestionInWorkspaceRequest): Observable<void>;
 
   getAllWorkspacesByUserId(
     data: GetAllWorkspacesByUserIdRequest

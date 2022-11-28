@@ -31,7 +31,7 @@ export class WorkspaceRepository {
       const participants = participantsIncludeUser
         .filter((participant) => participant.workspaceId === workspace.workspaceId);
       return {
-        ...workspace.workspace,
+        workspace: workspace.workspace,
         participants,
       };
     });
@@ -45,6 +45,12 @@ export class WorkspaceRepository {
 
   public getParticipantsByWorkspaceId(workspaceId: number): Promise<WorkspaceParticipants[]> {
     return this.prismaService.workspaceParticipants.findMany({ where: { workspaceId } });
+  }
+
+  public getFirstWorkspaceParticipantsWhere(
+    where: Prisma.WorkspaceParticipantsWhereInput,
+  ): Promise<WorkspaceParticipants | null> {
+    return this.prismaService.workspaceParticipants.findFirst({ where });
   }
 
 }

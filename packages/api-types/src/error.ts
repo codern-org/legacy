@@ -26,3 +26,5 @@ export class ExpectedNotFoundError extends ExpectedError {}
 export class ExpectedInvalidError extends ExpectedError {}
 
 export class ExpectedDuplicatedError extends ExpectedError {}
+
+export class ExpectedForbiddenError extends ExpectedError {}

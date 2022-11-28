@@ -13,8 +13,9 @@ import { FileGuard } from '@/utils/guards/FileGuard';
 import { User } from '@/utils/decorators/AuthDecorator';
 import { File } from '@/utils/decorators/FileDecorator';
 import { GradeParams } from '@/utils/dtos/GradingDtos';
+import { WorkspaceGuard } from '@/utils/guards/WorkspaceGuard';
 
-@Controller('/grade')
+@Controller('/workspaces')
 export class GradingController {
 
   private readonly gradingService: GradingService;
@@ -28,9 +29,8 @@ export class GradingController {
     this.gradingService = client.getService('GradingService');
   }
 
-  @Post('/:questionId/:language')
-  @UseGuards(FileGuard)
-  @UseGuards(AuthGuard)
+  @Post('/:workspaceId/questions/:questionId/grade/:language')
+  @UseGuards(AuthGuard, FileGuard, WorkspaceGuard)
   public async grade(
     @File() file: MultipartFile,
     @User() user: UserData,

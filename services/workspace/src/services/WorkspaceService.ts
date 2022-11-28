@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import {
   Workspace, Question, ExpectedNotFoundError,
-  WorkspaceWithParticipants,
+  WorkspaceWithParticipants, ExpectedForbiddenError,
 } from 'api-types';
 import { QuestionRepository } from '@/repositories/QuestionRepository';
 import { WorkspaceRepository } from '@/repositories/WorkspaceRepository';
@@ -22,17 +22,17 @@ export class WorkspaceService {
     this.workspaceRepository = workspaceRepository;
   }
 
-  public async isInWorkspace(userId: string, workspaceId: number): Promise<boolean> {
-    const participants = await this.workspaceRepository.getParticipantsByWorkspaceId(workspaceId);
-    return participants.some((participant) => participant.userId === userId);
+  public async validateUserInWorkspace(userId: string, workspaceId: number): Promise<void> {
+    const userInWorkspace = await this.workspaceRepository
+      .getFirstWorkspaceParticipantsWhere({ userId, workspaceId });
+    if (!userInWorkspace) throw new ExpectedForbiddenError(WorkspaceError.Forbidden);
   }
 
-  public async isQuestionInWorkspaceOrThrow(
-    questionId: number,
-    workspaceId: number,
-  ): Promise<boolean> {
+  public async validateQuestionInWorkspace(questionId: number, workspaceId: number): Promise<void> {
     const question = await this.getQuestionByIdOrThrow(questionId);
-    return question.workspaceId === workspaceId;
+    if (question.workspaceId !== workspaceId) {
+      throw new ExpectedNotFoundError(QuestionError.NotFoundInWorkspace);
+    }
   }
 
   public getAllWorkspacesByUserId(userId: string): Promise<WorkspaceWithParticipants[]> {

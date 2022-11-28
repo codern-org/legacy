@@ -3,7 +3,7 @@ import { RpcException } from '@nestjs/microservices';
 import { Prisma } from '@prisma/client';
 import {
   ExpectedDuplicatedError, ExpectedError, GrpcStatus,
-  ExpectedInvalidError, ExpectedNotFoundError,
+  ExpectedInvalidError, ExpectedNotFoundError, ExpectedForbiddenError,
 } from 'api-types';
 import { Observable, throwError } from 'rxjs';
 
@@ -25,6 +25,7 @@ export class AllExceptionFilter implements ExceptionFilter {
       if (exception instanceof ExpectedNotFoundError) code = GrpcStatus.NOT_FOUND;
       if (exception instanceof ExpectedInvalidError) code = GrpcStatus.INVALID_ARGUMENT;
       if (exception instanceof ExpectedDuplicatedError) code = GrpcStatus.ALREADY_EXISTS;
+      if (exception instanceof ExpectedForbiddenError) code = GrpcStatus.PERMISSION_DENIED;
 
       return throwError(() => new RpcException({ code, message }).getError());
     }
