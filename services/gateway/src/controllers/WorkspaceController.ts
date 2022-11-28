@@ -3,42 +3,45 @@ import {
   UseGuards, Param,
 } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
-import { map, Observable } from 'rxjs';
+import { firstValueFrom, map, Observable } from 'rxjs';
 import { PublicWorkspaceWithParticipants, Question, Workspace } from 'api-types';
-import { AuthGuard } from '@/utils/AuthGuard';
 import { WorkspaceService } from '@/services/WorkspaceService';
 import { User } from '@/utils/decorators/AuthDecorator';
-import { UserData } from '@/utils/guards/AuthGuard';
+import { AuthGuard, UserData } from '@/utils/guards/AuthGuard';
 import { WorkspaceGuard } from '@/utils/guards/WorkspaceGuard';
+import { AuthService } from '@/services/AuthService';
+import { workspaceWithParticipants } from '@/utils/Serializer';
 
 @Controller('/workspaces')
 export class WorkspaceController {
 
   private readonly workspaceService: WorkspaceService;
+  private readonly authService: AuthService;
 
-  public constructor(@Inject('WORKSPACE_PACKAGE') client: ClientGrpc) {
-    this.workspaceService = client.getService('WorkspaceService');
+  public constructor(
+    @Inject('WORKSPACE_PACKAGE') workspaceClient: ClientGrpc,
+    @Inject('AUTH_PACKAGE') authClient: ClientGrpc,
+  ) {
+    this.workspaceService = workspaceClient.getService('WorkspaceService');
+    this.authService = authClient.getService('AuthService');
   }
 
   @Get('/')
   @UseGuards(AuthGuard)
-  public getAllWorkspacesByUserId(
-    @User() user: UserData,
-  ): Observable<PublicWorkspaceWithParticipants[]> {
-    const userId = user.id;
-    return this.workspaceService
-      .getAllWorkspacesByUserId({ userId })
-      .pipe(
-        map((response) => response.workspaces),
-        map((workspace) => workspace.map((data) => ({
-          ...data.workspace,
-          participants: data.participants
-            .map((participant) => ({
-              ...participant,
-              workspaceId: undefined,
-            })),
-        }))),
-      );
+  public async getAllWorkspacesByUserId(
+    @User() userData: UserData,
+  ): Promise<PublicWorkspaceWithParticipants[]> {
+    const userId = userData.id;
+    const { workspaces } = await firstValueFrom(
+      this.workspaceService.getAllWorkspacesByUserId({ userId }),
+    );
+    const participantIds = workspaces
+      .map((workspace) => workspace.participants.map((participant) => participant.userId))
+      .flat();
+    const { users } = await firstValueFrom(
+      this.authService.getUserByIds({ userIds: participantIds }),
+    );
+    return workspaceWithParticipants(workspaces, users);
   }
 
   @Get('/:workspaceId')
