@@ -19,11 +19,16 @@ enum SubmissionStatus {
   COMPLETED
 }
 
+enum Language {
+  C
+  CPP
+}
+
 model Submission {
   id         Int              @id @default(autoincrement())
   questionId Int
   userId     String
-  language   String
+  language   Language
   status     SubmissionStatus
   result     String?
   filePath   String
@@ -33,7 +38,7 @@ model Submission {
 model Editor {
   userId     String
   questionId Int
-  language   String
+  language   Language
   codePath   String
   savedAt    DateTime
 
