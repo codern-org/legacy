@@ -30,6 +30,10 @@ export class UserRepository {
     return this.prismaService.user.findFirst({ where });
   }
 
+  public getUsersWhere(where: Prisma.UserWhereInput): Promise<User[]> {
+    return this.prismaService.user.findMany({ where });
+  }
+
   public updateUser(id: string, data: Prisma.UserUpdateInput): Promise<User> {
     return this.prismaService.user.update({ data, where: { id } });
   }

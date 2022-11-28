@@ -33,3 +33,11 @@ message GoogleAuthRequest {
 message GoogleAuthResponse {
   string cookieHeader = 1;
 }
+
+message GetUserByIdsRequest {
+  repeated string userIds = 1;
+}
+
+message GetUserByIdsResponse {
+  repeated User users = 1;
+}

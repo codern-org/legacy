@@ -8,4 +8,5 @@ service AuthService {
   rpc Logout(LogoutRequest) returns (Empty);
   rpc GetGoogleOAuthUrl(Empty) returns (GoogleAuthUrlResponse);
   rpc LoginWithGoogle(GoogleAuthRequest) returns (GoogleAuthResponse);
+  rpc GetUserByIds(GetUserByIdsRequest) returns (GetUserByIdsResponse);
 }

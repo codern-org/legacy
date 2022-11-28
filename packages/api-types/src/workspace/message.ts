@@ -36,7 +36,7 @@ export type GetAllWorkspacesByUserIdResponse = {
 };
 
 export type PublicWorkspaceWithParticipants = Workspace & {
-  participants: Omit<WorkspaceParticipants, 'workspaceId'>[],
+  participants: Omit<WorkspaceParticipants & { profileUrl: string }, 'workspaceId'>[],
 };
 
 export type GetWorkspaceByIdRequest = {

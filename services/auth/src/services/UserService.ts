@@ -44,6 +44,10 @@ export class UserService {
     return user;
   }
 
+  public async getUserByIds(ids: string[]): Promise<User[]> {
+    return this.userRepository.getUsersWhere({ id: { in: ids } });
+  }
+
   public async registerUserOrThrow(email: string, password: string): Promise<void> {
     const registeredUser = await this.getUserWithSelfProvider(email);
     if (registeredUser) throw new ExpectedDuplicatedError(UserError.Duplicated);

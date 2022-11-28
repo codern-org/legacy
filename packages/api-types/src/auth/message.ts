@@ -29,3 +29,11 @@ export type GoogleAuthRequest = {
 export type GoogleAuthResponse = {
   cookieHeader: string,
 };
+
+export type GetUserByIdsRequest = {
+  userIds: string[],
+};
+
+export type GetUserByIdsResponse = {
+  users: User[],
+};

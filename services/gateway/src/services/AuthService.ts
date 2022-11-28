@@ -1,7 +1,8 @@
 import { Observable } from 'rxjs';
 import {
-  AuthRequest, AuthResponse, GoogleAuthRequest,
-  GoogleAuthResponse, GoogleAuthUrlResponse, LogoutRequest,
+  AuthRequest, AuthResponse, GetUserByIdsRequest,
+  GetUserByIdsResponse, GoogleAuthRequest, GoogleAuthResponse,
+  GoogleAuthUrlResponse, LogoutRequest,
 } from 'api-types';
 
 export interface AuthService {
@@ -13,5 +14,7 @@ export interface AuthService {
   getGoogleOAuthUrl(any: unknown): Observable<GoogleAuthUrlResponse>;
 
   loginWithGoogle(data: GoogleAuthRequest): Observable<GoogleAuthResponse>;
+
+  getUserByIds(data: GetUserByIdsRequest): Observable<GetUserByIdsResponse>;
 
 }
