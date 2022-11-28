@@ -2,10 +2,14 @@ export type AuthRequest = {
   session: string,
 };
 
-export type AuthResponse = {
+export type User = {
   id: string,
   email: string,
   profileUrl: string,
+};
+
+export type AuthResponse = {
+  user: User,
 };
 
 export type LogoutRequest = {

@@ -1,9 +1,8 @@
 import bcrypt from 'bcrypt';
 import { Injectable } from '@nestjs/common';
-import { User } from '@prisma/client';
 import {
-  AuthResponse, ExpectedInvalidError, ExpectedNotFoundError,
-  GoogleAuthRequest,
+  ExpectedInvalidError, ExpectedNotFoundError, GoogleAuthRequest,
+  User,
 } from 'api-types';
 import { GoogleService } from '@/services/GoogleService';
 import { UserService } from '@/services/UserService';
@@ -27,7 +26,7 @@ export class AuthService {
     this.userService = userService;
   }
 
-  public async authenticateOrThrow(incomingSession: string): Promise<AuthResponse> {
+  public async authenticateOrThrow(incomingSession: string): Promise<User> {
     const session = await this.sessionService.validateSessionOrThrow(incomingSession);
     const user = await this.userService.getUserFromSessionId(session.id);
     if (!user) throw new ExpectedNotFoundError(AuthError.NotFoundFromSession);

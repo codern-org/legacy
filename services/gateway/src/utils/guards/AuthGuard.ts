@@ -4,7 +4,7 @@ import {
 import { ClientGrpc } from '@nestjs/microservices';
 import { FastifyRequest } from 'fastify';
 import { firstValueFrom } from 'rxjs';
-import { AuthResponse } from 'api-types';
+import { User } from 'api-types';
 import { AuthService } from '@/services/AuthService';
 
 @Injectable()
@@ -23,14 +23,14 @@ export class AuthGuard implements CanActivate {
     if (!session) throw new UnauthorizedException();
 
     const authService = this.client.getService<AuthService>('AuthService');
-    const result = await firstValueFrom(authService.authenticate({ session }));
+    const { user } = await firstValueFrom(authService.authenticate({ session }));
 
     // Mutate user data from session into request instance
-    request.user = result;
+    request.user = user;
 
-    return !!result.id;
+    return !!user.id;
   }
 
 }
 
-export type UserData = AuthResponse;
+export type UserData = User;

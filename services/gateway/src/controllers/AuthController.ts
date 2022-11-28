@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { firstValueFrom, Observable } from 'rxjs';
-import { AuthResponse, GoogleAuthUrlResponse } from 'api-types';
+import { GoogleAuthUrlResponse } from 'api-types';
 import { FastifyReply } from 'fastify';
 import { ConfigService } from '@nestjs/config';
 import { AuthService } from '@/services/AuthService';
@@ -28,7 +28,7 @@ export class AuthController {
 
   @Get('/me')
   @UseGuards(AuthGuard)
-  public authenticate(@User() userData: UserData): AuthResponse {
+  public authenticate(@User() userData: UserData): UserData {
     return userData;
   }
 

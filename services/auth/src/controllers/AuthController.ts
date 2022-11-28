@@ -23,7 +23,8 @@ export class AuthController {
 
   @GrpcMethod('AuthService')
   public async authenticate(data: AuthRequest): Promise<AuthResponse> {
-    return this.authService.authenticateOrThrow(data.session);
+    const user = await this.authService.authenticateOrThrow(data.session);
+    return { user };
   }
 
   @GrpcMethod('AuthService')
