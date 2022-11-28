@@ -27,7 +27,7 @@ model Submission {
   status     SubmissionStatus
   result     String?
   filePath   String
-  uploadedAt BigInt
+  uploadedAt DateTime
 }
 
 model Editor {
@@ -35,7 +35,7 @@ model Editor {
   questionId Int
   language   String
   codePath   String
-  savedAt    BigInt
+  savedAt    DateTime
 
   @@id([userId, questionId, language])
 }

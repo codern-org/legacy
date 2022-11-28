@@ -14,7 +14,7 @@ model User {
   password       String?
   profileUrl     String
   provider       AuthProvider
-  createdAt      BigInt
+  createdAt      DateTime
   session        Session[]
   userPermission UserPermission[]
   Organization   Organization[]
@@ -31,8 +31,8 @@ model Session {
   userId     String
   ipAddress  String
   userAgent  String
-  expiryDate BigInt
-  createdAt  BigInt
+  expiryDate DateTime
+  createdAt  DateTime
 }
 
 model Organization {

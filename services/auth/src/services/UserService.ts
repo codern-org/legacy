@@ -62,7 +62,7 @@ export class UserService {
       password: hashedPassword,
       profileUrl: avatarUrl,
       provider: 'SELF',
-      createdAt: Date.now(),
+      createdAt: new Date(),
     });
   }
 
@@ -76,7 +76,7 @@ export class UserService {
       email: '',
       profileUrl: avatarUrl,
       provider,
-      createdAt: Date.now(),
+      createdAt: new Date(),
     };
     return this.userRepository.createUser(user);
   }
