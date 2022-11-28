@@ -21,13 +21,13 @@ message Workspace {
   string name = 2;
   string profilePath = 3;
   string ownerId = 4;
-  int64 createdAt = 5;
+  uint64 createdAt = 5;
 }
 
 message WorkspaceParticipants {
   int32 workspaceId = 1;
   string userId = 2;
-  int64 joinedAt = 3;
+  uint64 joinedAt = 3;
 }
 
 message WorkspaceWithParticipants {
@@ -58,7 +58,7 @@ message Question {
   string detailPath = 4;
   string level = 5;
   int32 workspaceId = 6;
-  int64 createdAt = 7;
+  uint64 createdAt = 7;
 }
 
 message GetQuestionsByWorkspaceIdResponse {
