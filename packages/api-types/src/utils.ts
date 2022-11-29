@@ -1,5 +1,3 @@
-// https://stackoverflow.com/questions/72190916/replace-a-specific-type-with-another-type-in-a-nested-object-typescript
-
 export type ReplaceType<Type, FromType, ToType> =
   Type extends FromType
     ? ToType
@@ -12,3 +10,7 @@ export type ReplaceTypes<ObjType extends object, FromType, ToType> = {
 };
 
 export type DateToNumber<T extends object> = ReplaceTypes<T, Date, number>;
+
+export type RequiredNotNull<T> = {
+  [P in keyof T]: NonNullable<T[P]>
+};

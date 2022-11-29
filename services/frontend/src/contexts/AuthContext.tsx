@@ -1,5 +1,5 @@
 import { fetch } from '@/utils/Fetch';
-import { User } from 'api-types';
+import { RequiredNotNull, User } from 'api-types';
 import { ComponentChildren, createContext } from 'preact';
 import { route } from 'preact-router';
 import { useCallback, useContext, useEffect, useMemo, useState } from 'preact/hooks';
@@ -73,5 +73,13 @@ export const AuthProvider = ({
 };
 
 export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context.user) {
+    throw new Error(`Reached logged-in only component with null in 'user' context`);
+  }
+  return context as RequiredNotNull<AuthContextType>;
+};
+
+export const usePreAuth = () => {
   return useContext(AuthContext);
 };
