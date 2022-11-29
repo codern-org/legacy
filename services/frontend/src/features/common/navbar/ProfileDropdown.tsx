@@ -2,24 +2,19 @@ import { SwitchThemeButton } from '@/features/common/SwitchThemeButton';
 import { Text } from '@/features/common/Text';
 import { Popover, Transition } from '@headlessui/react'
 import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/outline';
-import { route } from 'preact-router';
 import MockupAvatar from '@/assets/mockup-avatar.svg';
 import { ProfileDropdownButton } from '@/features/common/navbar/ProfileDropdownButton';
-import { fetch } from '@/utils/Fetch';
+import { useAuth } from '@/contexts/AuthContext';
 
 export const ProfileDropdown = () => {
-  const logout = () => {
-    fetch
-      .get('/auth/logout')
-      .finally(() => route('/'));
-  };
+  const { user, logout } = useAuth();
 
   return (
     <Popover className="relative flex z-[9999]">
       {({ open }: { open: boolean }) => (
         <>
           <Popover.Button className="focus:outline-none">
-            <img src={MockupAvatar} alt="" className="w-8 h-8 rounded-md hover:border-2 border-black dark:border-neutral-300" />
+            <img src={user?.profileUrl} alt="" className="w-8 h-8 rounded-md hover:border-2 border-black dark:border-neutral-300" />
           </Popover.Button>
 
           <Transition
@@ -32,11 +27,15 @@ export const ProfileDropdown = () => {
             leaveTo="transform scale-80 opacity-0 -translate-y-2"
           >
             <Popover.Panel className="absolute top-0 right-0 border border-neutral-300 dark:border-neutral-700 transform translate-y-10 rounded-md shadow-lg transition-theme">
-              <div className="bg-white dark:bg-black flex flex-col p-2 rounded-md transition-theme">
-                <span className="flex flex-row justify-between items-center space-x-2 px-4 py-2">
+              <div className="flex flex-col space-y-3 p-4 bg-white dark:bg-black rounded-md transition-theme">
+                <Text color="primary">{user?.email}</Text>
+
+                <span className="flex flex-row justify-between items-center space-x-2">
                   <Text color="secondary" className="text-sm">Theme</Text>
                   <SwitchThemeButton direction="down" />
                 </span>
+
+                <div className="border-t border-neutral-300 dark:border-neutral-700" />
 
                 <ProfileDropdownButton
                   icon={<ArrowLeftOnRectangleIcon />}
