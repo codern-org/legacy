@@ -10,14 +10,12 @@ import { useEffect, useState } from 'preact/hooks';
 const EditorPane = lazy(() => import('@/features/question/EditorPane'));
 
 type QuestionPageProps = {
-  path: string,
   creatorId?: string,
   workspaceId?: string,
   questionId?: string,
 };
 
 export const QuestionPage = ({
-  path,
   creatorId,
   workspaceId,
   questionId,

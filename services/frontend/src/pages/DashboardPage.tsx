@@ -3,13 +3,7 @@ import { Navbar } from '@/features/common/navbar/Navbar';
 import { DashboardHeader } from '@/features/dashboard/DashboardHeader';
 import { WorkspaceDeck } from '@/features/dashboard/workspace/WorkspaceDeck';
 
-type DashboardPageProps = {
-  path: string,
-};
-
-export const DashboardPage = ({
-  path,
-}: DashboardPageProps) => {
+export const DashboardPage = () => {
   return (
     <div className="h-screen flex flex-col">
       <Navbar />

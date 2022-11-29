@@ -3,13 +3,7 @@ import { LoginForm } from '@/features/auth/login-form/LoginForm';
 import { SwitchThemeButton } from '@/features/common/SwitchThemeButton';
 import { Copyright } from '@/features/common/Copyright';
 
-type IndexPageProps = {
-  path: string,
-};
-
-export const IndexPage = ({
-  path,
-}: IndexPageProps) => {
+export const IndexPage = () => {
   return (
     <>
       <header className="absolute top-0 w-full lg:w-1/2 p-6">

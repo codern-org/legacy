@@ -6,13 +6,11 @@ import { ChartBarIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { route } from 'preact-router';
 
 type WorkspacePageProps = {
-  path: string,
   workspaceId?: string,
   creatorId?: string,
 };
 
 export const WorkspacePage = ({
-  path,
   workspaceId,
   creatorId,
 }: WorkspacePageProps) => {
