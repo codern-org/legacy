@@ -4,7 +4,7 @@ import { Prisma } from '@prisma/client';
 import {
   ExpectedDuplicatedError, ExpectedError, GrpcStatus,
   ExpectedInvalidError, ExpectedNotFoundError, ExpectedForbiddenError,
-} from 'api-types';
+} from '@codern-api/internal';
 import { Observable, throwError } from 'rxjs';
 
 @Catch()

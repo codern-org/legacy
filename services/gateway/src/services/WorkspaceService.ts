@@ -3,7 +3,7 @@ import {
   GetQuestionByIdResponse, GetQuestionsByWorkspaceIdRequest, GetQuestionsByWorkspaceIdResponse,
   GetWorkspaceByIdRequest, GetWorkspaceByIdResponse, ValidateQuestionInWorkspaceRequest,
   ValidateUserInWorkspaceRequest,
-} from 'api-types';
+} from '@codern-api/internal';
 import { Observable } from 'rxjs';
 
 export interface WorkspaceService {

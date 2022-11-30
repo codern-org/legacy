@@ -12,9 +12,10 @@ model User {
   id             String           @id
   email          String
   password       String?
+  displayName    String
   profileUrl     String
   provider       AuthProvider
-  createdAt      DateTime
+  createdAt      Int              @db.UnsignedInt
   session        Session[]
   userPermission UserPermission[]
   Organization   Organization[]
@@ -26,13 +27,13 @@ enum AuthProvider {
 }
 
 model Session {
-  id         String   @id
-  user       User     @relation(fields: [userId], references: [id])
-  userId     String
-  ipAddress  String
-  userAgent  String
-  expiryDate DateTime
-  createdAt  DateTime
+  id        String @id
+  user      User   @relation(fields: [userId], references: [id])
+  userId    String
+  ipAddress String
+  userAgent String
+  expiryAt  Int    @db.UnsignedInt
+  createdAt Int    @db.UnsignedInt
 }
 
 model Organization {

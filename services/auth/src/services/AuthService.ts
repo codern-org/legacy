@@ -2,8 +2,10 @@ import bcrypt from 'bcrypt';
 import { Injectable } from '@nestjs/common';
 import {
   ExpectedInvalidError, ExpectedNotFoundError, GoogleAuthRequest,
-  User,
-} from 'api-types';
+  AuthProvider,
+} from '@codern-api/internal';
+import { Timestamp } from '@codern/shared';
+import { User } from '@prisma/client';
 import { GoogleService } from '@/services/GoogleService';
 import { UserService } from '@/services/UserService';
 import { SessionService } from '@/services/SessionService';
@@ -28,16 +30,11 @@ export class AuthService {
 
   public async authenticateOrThrow(incomingSession: string): Promise<User> {
     const session = await this.sessionService.validateSessionOrThrow(incomingSession);
-    const user = await this.userService.getUserFromSessionId(session.id);
-    if (!user) throw new ExpectedNotFoundError(AuthError.NotFoundFromSession);
-    return {
-      id: user.id,
-      email: user.email,
-      profileUrl: user.profileUrl,
-    };
+    const user = await this.userService.getUserFromSessionIdOrThrow(session.id);
+    return user;
   }
 
-  public async logout(incomingSession: string): Promise<void> {
+  public async logoutOrThrow(incomingSession: string): Promise<void> {
     const session = await this.sessionService.validateSessionOrThrow(incomingSession);
     await this.sessionService.destroySession(session.id);
   }
@@ -52,13 +49,28 @@ export class AuthService {
     return user;
   }
 
-  public async loginWithGoogle(data: GoogleAuthRequest): Promise<string> {
+  public async loginWithGoogleOrThrow(data: GoogleAuthRequest): Promise<string> {
     const token = await this.googleService.getToken(data.code);
     const googleUser = await this.googleService.getGoogleUser(token);
-    const userId = this.userService.hashUserId(googleUser.id, 'GOOGLE');
+    const userId = this.userService.hashUserId(googleUser.id, AuthProvider.GOOGLE);
 
-    const user = await this.userService.getOrCreateUser(userId, 'GOOGLE');
-    await this.userService.updateEmailOrThrow(userId, googleUser.email);
+    let user: User;
+
+    try {
+      user = await this.userService.getUserOrThrow(userId);
+    } catch (error) {
+      if (!(error instanceof ExpectedNotFoundError)) throw error;
+      const profileUrl = await this.userService.generateAvatarOrThrow(userId);
+      user = await this.userService.createUser({
+        id: userId,
+        email: googleUser.email,
+        password: null,
+        displayName: googleUser.name,
+        profileUrl,
+        provider: AuthProvider.GOOGLE,
+        createdAt: Timestamp.now(),
+      });
+    }
 
     return this.sessionService.createSession(user.id, data.userAgent, data.ipAddress);
   }

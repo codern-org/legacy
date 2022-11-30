@@ -1,9 +1,9 @@
+import querystring from 'querystring';
 import { HttpService } from '@nestjs/axios';
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AxiosError, AxiosResponse } from 'axios';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
-import querystring from 'querystring';
 import { catchError, firstValueFrom, OperatorFunction } from 'rxjs';
 
 type GoogleApiError = {

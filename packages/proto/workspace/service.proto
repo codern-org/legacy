@@ -1,6 +1,7 @@
 syntax = "proto3";
 package codern.workspace;
 
+import "workspace/entity.proto";
 import "workspace/message.proto";
 
 service WorkspaceService {

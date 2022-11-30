@@ -1,4 +1,5 @@
-import { PublicWorkspaceWithParticipants, User, WorkspaceWithParticipants } from 'api-types';
+import { PublicWorkspaceWithParticipants } from '@codern-api/external';
+import { User, WorkspaceWithParticipants } from '@codern-api/internal';
 
 export const workspaceWithParticipants = (
   workspaces: WorkspaceWithParticipants[],

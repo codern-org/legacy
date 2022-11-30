@@ -1,5 +1,5 @@
 {
-  "name": "api-types",
+  "name": "@codern-api/external",
   "version": "0.0.0",
   "private": true,
   "main": "dist/index.js",
@@ -8,7 +8,11 @@
     "build": "tsc",
     "clean": "rimraf node_modules .turbo dist",
     "dev": "tsc -w",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "postinstall": "pnpm build"
+  },
+  "dependencies": {
+    "@codern-api/internal": "workspace:*"
   },
   "devDependencies": {
     "eslint-config-vectier": "workspace:*",

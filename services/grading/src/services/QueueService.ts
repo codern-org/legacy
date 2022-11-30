@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientRMQ } from '@nestjs/microservices';
-import { Language } from 'api-types';
+import { Language } from '@codern-api/internal';
 import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable()

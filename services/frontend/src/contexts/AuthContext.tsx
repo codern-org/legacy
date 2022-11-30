@@ -1,5 +1,6 @@
 import { fetch } from '@/utils/Fetch';
-import { RequiredNotNull, User } from 'api-types';
+import { RequiredNotNull } from '@/utils/Types';
+import { PublicUser } from '@codern-api/external';
 import { ComponentChildren, createContext } from 'preact';
 import { route } from 'preact-router';
 import { useCallback, useContext, useEffect, useMemo, useState } from 'preact/hooks';
@@ -11,7 +12,7 @@ export enum AuthStatus {
 };
 
 type AuthContextType = {
-  user: User | null,
+  user: PublicUser | null,
   authStatus: AuthStatus,
   auth: () => void,
   logout: () => void,
@@ -31,13 +32,13 @@ export type AuthProviderProps = {
 export const AuthProvider = ({
   children,
 }: AuthProviderProps) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<PublicUser | null>(null);
   const [authStatus, setAuthStatus] = useState<AuthStatus>(AuthStatus.AUTHENTICATING);
 
   const auth = useCallback(() => {
     // TODO: ux on error
     fetch
-      .get<User>('/auth/me')
+      .get<PublicUser>('/auth/me')
       .then((response) => {
         setAuthStatus(AuthStatus.AUTHENTICATED);
         setUser(response.data);

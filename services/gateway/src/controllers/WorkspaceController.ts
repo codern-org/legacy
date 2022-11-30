@@ -4,10 +4,13 @@ import {
 } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { firstValueFrom, map, Observable } from 'rxjs';
-import { PublicWorkspaceWithParticipants, Question, Workspace } from 'api-types';
+import {
+  PublicUser, PublicWorkspaceWithParticipants, PublicQuestion,
+  PublicWorkspace,
+} from '@codern-api/external';
 import { WorkspaceService } from '@/services/WorkspaceService';
 import { User } from '@/utils/decorators/AuthDecorator';
-import { AuthGuard, UserData } from '@/utils/guards/AuthGuard';
+import { AuthGuard } from '@/utils/guards/AuthGuard';
 import { WorkspaceGuard } from '@/utils/guards/WorkspaceGuard';
 import { AuthService } from '@/services/AuthService';
 import { workspaceWithParticipants } from '@/utils/Serializer';
@@ -29,7 +32,7 @@ export class WorkspaceController {
   @Get('/')
   @UseGuards(AuthGuard)
   public async getAllWorkspacesByUserId(
-    @User() userData: UserData,
+    @User() userData: PublicUser,
   ): Promise<PublicWorkspaceWithParticipants[]> {
     const userId = userData.id;
     const { workspaces } = await firstValueFrom(
@@ -48,7 +51,7 @@ export class WorkspaceController {
   @UseGuards(AuthGuard, WorkspaceGuard)
   public getWorkspaceById(
     @Param('workspaceId') workspaceId: number,
-  ): Observable<Workspace> {
+  ): Observable<PublicWorkspace> {
     return this.workspaceService
       .getWorkspaceById({ workspaceId })
       .pipe(map((response) => response.workspace));
@@ -58,7 +61,7 @@ export class WorkspaceController {
   @UseGuards(AuthGuard, WorkspaceGuard)
   public getQuestionsByWorkspaceId(
     @Param('workspaceId') id: number,
-  ): Observable<Question[]> {
+  ): Observable<PublicQuestion[]> {
     return this.workspaceService
       .getQuestionsByWorkspaceId({ id })
       .pipe(map((response) => response.questions));
@@ -68,7 +71,7 @@ export class WorkspaceController {
   @UseGuards(AuthGuard, WorkspaceGuard)
   public getQuestionById(
     @Param('questionId') id: number,
-  ): Observable<Question> {
+  ): Observable<PublicQuestion> {
     return this.workspaceService
       .getQuestionById({ id })
       .pipe(map((response) => response.question));

@@ -5,10 +5,10 @@ import {
 import { ClientGrpc } from '@nestjs/microservices';
 import { MultipartFile } from '@fastify/multipart';
 import { firstValueFrom } from 'rxjs';
-import { GradeResponse } from 'api-types';
+import { PublicGradeResponse, PublicUser } from '@codern-api/external';
 import { FileService } from '@/services/FileService';
 import { GradingService } from '@/services/GradingService';
-import { AuthGuard, UserData } from '@/utils/guards/AuthGuard';
+import { AuthGuard } from '@/utils/guards/AuthGuard';
 import { FileGuard } from '@/utils/guards/FileGuard';
 import { User } from '@/utils/decorators/AuthDecorator';
 import { File } from '@/utils/decorators/FileDecorator';
@@ -33,9 +33,9 @@ export class GradingController {
   @UseGuards(AuthGuard, FileGuard, WorkspaceGuard)
   public async grade(
     @File() file: MultipartFile,
-    @User() user: UserData,
+    @User() user: PublicUser,
     @Param() params: GradeParams,
-  ): Promise<GradeResponse> {
+  ): Promise<PublicGradeResponse> {
     const { questionId, language } = params;
 
     const { submissionId, filePath } = await firstValueFrom(this.gradingService.submit({

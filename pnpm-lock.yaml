@@ -14,7 +14,20 @@ importers:
       rimraf: 3.0.2
       turbo: 1.6.1
 
-  packages/api-types:
+  packages/api-types-external:
+    specifiers:
+      '@codern-api/internal': workspace:*
+      eslint-config-vectier: workspace:*
+      tsconfig: workspace:*
+      typescript: ^4.8.4
+    dependencies:
+      '@codern-api/internal': link:../api-types-internal
+    devDependencies:
+      eslint-config-vectier: link:../eslist-config-vectier
+      tsconfig: link:../tsconfig
+      typescript: 4.8.4
+
+  packages/api-types-internal:
     specifiers:
       eslint-config-vectier: workspace:*
       tsconfig: workspace:*
@@ -57,6 +70,16 @@ importers:
       tsconfig: link:../tsconfig
       typescript: 4.8.4
 
+  packages/shared:
+    specifiers:
+      eslint-config-vectier: workspace:*
+      tsconfig: workspace:*
+      typescript: ^4.8.4
+    devDependencies:
+      eslint-config-vectier: link:../eslist-config-vectier
+      tsconfig: link:../tsconfig
+      typescript: 4.8.4
+
   packages/tailwind:
     specifiers:
       '@tailwindcss/typography': ^0.5.7
@@ -76,6 +99,8 @@ importers:
 
   services/auth:
     specifiers:
+      '@codern-api/internal': workspace:*
+      '@codern/shared': workspace:*
       '@grpc/grpc-js': ^1.7.3
       '@grpc/proto-loader': ^0.7.3
       '@nestjs/axios': ^1.0.0
@@ -83,11 +108,10 @@ importers:
       '@nestjs/config': ^2.2.0
       '@nestjs/core': ^9.1.6
       '@nestjs/microservices': ^9.1.6
-      '@prisma/client': ^4.5.0
+      '@prisma/client': ^4.6.0
       '@types/bcrypt': ^5.0.0
       '@types/cookie': ^0.5.1
       '@types/node': ^18.11.4
-      api-types: workspace:*
       axios: ^1.1.3
       bcrypt: ^5.1.0
       cookie: ^0.5.0
@@ -95,7 +119,7 @@ importers:
       form-data: ^4.0.0
       logger: workspace:*
       nest-winston: ^1.8.0
-      prisma: ^4.5.0
+      prisma: ^4.6.0
       reflect-metadata: ^0.1.13
       rxjs: ^7.5.7
       ts-node-dev: ^2.0.0
@@ -105,6 +129,8 @@ importers:
       typescript: ^4.8.4
       winston: ^3.8.2
     dependencies:
+      '@codern-api/internal': link:../../packages/api-types-internal
+      '@codern/shared': link:../../packages/shared
       '@grpc/grpc-js': 1.7.3
       '@grpc/proto-loader': 0.7.3
       '@nestjs/axios': 1.0.0_yjxybkvltbh2d3oivnq5etx3oi
@@ -112,8 +138,7 @@ importers:
       '@nestjs/config': 2.2.0_yjxybkvltbh2d3oivnq5etx3oi
       '@nestjs/core': 9.1.6_chrjhvo72slcybvlgaz2t656fi
       '@nestjs/microservices': 9.1.6_hga4b3bo3a6pfsryj5ex4zoeoy
-      '@prisma/client': 4.5.0_prisma@4.5.0
-      api-types: link:../../packages/api-types
+      '@prisma/client': 4.6.1_prisma@4.6.1
       axios: 1.1.3
       bcrypt: 5.1.0
       cookie: 0.5.0
@@ -128,7 +153,7 @@ importers:
       '@types/cookie': 0.5.1
       '@types/node': 18.11.4
       eslint-config-vectier: link:../../packages/eslist-config-vectier
-      prisma: 4.5.0
+      prisma: 4.6.1
       ts-node-dev: 2.0.0_6hf6ijjdmrvgn4gwd23tocsh2m
       tsc-alias: 1.7.0
       tsconfig: link:../../packages/tsconfig
@@ -138,13 +163,14 @@ importers:
   services/frontend:
     specifiers:
       '@babel/core': ^7.0.0
+      '@codern-api/external': workspace:*
+      '@codern/shared': workspace:*
       '@headlessui/react': ^1.7.3
       '@heroicons/react': ^2.0.12
       '@monaco-editor/react': ^4.4.6
       '@preact/preset-vite': ^2.4.0
       '@types/dompurify': ^2.3.4
       '@types/marked': ^4.0.7
-      api-types: workspace:*
       axios: ^1.1.3
       dompurify: ^2.4.0
       jotai: ^1.9.0
@@ -158,10 +184,11 @@ importers:
       typescript: ^4.6.4
       vite: ^3.2.0
     dependencies:
+      '@codern-api/external': link:../../packages/api-types-external
+      '@codern/shared': link:../../packages/shared
       '@headlessui/react': 1.7.3_ive3jjn476xyi3ikfsqwmh5x74
       '@heroicons/react': 2.0.12_@preact+compat@17.1.2
       '@monaco-editor/react': 4.4.6_wraufuwhvcax7nr37vxnuxhpbm
-      api-types: link:../../packages/api-types
       axios: 1.1.3
       dompurify: 2.4.0
       jotai: 1.9.0_z7hw6gxg26aog2oz4ajrhgrmhu
@@ -182,6 +209,9 @@ importers:
 
   services/gateway:
     specifiers:
+      '@codern-api/external': workspace:*
+      '@codern-api/internal': workspace:*
+      '@codern/shared': workspace:*
       '@fastify/cookie': ^8.3.0
       '@fastify/multipart': ^7.3.0
       '@nestjs/axios': ^1.0.0
@@ -191,7 +221,6 @@ importers:
       '@nestjs/microservices': ^9.1.6
       '@nestjs/platform-fastify': ^9.1.6
       '@types/node': ^18.11.4
-      api-types: workspace:*
       axios: ^1.1.3
       class-transformer: ^0.5.1
       class-validator: ^0.13.2
@@ -209,6 +238,9 @@ importers:
       typescript: ^4.8.4
       winston: ^3.8.2
     dependencies:
+      '@codern-api/external': link:../../packages/api-types-external
+      '@codern-api/internal': link:../../packages/api-types-internal
+      '@codern/shared': link:../../packages/shared
       '@fastify/cookie': 8.3.0
       '@fastify/multipart': 7.3.0
       '@nestjs/axios': 1.0.0_yjxybkvltbh2d3oivnq5etx3oi
@@ -217,7 +249,6 @@ importers:
       '@nestjs/core': 9.1.6_chrjhvo72slcybvlgaz2t656fi
       '@nestjs/microservices': 9.1.6_abdwileke2hqrs3f5gykhzlvd4
       '@nestjs/platform-fastify': 9.1.6_6whalgrsvisgjemghedgkfq7dm
-      api-types: link:../../packages/api-types
       axios: 1.1.3
       class-transformer: 0.5.1
       class-validator: 0.13.2
@@ -239,6 +270,8 @@ importers:
 
   services/grading:
     specifiers:
+      '@codern-api/internal': workspace:*
+      '@codern/shared': workspace:*
       '@grpc/grpc-js': ^1.7.3
       '@grpc/proto-loader': ^0.7.3
       '@nestjs/axios': ^1.0.0
@@ -246,16 +279,15 @@ importers:
       '@nestjs/config': ^2.2.0
       '@nestjs/core': ^9.1.6
       '@nestjs/microservices': ^9.1.6
-      '@prisma/client': ^4.5.0
+      '@prisma/client': ^4.6.0
       '@types/node': ^18.11.4
       amqp-connection-manager: ^4.1.9
       amqplib: ^0.10.3
-      api-types: workspace:*
       axios: ^1.1.3
       eslint-config-vectier: workspace:*
       logger: workspace:*
       nest-winston: ^1.8.0
-      prisma: ^4.5.0
+      prisma: ^4.6.0
       reflect-metadata: ^0.1.13
       rxjs: ^7.5.7
       ts-node: ^10.9.1
@@ -266,6 +298,8 @@ importers:
       typescript: ^4.8.4
       winston: ^3.8.2
     dependencies:
+      '@codern-api/internal': link:../../packages/api-types-internal
+      '@codern/shared': link:../../packages/shared
       '@grpc/grpc-js': 1.7.3
       '@grpc/proto-loader': 0.7.3
       '@nestjs/axios': 1.0.0_yjxybkvltbh2d3oivnq5etx3oi
@@ -273,10 +307,9 @@ importers:
       '@nestjs/config': 2.2.0_yjxybkvltbh2d3oivnq5etx3oi
       '@nestjs/core': 9.1.6_chrjhvo72slcybvlgaz2t656fi
       '@nestjs/microservices': 9.1.6_xoefyg7re5wksxjszbe4d7n3mu
-      '@prisma/client': 4.5.0_prisma@4.5.0
+      '@prisma/client': 4.6.1_prisma@4.6.1
       amqp-connection-manager: 4.1.9_amqplib@0.10.3
       amqplib: 0.10.3
-      api-types: link:../../packages/api-types
       axios: 1.1.3
       logger: link:../../packages/logger
       nest-winston: 1.8.0_uysm6ztl6xbfnrp6lpbq2yiitm
@@ -286,7 +319,7 @@ importers:
     devDependencies:
       '@types/node': 18.11.4
       eslint-config-vectier: link:../../packages/eslist-config-vectier
-      prisma: 4.5.0
+      prisma: 4.6.1
       ts-node: 10.9.1_6hf6ijjdmrvgn4gwd23tocsh2m
       ts-node-dev: 2.0.0_6hf6ijjdmrvgn4gwd23tocsh2m
       tsc-alias: 1.7.0
@@ -314,6 +347,8 @@ importers:
 
   services/workspace:
     specifiers:
+      '@codern-api/internal': workspace:*
+      '@codern/shared': workspace:*
       '@grpc/grpc-js': ^1.7.3
       '@grpc/proto-loader': ^0.7.3
       '@nestjs/axios': ^1.0.0
@@ -321,14 +356,13 @@ importers:
       '@nestjs/config': ^2.2.0
       '@nestjs/core': ^9.1.6
       '@nestjs/microservices': ^9.1.6
-      '@prisma/client': ^4.5.0
+      '@prisma/client': ^4.6.0
       '@types/node': ^18.11.4
-      api-types: workspace:*
       axios: ^1.1.3
       eslint-config-vectier: workspace:*
       logger: workspace:*
       nest-winston: ^1.8.0
-      prisma: ^4.5.0
+      prisma: ^4.6.0
       reflect-metadata: ^0.1.13
       rxjs: ^7.5.7
       ts-node: ^10.9.1
@@ -339,6 +373,8 @@ importers:
       typescript: ^4.8.4
       winston: ^3.8.2
     dependencies:
+      '@codern-api/internal': link:../../packages/api-types-internal
+      '@codern/shared': link:../../packages/shared
       '@grpc/grpc-js': 1.7.3
       '@grpc/proto-loader': 0.7.3
       '@nestjs/axios': 1.0.0_yjxybkvltbh2d3oivnq5etx3oi
@@ -346,8 +382,7 @@ importers:
       '@nestjs/config': 2.2.0_yjxybkvltbh2d3oivnq5etx3oi
       '@nestjs/core': 9.1.6_chrjhvo72slcybvlgaz2t656fi
       '@nestjs/microservices': 9.1.6_hga4b3bo3a6pfsryj5ex4zoeoy
-      '@prisma/client': 4.5.0_prisma@4.5.0
-      api-types: link:../../packages/api-types
+      '@prisma/client': 4.6.1_prisma@4.6.1
       axios: 1.1.3
       logger: link:../../packages/logger
       nest-winston: 1.8.0_uysm6ztl6xbfnrp6lpbq2yiitm
@@ -357,7 +392,7 @@ importers:
     devDependencies:
       '@types/node': 18.11.4
       eslint-config-vectier: link:../../packages/eslist-config-vectier
-      prisma: 4.5.0
+      prisma: 4.6.1
       ts-node: 10.9.1_6hf6ijjdmrvgn4gwd23tocsh2m
       ts-node-dev: 2.0.0_6hf6ijjdmrvgn4gwd23tocsh2m
       tsc-alias: 1.7.0
@@ -1236,8 +1271,8 @@ packages:
       - supports-color
     dev: true
 
-  /@prisma/client/4.5.0_prisma@4.5.0:
-    resolution: {integrity: sha512-B2cV0OPI1smhdYUxsJoLYQLoMlLH06MUxgFUWQnHodGMX98VRVXKmQE/9OcrTNkqtke5RC+YU24Szxd04tZA2g==}
+  /@prisma/client/4.6.1_prisma@4.6.1:
+    resolution: {integrity: sha512-M1+NNrMzqaOIxT7PBGcTs3IZo7d1EW/+gVQd4C4gUgWBDGgD9AcIeZnUSidgWClmpMSgVUdnVORjsWWGUameYA==}
     engines: {node: '>=14.17'}
     requiresBuild: true
     peerDependencies:
@@ -1246,16 +1281,16 @@ packages:
       prisma:
         optional: true
     dependencies:
-      '@prisma/engines-version': 4.5.0-43.0362da9eebca54d94c8ef5edd3b2e90af99ba452
-      prisma: 4.5.0
+      '@prisma/engines-version': 4.6.1-3.694eea289a8462c80264df36757e4fdc129b1b32
+      prisma: 4.6.1
     dev: false
 
-  /@prisma/engines-version/4.5.0-43.0362da9eebca54d94c8ef5edd3b2e90af99ba452:
-    resolution: {integrity: sha512-o7LyVx8PPJBLrEzLl6lpxxk2D5VnlM4Fwmrbq0NoT6pr5aa1OuHD9ZG+WJY6TlR/iD9bhmo2LNcxddCMr5Rv2A==}
+  /@prisma/engines-version/4.6.1-3.694eea289a8462c80264df36757e4fdc129b1b32:
+    resolution: {integrity: sha512-HUCmkXAU2jqp2O1RvNtbE+seLGLyJGEABZS/R38rZjSAafAy0WzBuHq+tbZMnD+b5OSCsTVtIPVcuvx1ySxcWQ==}
     dev: false
 
-  /@prisma/engines/4.5.0:
-    resolution: {integrity: sha512-4t9ir2SbQQr/wMCNU4YpHWp5hU14J2m3wHUZnGJPpmBF8YtkisxyVyQsKd1e6FyLTaGq8LOLhm6VLYHKqKNm+g==}
+  /@prisma/engines/4.6.1:
+    resolution: {integrity: sha512-3u2/XxvxB+Q7cMXHnKU0CpBiUK1QWqpgiBv28YDo1zOIJE3FCF8DI2vrp6vuwjGt5h0JGXDSvmSf4D4maVjJdw==}
     requiresBuild: true
 
   /@protobufjs/aspromise/1.1.2:
@@ -3785,13 +3820,13 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: true
 
-  /prisma/4.5.0:
-    resolution: {integrity: sha512-9Aeg4qiKlv9Wsjz4NO8k2CzRzlvS3A4FYVJ5+28sBBZ0eEwbiVOE/Jj7v6rZC1tFW2s4GSICQOAyuOjc6WsNew==}
+  /prisma/4.6.1:
+    resolution: {integrity: sha512-BR4itMCuzrDV4tn3e2TF+nh1zIX/RVU0isKtKoN28ADeoJ9nYaMhiuRRkFd2TZN8+l/XfYzoRKyHzUFXLQhmBQ==}
     engines: {node: '>=14.17'}
     hasBin: true
     requiresBuild: true
     dependencies:
-      '@prisma/engines': 4.5.0
+      '@prisma/engines': 4.6.1
 
   /process-warning/2.0.0:
     resolution: {integrity: sha512-+MmoAXoUX+VTHAlwns0h+kFUWFs/3FZy+ZuchkgjyOu3oioLAo2LB5aCfKPh2+P9O18i3m43tUEv3YqttSy0Ww==}

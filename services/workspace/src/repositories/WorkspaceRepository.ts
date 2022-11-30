@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma, Workspace, WorkspaceParticipants } from '@prisma/client';
-import { WorkspaceWithParticipants } from 'api-types';
+import { WorkspaceWithParticipants } from '@codern-api/internal';
 import { PrismaService } from '@/services/PrismaService';
 
 @Injectable()

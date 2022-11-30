@@ -2,7 +2,7 @@ import {
   GetSubmissionsRequest, GetSubmissionsResponse, GradeRequest,
   GradeResponse, SaveCodeRequest, SubmitRequest,
   SubmitResponse,
-} from 'api-types';
+} from '@codern-api/internal';
 import { Observable } from 'rxjs';
 
 export interface GradingService {

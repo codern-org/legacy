@@ -3,13 +3,13 @@ import {
   Inject, Ip, Query,
   Redirect, Res, UseGuards,
 } from '@nestjs/common';
+import { PublicGoogleAuthUrlResponse, PublicUser } from '@codern-api/external';
 import { ClientGrpc } from '@nestjs/microservices';
 import { firstValueFrom, Observable } from 'rxjs';
-import { GoogleAuthUrlResponse } from 'api-types';
 import { FastifyReply } from 'fastify';
 import { ConfigService } from '@nestjs/config';
 import { AuthService } from '@/services/AuthService';
-import { AuthGuard, UserData } from '@/utils/guards/AuthGuard';
+import { AuthGuard } from '@/utils/guards/AuthGuard';
 import { Session, User } from '@/utils/decorators/AuthDecorator';
 
 @Controller('/auth')
@@ -28,7 +28,7 @@ export class AuthController {
 
   @Get('/me')
   @UseGuards(AuthGuard)
-  public authenticate(@User() userData: UserData): UserData {
+  public authenticate(@User() userData: PublicUser): PublicUser {
     return userData;
   }
 
@@ -43,7 +43,7 @@ export class AuthController {
   }
 
   @Get('/google')
-  public getGoogleOAuthUrl(): Observable<GoogleAuthUrlResponse> {
+  public getGoogleOAuthUrl(): Observable<PublicGoogleAuthUrlResponse> {
     return this.authService.getGoogleOAuthUrl({});
   }
 

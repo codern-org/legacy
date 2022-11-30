@@ -1,0 +1,31 @@
+syntax = "proto3";
+package codern.workspace;
+
+message Workspace {
+  int32 id = 1;
+  string name = 2;
+  string profilePath = 3;
+  string ownerId = 4;
+  uint64 createdAt = 5;
+}
+
+message WorkspaceParticipants {
+  int32 workspaceId = 1;
+  string userId = 2;
+  uint64 joinedAt = 3;
+}
+
+message WorkspaceWithParticipants {
+  Workspace workspace = 1;
+  repeated WorkspaceParticipants participants = 2;
+};
+
+message Question {
+  int32 id = 1;
+  string name = 2;
+  string description = 3;
+  string detailPath = 4;
+  string level = 5;
+  int32 workspaceId = 6;
+  uint64 createdAt = 7;
+}

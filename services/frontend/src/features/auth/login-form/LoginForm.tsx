@@ -4,7 +4,7 @@ import { Button } from '@/features/common/Button';
 import { Input } from '@/features/common/Input';
 import { Text } from '@/features/common/Text';
 import { fetch } from '@/utils/Fetch';
-import { GoogleAuthUrlResponse } from 'api-types';
+import { PublicGoogleAuthUrlResponse } from '@codern-api/external';
 import { route } from 'preact-router';
 import { useState } from 'preact/hooks';
 
@@ -29,7 +29,7 @@ export const LoginForm = () => {
     // TODO: error handling
     setIsLoggingIn(LoginProvider.GOOGLE);
     fetch
-      .get<GoogleAuthUrlResponse>('/auth/google')
+      .get<PublicGoogleAuthUrlResponse>('/auth/google')
       .then((response) => window.location.href = response.data.url)
       .catch(() => {});
   };

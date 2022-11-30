@@ -6,12 +6,6 @@ message AuthRequest {
   string session = 1;
 }
 
-message User {
-  string id = 1;
-  string email = 2;
-  string profileUrl = 3;
-}
-
 message AuthResponse {
   User user = 1;
 }

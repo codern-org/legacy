@@ -2,17 +2,16 @@ import crypto from 'crypto';
 import cookie from 'cookie';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Session, User } from '@prisma/client';
-import { ExpectedInvalidError } from 'api-types';
+import { Session } from '@prisma/client';
+import { Timestamp } from '@codern/shared';
+import { ExpectedInvalidError } from '@codern-api/internal';
 import { SessionRepository } from '@/repositories/SessionRepository';
 import { SessionError } from '@/utils/errors/SessionError';
-
-export type SessionWithUser = Session & { user: User };
 
 @Injectable()
 export class SessionService {
 
-  public static readonly SESSION_MAX_AGE = 1000 * 60 * 60 * 24 * 7;
+  public static readonly SESSION_MAX_AGE_IN_SEC = 60 * 60 * 24 * 7;
   public static readonly SESSION_SIGN_PREFIX = '$:';
 
   private readonly configService: ConfigService;
@@ -66,7 +65,7 @@ export class SessionService {
     const session = await this.getSession(incomingSession);
     if (!session) throw new ExpectedInvalidError(SessionError.Invalid);
 
-    if (new Date() >= session.expiryDate) {
+    if (Timestamp.now() >= session.expiryAt) {
       this.destroySession(session.id);
       throw new ExpectedInvalidError(SessionError.Expired);
     }
@@ -83,12 +82,12 @@ export class SessionService {
 
     const sessionId = crypto.randomUUID();
     const signedSessionId = this.signSessionId(sessionId);
-    const createdAt = new Date();
-    const expiryDate = new Date(createdAt.getTime() + SessionService.SESSION_MAX_AGE);
+    const createdAt = Timestamp.now();
+    const expiryAt = createdAt + SessionService.SESSION_MAX_AGE_IN_SEC;
     const cookieHeader = cookie.serialize('sid', signedSessionId, {
       path: '/',
       httpOnly: true,
-      maxAge: (SessionService.SESSION_MAX_AGE / 1000),
+      maxAge: SessionService.SESSION_MAX_AGE_IN_SEC,
     });
 
     await this.sessionRepository.createSession({
@@ -96,7 +95,7 @@ export class SessionService {
       user: { connect: { id: userId } },
       ipAddress,
       userAgent,
-      expiryDate,
+      expiryAt,
       createdAt,
     });
 

@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import {
-  Workspace, Question, ExpectedNotFoundError,
-  WorkspaceWithParticipants, ExpectedForbiddenError,
-} from 'api-types';
+import { ExpectedNotFoundError, ExpectedForbiddenError, WorkspaceWithParticipants } from '@codern-api/internal';
+import { Workspace, Question } from '@prisma/client';
 import { QuestionRepository } from '@/repositories/QuestionRepository';
 import { WorkspaceRepository } from '@/repositories/WorkspaceRepository';
 import { WorkspaceError } from '@/utils/errors/WorkspaceError';

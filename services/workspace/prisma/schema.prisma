@@ -13,7 +13,7 @@ model Workspace {
   name                  String
   profilePath           String
   ownerId               String
-  createdAt             DateTime
+  createdAt             Int                     @db.UnsignedInt
   WorkspaceParticipants WorkspaceParticipants[]
   Question              Question[]
 }
@@ -22,7 +22,7 @@ model WorkspaceParticipants {
   workspace   Workspace @relation(fields: [workspaceId], references: [id])
   workspaceId Int
   userId      String
-  joinedAt    DateTime
+  joinedAt    Int       @db.UnsignedInt
 
   @@id([workspaceId, userId])
 }
@@ -41,5 +41,5 @@ model Question {
   level       QuestionLevel
   workspace   Workspace     @relation(fields: [workspaceId], references: [id])
   workspaceId Int
-  createdAt   DateTime
+  createdAt   Int           @db.UnsignedInt
 }

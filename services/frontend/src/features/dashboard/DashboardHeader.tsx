@@ -19,12 +19,13 @@ export const DashboardHeader = () => {
             <div className="flex flex-row space-x-6">
               <DashboardHeaderCard
                 label="Total Workspaces"
-                value={workspaces?.length}
+                value={workspaces ? workspaces.length : 0}
               />
+              {/* TODO
               <DashboardHeaderCard
                 label="Complete Workspaces"
-                value={(workspaces ? 0 : undefined)}
-              />
+                value={1}
+              /> */}
             </div>
           </div>
           <span className={classNames(

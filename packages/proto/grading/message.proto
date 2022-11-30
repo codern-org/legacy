@@ -6,16 +6,6 @@ message GetSubmissionsRequest {
   int32 id = 1;
 }
 
-message Submission {
-  int32 id = 1;
-  int32 questionId = 2;
-  int32 userId = 3;
-  string language = 4;
-  string filePath = 5;
-  string result = 6;
-  uint64 uploadedAt = 7;
-}
-
 message GetSubmissionsResponse {
   repeated Submission submissions = 1;
 }

@@ -2,13 +2,11 @@ import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import {
   GetAllWorkspacesByUserIdRequest, GetAllWorkspacesByUserIdResponse, GetQuestionByIdRequest,
-  GetQuestionByIdResponse, GetQuestionsByWorkspaceIdRequest,
-  GetQuestionsByWorkspaceIdResponse, GetWorkspaceByIdRequest, GetWorkspaceByIdResponse,
-  ValidateUserInWorkspaceRequest, ValidateQuestionInWorkspaceRequest,
-} from 'api-types';
-import { from, map, Observable } from 'rxjs';
+  GetQuestionByIdResponse, GetQuestionsByWorkspaceIdRequest, GetQuestionsByWorkspaceIdResponse,
+  GetWorkspaceByIdRequest, GetWorkspaceByIdResponse, ValidateUserInWorkspaceRequest,
+  ValidateQuestionInWorkspaceRequest,
+} from '@codern-api/internal';
 import { WorkspaceService } from '@/services/WorkspaceService';
-import { convertDateToNumber } from '@/utils/Utils';
 
 @Controller('/workspace')
 export class WorkspaceController {
@@ -34,31 +32,31 @@ export class WorkspaceController {
   }
 
   @GrpcMethod('WorkspaceService')
-  public getAllWorkspacesByUserId(
+  public async getAllWorkspacesByUserId(
     data: GetAllWorkspacesByUserIdRequest,
-  ): Observable<GetAllWorkspacesByUserIdResponse> {
-    return from(this.workspaceService.getAllWorkspacesByUserId(data.userId))
-      .pipe(map((workspaces) => ({ workspaces: convertDateToNumber(workspaces) })));
+  ): Promise<GetAllWorkspacesByUserIdResponse> {
+    const workspaces = await this.workspaceService.getAllWorkspacesByUserId(data.userId);
+    return { workspaces };
   }
 
   @GrpcMethod('WorkspaceService')
-  public getWorkspaceById(data: GetWorkspaceByIdRequest): Observable<GetWorkspaceByIdResponse> {
-    return from(this.workspaceService.getWorkspaceByIdOrThrow(data.workspaceId))
-      .pipe(map((workspace) => ({ workspace: convertDateToNumber(workspace) })));
+  public async getWorkspaceById(data: GetWorkspaceByIdRequest): Promise<GetWorkspaceByIdResponse> {
+    const workspace = await this.workspaceService.getWorkspaceByIdOrThrow(data.workspaceId);
+    return { workspace };
   }
 
   @GrpcMethod('WorkspaceService')
-  public getQuestionsByWorkspaceId(
+  public async getQuestionsByWorkspaceId(
     data: GetQuestionsByWorkspaceIdRequest,
-  ): Observable<GetQuestionsByWorkspaceIdResponse> {
-    return from(this.workspaceService.getQuestionsByWorkspaceId(data.id))
-      .pipe(map((questions) => ({ questions: convertDateToNumber(questions) })));
+  ): Promise<GetQuestionsByWorkspaceIdResponse> {
+    const questions = await this.workspaceService.getQuestionsByWorkspaceId(data.id);
+    return { questions };
   }
 
   @GrpcMethod('WorkspaceService')
-  public getQuestionById(data: GetQuestionByIdRequest): Observable<GetQuestionByIdResponse> {
-    return from(this.workspaceService.getQuestionByIdOrThrow(data.id))
-      .pipe(map((questions) => ({ question: convertDateToNumber(questions) })));
+  public async getQuestionById(data: GetQuestionByIdRequest): Promise<GetQuestionByIdResponse> {
+    const question = await this.workspaceService.getQuestionByIdOrThrow(data.id);
+    return { question };
   }
 
 }

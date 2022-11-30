@@ -3,34 +3,22 @@ import { Input } from '@/features/common/Input';
 import { Text } from '@/features/common/Text';
 import { WorkspaceCard } from '@/features/dashboard/workspace/WorkspaceCard';
 import { WorkspaceCardSkeleton } from '@/features/dashboard/workspace/WorkspaceCardSkeleton';
-import { mockWorkspaces } from '@/stores/mockup/WorkspaceMockup';
 import { workspacesAtom } from '@/stores/WorkspaceStore';
+import { fetch } from '@/utils/Fetch';
 import { PlusSmallIcon, FunnelIcon, XMarkIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useAtom } from 'jotai';
 import { useEffect } from 'preact/hooks';
 
 export const WorkspaceDeck = () => {
   const [workspaces, setWorkspaces] = useAtom(workspacesAtom);
-  // TODO: search
-  // const [search, setSearch] = useState<string>('');
 
-  // TODO: real fetch
   useEffect(() => {
-    setTimeout(() => {
-      setWorkspaces(mockWorkspaces);
-    }, 1000);
+    // TODO: error handling
+    fetch
+      .get('/workspaces')
+      .then((response) => setWorkspaces(response.data))
+      .catch(() => {});
   }, []);
-
-  // const handleSearchInput = (event: Event) => {
-  //   if (!(event.target instanceof HTMLInputElement)) return;
-  //   setSearch(event.target.value);
-  // };
-
-  // const filterWorkspaces = (workspaces: Workspace[]) => {
-  //   return workspaces.filter(
-  //     (workspace) => workspace.title.toLowerCase().includes(search.toLowerCase())
-  //   );
-  // };
 
   return (
     <div className="h-full flex flex-col overflow-y-auto">
@@ -47,8 +35,6 @@ export const WorkspaceDeck = () => {
           type="text"
           icon={<MagnifyingGlassIcon />}
           placeholder="Search workspace"
-          // onInput={handleSearchInput}
-          // value={search}
         />
 
         <div className="flex flex-row space-x-2">
@@ -72,11 +58,11 @@ export const WorkspaceDeck = () => {
         {(workspaces) && workspaces.map((workspace, index) => (
           <WorkspaceCard
             key={index}
-            title={workspace.title}
-            creator={workspace.creator}
-            creatorProfile={workspace.creatorProfile}
-            participantsProfile={workspace.participantsProfile}
-            progress={workspace.progress}
+            title={workspace.name}
+            creator={workspace.ownerId} // TODO: use creator name
+            creatorProfile={workspace.profilePath}
+            participantsProfile={workspace.participants.map((participant) => participant.profileUrl)}
+            progress={10} // TODO: real progress
           />
         ))}
       </div>

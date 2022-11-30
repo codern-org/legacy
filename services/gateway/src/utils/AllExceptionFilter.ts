@@ -1,10 +1,8 @@
 import {
   ArgumentsHost, Catch, ExceptionFilter,
-  HttpException,
-  HttpStatus,
-  Logger,
+  HttpException, HttpStatus, Logger,
 } from '@nestjs/common';
-import { ErrorDetail, GrpcStatus } from 'api-types';
+import { ErrorDetail, GrpcStatus } from '@codern-api/internal';
 import { FastifyReply } from 'fastify';
 
 type GrpcError = {

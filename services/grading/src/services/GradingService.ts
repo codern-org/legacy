@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import {
-  ExpectedNotFoundError, GradeResponse, Language,
-  SubmitResponse,
-} from 'api-types';
+  ExpectedNotFoundError, GradeResponse, SubmitResponse,
+  Language,
+} from '@codern-api/internal';
+import { Timestamp } from '@codern/shared';
 import { SubmissionStatus } from '@prisma/client';
 import { SubmissionRepository } from '@/repositories/SubmissionRepository';
 import { QueueSerivce } from '@/services/QueueService';
@@ -34,8 +35,8 @@ export class GradingService {
     const testcase = await this.testcaseRepository.getTestcaseByQuestionId(questionId);
     if (!testcase) throw new ExpectedNotFoundError(GradingError.TestcaseNotFound);
 
-    const uploadedAt = new Date();
-    const filePath = `/${userId}/${questionId}/${language}/${uploadedAt.getTime()}`;
+    const uploadedAt = Timestamp.now();
+    const filePath = `/${userId}/${questionId}/${language}/${uploadedAt}`;
 
     const submission = await this.submissionRepository.createSubmission({
       userId,
@@ -43,7 +44,7 @@ export class GradingService {
       language,
       status: SubmissionStatus.UPLOADING,
       filePath,
-      uploadedAt: new Date(),
+      uploadedAt,
     });
 
     return {

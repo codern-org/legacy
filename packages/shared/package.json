@@ -1,0 +1,19 @@
+{
+  "name": "@codern/shared",
+  "version": "0.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf node_modules .turbo dist",
+    "dev": "tsc -w",
+    "lint": "eslint . --ext .ts",
+    "postinstall": "pnpm build"
+  },
+  "devDependencies": {
+    "eslint-config-vectier": "workspace:*",
+    "tsconfig": "workspace:*",
+    "typescript": "^4.8.4"
+  }
+}

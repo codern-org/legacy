@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
-import { QuestionLevel } from 'api-types';
+import { QuestionLevel } from '@codern-api/internal';
+import { Timestamp } from '@codern/shared';
 
 const prisma = new PrismaClient();
 
@@ -12,7 +13,7 @@ const main = async (): Promise<void> => {
       name: 'Vectier',
       profilePath: 'https://cdn.discordapp.com/attachments/935377151765647402/935384123294486618/vectier2022-logo-white.png',
       ownerId: '1',
-      createdAt: new Date(),
+      createdAt: Timestamp.now(),
     },
   });
 
@@ -29,7 +30,7 @@ const main = async (): Promise<void> => {
     create: {
       workspaceId: 1,
       userId: '1',
-      joinedAt: new Date(),
+      joinedAt: Timestamp.now(),
     },
   });
 
@@ -45,7 +46,7 @@ const main = async (): Promise<void> => {
       detailPath: '',
       level: QuestionLevel.HARD,
       workspaceId: 1,
-      createdAt: new Date(),
+      createdAt: Timestamp.now(),
     },
   });
 

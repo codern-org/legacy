@@ -1,6 +1,7 @@
 syntax = "proto3";
 package codern.auth;
 
+import "auth/entity.proto";
 import "auth/message.proto"; 
 
 service AuthService {

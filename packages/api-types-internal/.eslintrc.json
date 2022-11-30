@@ -1,0 +1,14 @@
+{
+  "extends": ["vectier"],
+  "parserOptions": {
+    "tsconfigRootDir": ".",
+    "project": ["./tsconfig.json"]
+  },
+  "rules": {
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      { "ts": "never" }
+    ]
+  }
+}

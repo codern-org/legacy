@@ -1,6 +1,7 @@
 syntax = "proto3";
 package codern.grading;
 
+import "grading/entity.proto"; 
 import "grading/message.proto"; 
 
 service GradingService {

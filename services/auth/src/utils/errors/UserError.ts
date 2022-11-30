@@ -14,4 +14,9 @@ export const UserError = {
     error: 'Invalid user data',
     message: 'Password length must be 8-15 and alphanumeric',
   },
+  NotFoundById: {
+    code: 'U-003-001',
+    error: 'User not found',
+    message: 'Cannot retrieve user with this user id',
+  },
 };

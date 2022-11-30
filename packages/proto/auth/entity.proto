@@ -1,0 +1,9 @@
+syntax = "proto3";
+package codern.auth;
+
+message User {
+  string id = 1;
+  string email = 2;
+  string displayName= 3;
+  string profileUrl = 4;
+}

@@ -1,15 +1,20 @@
-import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
-import { AuthProvider, Prisma, User } from '@prisma/client';
-import { firstValueFrom } from 'rxjs';
 import FormData from 'form-data';
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
-import { ExpectedDuplicatedError, ExpectedInvalidError } from 'api-types';
+import { HttpService } from '@nestjs/axios';
+import { Injectable } from '@nestjs/common';
+import { User } from '@prisma/client';
+import {
+  ExpectedDuplicatedError, ExpectedInvalidError, ExpectedNotFoundError,
+  AuthProvider,
+} from '@codern-api/internal';
+import { Timestamp } from '@codern/shared';
+import { firstValueFrom } from 'rxjs';
 import { UserRepository } from '@/repositories/UserRepository';
 import { generateAvatar } from '@/utils/AvatarGenerator';
 import { Validator } from '@/utils/Validator';
 import { UserError } from '@/utils/errors/UserError';
+import { AuthError } from '@/utils/errors/AuthError';
 
 export type SelfProviderUser = Omit<User, 'password'> & { password: string };
 
@@ -34,13 +39,15 @@ export class UserService {
       .digest('hex');
   }
 
-  public getUserFromSessionId(id: string): Promise<User | null> {
-    return this.userRepository.getUserBySessionId(id);
+  public async getUserFromSessionIdOrThrow(id: string): Promise<User> {
+    const user = await this.userRepository.getUserBySessionId(id);
+    if (!user) throw new ExpectedNotFoundError(AuthError.NotFoundFromSession);
+    return user;
   }
 
   public async getUserWithSelfProvider(email: string): Promise<SelfProviderUser | null> {
     const user = await this.userRepository
-      .getFirstUserWhere({ email, provider: 'SELF' }) as SelfProviderUser;
+      .getFirstUserWhere({ email, provider: AuthProvider.SELF }) as SelfProviderUser;
     return user;
   }
 
@@ -56,7 +63,7 @@ export class UserService {
 
     // TODO: secure password validation
 
-    const userId = this.hashUserId(email, 'SELF');
+    const userId = this.hashUserId(email, AuthProvider.SELF);
     const hashedPassword = await bcrypt.hash(password, 10);
     const avatarUrl = await this.generateAvatarOrThrow(userId);
 
@@ -64,30 +71,30 @@ export class UserService {
       id: userId,
       email,
       password: hashedPassword,
+      displayName: '',
       profileUrl: avatarUrl,
       provider: 'SELF',
-      createdAt: new Date(),
+      createdAt: Timestamp.now(),
     });
   }
 
-  public async getOrCreateUser(id: string, provider: AuthProvider): Promise<User> {
-    const retrievedUser = await this.userRepository.getUserById(id);
-    if (retrievedUser) return retrievedUser;
+  public async getUserOrThrow(id: string): Promise<User> {
+    const user = await this.userRepository.getUserById(id);
+    if (!user) throw new ExpectedNotFoundError(UserError.NotFoundById);
+    return user;
+  }
 
-    const avatarUrl = await this.generateAvatarOrThrow(id);
-    const user: Prisma.UserCreateInput = {
-      id,
-      email: '',
-      profileUrl: avatarUrl,
-      provider,
-      createdAt: new Date(),
-    };
+  public createUser(user: User): Promise<User> {
     return this.userRepository.createUser(user);
   }
 
   public async updateEmailOrThrow(id: string, email: string): Promise<void> {
     if (!Validator.validateEmail(email)) throw new ExpectedInvalidError(UserError.InvalidEmail);
     await this.userRepository.updateUser(id, { email });
+  }
+
+  public async updateDisplayName(id: string, displayName: string): Promise<void> {
+    await this.userRepository.updateUser(id, { displayName });
   }
 
   public async generateAvatarOrThrow(id: string): Promise<string> {
