@@ -3,7 +3,7 @@ import {
   AuthRequest, AuthResponse, GetUserByIdsRequest,
   GetUserByIdsResponse, GoogleAuthRequest, GoogleAuthResponse,
   GoogleAuthUrlResponse, LogoutRequest,
-} from '@codern-api/internal';
+} from '@codern/internal';
 
 export interface AuthService {
 

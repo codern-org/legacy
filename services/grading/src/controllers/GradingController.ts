@@ -3,7 +3,7 @@ import { GrpcMethod } from '@nestjs/microservices';
 import {
   GradeRequest, GradeResponse, SubmitRequest,
   SubmitResponse,
-} from '@codern-api/internal';
+} from '@codern/internal';
 import { GradingService } from '@/services/GradingService';
 
 @Controller('/grade')

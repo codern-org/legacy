@@ -7,7 +7,7 @@ import { User } from '@prisma/client';
 import {
   ExpectedDuplicatedError, ExpectedInvalidError, ExpectedNotFoundError,
   AuthProvider,
-} from '@codern-api/internal';
+} from '@codern/internal';
 import { Timestamp } from '@codern/shared';
 import { firstValueFrom } from 'rxjs';
 import { UserRepository } from '@/repositories/UserRepository';

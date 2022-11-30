@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import {
   ExpectedNotFoundError, GradeResponse, SubmitResponse,
   Language,
-} from '@codern-api/internal';
+} from '@codern/internal';
 import { Timestamp } from '@codern/shared';
 import { SubmissionStatus } from '@prisma/client';
 import { SubmissionRepository } from '@/repositories/SubmissionRepository';

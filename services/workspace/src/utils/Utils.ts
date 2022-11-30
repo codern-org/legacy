@@ -1,4 +1,4 @@
-import { ReplaceTypes } from '@codern-api/internal';
+import { ReplaceTypes } from '@codern/internal';
 
 type BigIntToNumber<T extends object> = ReplaceTypes<T, bigint, number>;
 

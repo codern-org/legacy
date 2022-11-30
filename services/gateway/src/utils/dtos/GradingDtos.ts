@@ -1,4 +1,4 @@
-import { Language } from '@codern-api/internal';
+import { Language } from '@codern/internal';
 import { Transform } from 'class-transformer';
 import { IsEnum, IsInt } from 'class-validator';
 

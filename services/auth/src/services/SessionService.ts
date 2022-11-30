@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Session } from '@prisma/client';
 import { Timestamp } from '@codern/shared';
-import { ExpectedInvalidError } from '@codern-api/internal';
+import { ExpectedInvalidError } from '@codern/internal';
 import { SessionRepository } from '@/repositories/SessionRepository';
 import { SessionError } from '@/utils/errors/SessionError';
 

@@ -4,7 +4,7 @@ import { Button } from '@/features/common/Button';
 import { Input } from '@/features/common/Input';
 import { Text } from '@/features/common/Text';
 import { fetch } from '@/utils/Fetch';
-import { PublicGoogleAuthUrlResponse } from '@codern-api/external';
+import { PublicGoogleAuthUrlResponse } from '@codern/external';
 import { route } from 'preact-router';
 import { useState } from 'preact/hooks';
 

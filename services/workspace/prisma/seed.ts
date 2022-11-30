@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { QuestionLevel } from '@codern-api/internal';
+import { QuestionLevel } from '@codern/internal';
 import { Timestamp } from '@codern/shared';
 
 const prisma = new PrismaClient();

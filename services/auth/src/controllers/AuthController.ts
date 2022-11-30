@@ -4,7 +4,7 @@ import {
   AuthRequest, GoogleAuthRequest, GoogleAuthResponse,
   GoogleAuthUrlResponse, LogoutRequest, AuthResponse,
   GetUserByIdsRequest, GetUserByIdsResponse,
-} from '@codern-api/internal';
+} from '@codern/internal';
 import { GoogleService } from '@/services/GoogleService';
 import { AuthService } from '@/services/AuthService';
 import { UserService } from '@/services/UserService';

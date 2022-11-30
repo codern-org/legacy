@@ -1,5 +1,5 @@
 import { MultipartFile } from '@fastify/multipart';
-import { PublicUser } from '@codern-api/external';
+import { PublicUser } from '@codern/external';
 
 declare module 'fastify' {
   export interface FastifyRequest {

@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import {
   ExpectedInvalidError, ExpectedNotFoundError, GoogleAuthRequest,
   AuthProvider,
-} from '@codern-api/internal';
+} from '@codern/internal';
 import { Timestamp } from '@codern/shared';
 import { User } from '@prisma/client';
 import { GoogleService } from '@/services/GoogleService';

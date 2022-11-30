@@ -14,29 +14,6 @@ importers:
       rimraf: 3.0.2
       turbo: 1.6.1
 
-  packages/api-types-external:
-    specifiers:
-      '@codern-api/internal': workspace:*
-      eslint-config-vectier: workspace:*
-      tsconfig: workspace:*
-      typescript: ^4.8.4
-    dependencies:
-      '@codern-api/internal': link:../api-types-internal
-    devDependencies:
-      eslint-config-vectier: link:../eslist-config-vectier
-      tsconfig: link:../tsconfig
-      typescript: 4.8.4
-
-  packages/api-types-internal:
-    specifiers:
-      eslint-config-vectier: workspace:*
-      tsconfig: workspace:*
-      typescript: ^4.8.4
-    devDependencies:
-      eslint-config-vectier: link:../eslist-config-vectier
-      tsconfig: link:../tsconfig
-      typescript: 4.8.4
-
   packages/eslist-config-vectier:
     specifiers:
       '@typescript-eslint/eslint-plugin': ^5.40.1
@@ -70,7 +47,30 @@ importers:
       tsconfig: link:../tsconfig
       typescript: 4.8.4
 
-  packages/shared:
+  packages/shared-all:
+    specifiers:
+      eslint-config-vectier: workspace:*
+      tsconfig: workspace:*
+      typescript: ^4.8.4
+    devDependencies:
+      eslint-config-vectier: link:../eslist-config-vectier
+      tsconfig: link:../tsconfig
+      typescript: 4.8.4
+
+  packages/shared-external:
+    specifiers:
+      '@codern/internal': workspace:*
+      eslint-config-vectier: workspace:*
+      tsconfig: workspace:*
+      typescript: ^4.8.4
+    dependencies:
+      '@codern/internal': link:../shared-internal
+    devDependencies:
+      eslint-config-vectier: link:../eslist-config-vectier
+      tsconfig: link:../tsconfig
+      typescript: 4.8.4
+
+  packages/shared-internal:
     specifiers:
       eslint-config-vectier: workspace:*
       tsconfig: workspace:*
@@ -99,7 +99,7 @@ importers:
 
   services/auth:
     specifiers:
-      '@codern-api/internal': workspace:*
+      '@codern/internal': workspace:*
       '@codern/shared': workspace:*
       '@grpc/grpc-js': ^1.7.3
       '@grpc/proto-loader': ^0.7.3
@@ -129,8 +129,8 @@ importers:
       typescript: ^4.8.4
       winston: ^3.8.2
     dependencies:
-      '@codern-api/internal': link:../../packages/api-types-internal
-      '@codern/shared': link:../../packages/shared
+      '@codern/internal': link:../../packages/shared-internal
+      '@codern/shared': link:../../packages/shared-all
       '@grpc/grpc-js': 1.7.3
       '@grpc/proto-loader': 0.7.3
       '@nestjs/axios': 1.0.0_yjxybkvltbh2d3oivnq5etx3oi
@@ -163,7 +163,7 @@ importers:
   services/frontend:
     specifiers:
       '@babel/core': ^7.0.0
-      '@codern-api/external': workspace:*
+      '@codern/external': workspace:*
       '@codern/shared': workspace:*
       '@headlessui/react': ^1.7.3
       '@heroicons/react': ^2.0.12
@@ -184,8 +184,8 @@ importers:
       typescript: ^4.6.4
       vite: ^3.2.0
     dependencies:
-      '@codern-api/external': link:../../packages/api-types-external
-      '@codern/shared': link:../../packages/shared
+      '@codern/external': link:../../packages/shared-external
+      '@codern/shared': link:../../packages/shared-all
       '@headlessui/react': 1.7.3_ive3jjn476xyi3ikfsqwmh5x74
       '@heroicons/react': 2.0.12_@preact+compat@17.1.2
       '@monaco-editor/react': 4.4.6_wraufuwhvcax7nr37vxnuxhpbm
@@ -209,8 +209,8 @@ importers:
 
   services/gateway:
     specifiers:
-      '@codern-api/external': workspace:*
-      '@codern-api/internal': workspace:*
+      '@codern/external': workspace:*
+      '@codern/internal': workspace:*
       '@codern/shared': workspace:*
       '@fastify/cookie': ^8.3.0
       '@fastify/multipart': ^7.3.0
@@ -238,9 +238,9 @@ importers:
       typescript: ^4.8.4
       winston: ^3.8.2
     dependencies:
-      '@codern-api/external': link:../../packages/api-types-external
-      '@codern-api/internal': link:../../packages/api-types-internal
-      '@codern/shared': link:../../packages/shared
+      '@codern/external': link:../../packages/shared-external
+      '@codern/internal': link:../../packages/shared-internal
+      '@codern/shared': link:../../packages/shared-all
       '@fastify/cookie': 8.3.0
       '@fastify/multipart': 7.3.0
       '@nestjs/axios': 1.0.0_yjxybkvltbh2d3oivnq5etx3oi
@@ -270,7 +270,7 @@ importers:
 
   services/grading:
     specifiers:
-      '@codern-api/internal': workspace:*
+      '@codern/internal': workspace:*
       '@codern/shared': workspace:*
       '@grpc/grpc-js': ^1.7.3
       '@grpc/proto-loader': ^0.7.3
@@ -298,8 +298,8 @@ importers:
       typescript: ^4.8.4
       winston: ^3.8.2
     dependencies:
-      '@codern-api/internal': link:../../packages/api-types-internal
-      '@codern/shared': link:../../packages/shared
+      '@codern/internal': link:../../packages/shared-internal
+      '@codern/shared': link:../../packages/shared-all
       '@grpc/grpc-js': 1.7.3
       '@grpc/proto-loader': 0.7.3
       '@nestjs/axios': 1.0.0_yjxybkvltbh2d3oivnq5etx3oi
@@ -347,7 +347,7 @@ importers:
 
   services/workspace:
     specifiers:
-      '@codern-api/internal': workspace:*
+      '@codern/internal': workspace:*
       '@codern/shared': workspace:*
       '@grpc/grpc-js': ^1.7.3
       '@grpc/proto-loader': ^0.7.3
@@ -373,8 +373,8 @@ importers:
       typescript: ^4.8.4
       winston: ^3.8.2
     dependencies:
-      '@codern-api/internal': link:../../packages/api-types-internal
-      '@codern/shared': link:../../packages/shared
+      '@codern/internal': link:../../packages/shared-internal
+      '@codern/shared': link:../../packages/shared-all
       '@grpc/grpc-js': 1.7.3
       '@grpc/proto-loader': 0.7.3
       '@nestjs/axios': 1.0.0_yjxybkvltbh2d3oivnq5etx3oi

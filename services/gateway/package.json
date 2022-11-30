@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@codern/shared": "workspace:*",
-    "@codern-api/external": "workspace:*",
-    "@codern-api/internal": "workspace:*",
+    "@codern/external": "workspace:*",
+    "@codern/internal": "workspace:*",
     "@fastify/cookie": "^8.3.0",
     "@fastify/multipart": "^7.3.0",
     "@nestjs/axios": "^1.0.0",

@@ -3,7 +3,7 @@ import {
   Inject, Ip, Query,
   Redirect, Res, UseGuards,
 } from '@nestjs/common';
-import { PublicGoogleAuthUrlResponse, PublicUser } from '@codern-api/external';
+import { PublicGoogleAuthUrlResponse, PublicUser } from '@codern/external';
 import { ClientGrpc } from '@nestjs/microservices';
 import { firstValueFrom, Observable } from 'rxjs';
 import { FastifyReply } from 'fastify';

@@ -1,6 +1,6 @@
 import { fetch } from '@/utils/Fetch';
 import { RequiredNotNull } from '@/utils/Types';
-import { PublicUser } from '@codern-api/external';
+import { PublicUser } from '@codern/external';
 import { ComponentChildren, createContext } from 'preact';
 import { route } from 'preact-router';
 import { useCallback, useContext, useEffect, useMemo, useState } from 'preact/hooks';

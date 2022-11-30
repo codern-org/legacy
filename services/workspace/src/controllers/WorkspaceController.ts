@@ -5,7 +5,7 @@ import {
   GetQuestionByIdResponse, GetQuestionsByWorkspaceIdRequest, GetQuestionsByWorkspaceIdResponse,
   GetWorkspaceByIdRequest, GetWorkspaceByIdResponse, ValidateUserInWorkspaceRequest,
   ValidateQuestionInWorkspaceRequest,
-} from '@codern-api/internal';
+} from '@codern/internal';
 import { WorkspaceService } from '@/services/WorkspaceService';
 
 @Controller('/workspace')

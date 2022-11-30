@@ -1,7 +1,4 @@
-import {
-  GoogleAuthUrlResponse,
-  User,
-} from '@codern-api/internal';
+import { GoogleAuthUrlResponse, User } from '@codern/internal';
 
 export type PublicUser = User;
 

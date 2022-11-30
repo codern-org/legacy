@@ -1,4 +1,4 @@
-import { Question, Workspace, WorkspaceParticipants } from '@codern-api/internal';
+import { Question, Workspace, WorkspaceParticipants } from '@codern/internal';
 
 export type PublicWorkspace = Workspace;
 

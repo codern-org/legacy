@@ -7,7 +7,7 @@ import { firstValueFrom, map, Observable } from 'rxjs';
 import {
   PublicUser, PublicWorkspaceWithParticipants, PublicQuestion,
   PublicWorkspace,
-} from '@codern-api/external';
+} from '@codern/external';
 import { WorkspaceService } from '@/services/WorkspaceService';
 import { User } from '@/utils/decorators/AuthDecorator';
 import { AuthGuard } from '@/utils/guards/AuthGuard';

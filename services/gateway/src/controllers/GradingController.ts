@@ -5,7 +5,7 @@ import {
 import { ClientGrpc } from '@nestjs/microservices';
 import { MultipartFile } from '@fastify/multipart';
 import { firstValueFrom } from 'rxjs';
-import { PublicGradeResponse, PublicUser } from '@codern-api/external';
+import { PublicGradeResponse, PublicUser } from '@codern/external';
 import { FileService } from '@/services/FileService';
 import { GradingService } from '@/services/GradingService';
 import { AuthGuard } from '@/utils/guards/AuthGuard';

@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@codern/shared": "workspace:*",
-    "@codern-api/external": "workspace:*",
+    "@codern/external": "workspace:*",
     "@headlessui/react": "^1.7.3",
     "@heroicons/react": "^2.0.12",
     "@monaco-editor/react": "^4.4.6",
