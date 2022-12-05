@@ -28,9 +28,9 @@ model WorkspaceParticipants {
 }
 
 enum QuestionLevel {
-  Easy
-  Medium
-  Hard
+  EASY
+  MEDIUM
+  HARD
 }
 
 model Question {

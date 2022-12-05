@@ -18,9 +18,9 @@ export type WorkspaceWithParticipants = {
 };
 
 export enum QuestionLevel {
-  EASY = 'Easy',
-  MEDIUM = 'Medium',
-  HARD = 'Hard',
+  EASY = 'EASY',
+  MEDIUM = 'MEDIUM',
+  HARD = 'HARD',
 }
 
 export type Question = {

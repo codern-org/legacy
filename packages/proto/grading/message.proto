@@ -37,3 +37,11 @@ message GradeResponse {
   string language = 3;
   string filePath = 4;
 }
+
+message GetQuestionSummaryByIdsRequest {
+  repeated int32 questionIds = 1;
+}
+
+message GetQuestionSummaryByIdsResponse {
+  repeated QuestionSummary questionSummaries = 1;
+}

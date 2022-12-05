@@ -13,7 +13,7 @@ model Testcase {
   filePath   String
 }
 
-enum SubmissionStatus {
+enum GradingStatus {
   UPLOADING
   GRADING
   COMPLETED
@@ -29,7 +29,7 @@ model Submission {
   questionId Int
   userId     String
   language   Language
-  status     SubmissionStatus
+  status     GradingStatus
   result     String?
   filePath   String
   uploadedAt Int              @db.UnsignedInt

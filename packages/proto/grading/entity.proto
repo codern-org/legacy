@@ -4,9 +4,15 @@ package codern.grading;
 message Submission {
   int32 id = 1;
   int32 questionId = 2;
-  int32 userId = 3;
+  string userId = 3;
   string language = 4;
   string filePath = 5;
   string result = 6;
   uint64 uploadedAt = 7;
+}
+
+message QuestionSummary {
+  int32 questionId = 1;
+  uint64 uploadedAt = 2;
+  string status = 3;
 }

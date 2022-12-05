@@ -9,4 +9,5 @@ service GradingService {
   rpc SaveCode(SaveCodeRequest) returns (Empty);
   rpc Submit(SubmitRequest) returns (SubmitResponse);
   rpc Grade(GradeRequest) returns (GradeResponse);
+  rpc GetQuestionSummaryByIds(GetQuestionSummaryByIdsRequest) returns (GetQuestionSummaryByIdsResponse);
 }

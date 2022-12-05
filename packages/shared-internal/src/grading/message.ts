@@ -1,4 +1,4 @@
-import { Language, Submission } from './entity';
+import { Submission, QuestionSummary, Language } from './entity';
 
 export type GetSubmissionsRequest = {
   id: number,
@@ -34,4 +34,12 @@ export type GradeResponse = {
   questionId: number,
   language: Language,
   filePath: string,
+};
+
+export type GetQuestionSummaryByIdRequest = {
+  questionIds: number[];
+};
+
+export type GetQuestionSummaryByIdResponse = {
+  questionSummaries: QuestionSummary[],
 };

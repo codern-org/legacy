@@ -3,7 +3,7 @@ import { Markdown } from '@/features/common/Makdown';
 import { Text } from '@/features/common/Text';
 import { SubmissionSection } from '@/features/question/submission/SubmissionSection';
 import { QuestionStatusBadge } from '@/features/workspace/QuestionStatusBadge';
-import { Question } from '@/stores/QuestionStore';
+import { PublicQuestion } from '@codern/external';
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { route } from 'preact-router';
 import { useState } from 'preact/hooks';
@@ -14,7 +14,7 @@ export type QuestionPaneSection = typeof sections[number];
 type QuestionPaneProps = {
   creatorId: string,
   workspaceId: string,
-  question: Question,
+  question: PublicQuestion,
 };
 
 export const QuestionPane = ({
@@ -32,7 +32,7 @@ export const QuestionPane = ({
             className="w-4 h-4 mr-1 text-black dark:text-white hover:cursor-pointer"
             onClick={() => route(`/workspace/${creatorId}/${workspaceId}`)}
           />
-          <Text color="primary" className="mr-2">{question.title}</Text>
+          <Text color="primary" className="mr-2">{question.name}</Text>
           <Text color="secondary" className="capitalize">({question.level})</Text>
         </div>
 
@@ -54,7 +54,7 @@ export const QuestionPane = ({
         ))}
       </div>
       <div className="py-4 overflow-y-auto">
-        {currentSection === 'problem' && (<Markdown markdown={question.detail} />)}
+        {currentSection === 'problem' && (<Markdown markdown={question.detailPath} />)}
         {currentSection === 'submission' && (<SubmissionSection />)}
       </div>
     </div>

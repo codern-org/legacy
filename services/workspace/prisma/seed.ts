@@ -36,21 +36,36 @@ const main = async (): Promise<void> => {
 
   console.log({ workspaceParticipants });
 
-  const question = await prisma.question.upsert({
-    where: { id: 1 },
-    update: {},
-    create: {
-      id: 1,
-      name: 'Keeratikorn Noodle',
-      description: 'The hardest algorithm question in the software world',
-      detailPath: '',
-      level: QuestionLevel.HARD,
-      workspaceId: 1,
-      createdAt: Timestamp.now(),
-    },
-  });
+  const questions = await Promise.all([
+    await prisma.question.upsert({
+      where: { id: 1 },
+      update: {},
+      create: {
+        id: 1,
+        name: 'Keeratikorn Noodle',
+        description: 'The hardest algorithm question in the software world',
+        detailPath: '',
+        level: QuestionLevel.HARD,
+        workspaceId: 1,
+        createdAt: Timestamp.now(),
+      },
+    }),
+    await prisma.question.upsert({
+      where: { id: 2 },
+      update: {},
+      create: {
+        id: 2,
+        name: 'Porama Chicken',
+        description: 'The hardest algorithm question in the software world',
+        detailPath: '',
+        level: QuestionLevel.HARD,
+        workspaceId: 1,
+        createdAt: Timestamp.now(),
+      },
+    }),
+  ]);
 
-  console.log({ question });
+  console.log({ questions });
 };
 
 main()
