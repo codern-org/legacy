@@ -1,7 +1,7 @@
 import { MojiBunMascot } from '@/features/common/MojiBunMascot';
 import { useTheme } from '@/hooks/useTheme';
 
-export const Authenticating = () => {
+export const LoadingScreen = () => {
   useTheme(); // Prelaod theme
 
   return (
