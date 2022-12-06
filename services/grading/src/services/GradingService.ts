@@ -1,14 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import {
   ExpectedNotFoundError, GradeResponse, SubmitResponse,
-  Language,
+  Language, QuestionSummary, QuestionStatus, TestcaseStatus,
 } from '@codern/internal';
 import { Timestamp } from '@codern/shared';
-import { SubmissionStatus } from '@prisma/client';
+import { Submission, GradingStatus } from '@prisma/client';
 import { SubmissionRepository } from '@/repositories/SubmissionRepository';
 import { QueueSerivce } from '@/services/QueueService';
 import { TestcaseRepository } from '@/repositories/TestcaseRepository';
 import { GradingError } from '@/utils/errors/GradingError';
+
+type QuestionIdWithStatus = Pick<Submission, 'questionId'> & { status: QuestionStatus };
 
 @Injectable()
 export class GradingService {
@@ -42,7 +44,7 @@ export class GradingService {
       userId,
       questionId,
       language,
-      status: SubmissionStatus.UPLOADING,
+      status: GradingStatus.UPLOADING,
       filePath,
       uploadedAt,
     });
@@ -55,7 +57,7 @@ export class GradingService {
 
   public async grade(submissionId: number): Promise<GradeResponse> {
     const submission = await this.submissionRepository.updateSubmission(submissionId, {
-      status: SubmissionStatus.GRADING,
+      status: GradingStatus.GRADING,
     });
 
     const testcase = await this.testcaseRepository.getTestcaseByQuestionId(submission.questionId);
@@ -73,6 +75,65 @@ export class GradingService {
       language: submission.language as Language,
       filePath: submission.filePath,
     };
+  }
+
+  public async getQuestionSummaryByIds(ids: number[]): Promise<QuestionSummary[]> {
+    const submissions = await this.submissionRepository.getSubmissionByQuestionIds(ids);
+    const lastSubmissions = this.filterLastSubmission(submissions);
+    const questionsStatus = this.getQuestionStatus(submissions);
+
+    return lastSubmissions.map((submission) => {
+      const questionStatus = questionsStatus
+        .find((data) => data.questionId === submission.questionId);
+      return {
+        questionId: submission.questionId,
+        uploadedAt: submission.uploadedAt,
+        status: questionStatus ? questionStatus.status : QuestionStatus.TODO,
+      };
+    });
+  }
+
+  public filterLastSubmission(submissions: Submission[]): Submission[] {
+    return submissions
+      .sort((x, y) => y.uploadedAt - x.uploadedAt)
+      .reduce((selecteds, submission) => {
+        const isAlreadySelected = selecteds
+          .some((selected) => selected.questionId === submission.questionId);
+        if (!isAlreadySelected) selecteds.push(submission);
+        return selecteds;
+      }, [] as Submission[]);
+  }
+
+  public getQuestionStatus(submissions: Submission[]): QuestionIdWithStatus[] {
+    const submissionsGroupByQuestionId = submissions.reduce((acc, value) => {
+      const { questionId, result } = value;
+      const group = acc.find((submission) => submission.questionId === value.questionId);
+      if (group && result) {
+        group.results.push(result);
+      } else if (!group) {
+        acc.push({ questionId, results: (result ? [result] : []) });
+      }
+      return acc;
+    }, [] as Pick<Submission & { results: string[] }, 'questionId' | 'results'>[]);
+
+    const submissionsStatus = submissionsGroupByQuestionId.map((submission) => {
+      const { results, questionId } = submission;
+      const isContainsPassResult = results.some((result) => (Number.parseInt(result, 10) === 0));
+      let status = QuestionStatus.ERROR;
+      if (results.length === 0) {
+        status = QuestionStatus.TODO;
+      } else if (isContainsPassResult) {
+        status = QuestionStatus.DONE;
+      }
+      return { questionId, status };
+    });
+
+    return submissionsStatus;
+  }
+
+  public getTestcaseStatus(submissionResult: string): TestcaseStatus[] {
+    return [...submissionResult]
+      .map((result) => Object.values(TestcaseStatus)[Number.parseInt(result, 10)]);
   }
 
 }

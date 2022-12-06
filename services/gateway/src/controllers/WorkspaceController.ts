@@ -13,20 +13,24 @@ import { User } from '@/utils/decorators/AuthDecorator';
 import { AuthGuard } from '@/utils/guards/AuthGuard';
 import { WorkspaceGuard } from '@/utils/guards/WorkspaceGuard';
 import { AuthService } from '@/services/AuthService';
-import { workspaceWithParticipants } from '@/utils/Serializer';
+import { getParticipantsFromWorkspaces, publicQuestions, workspaceWithParticipants } from '@/utils/Serializer';
+import { GradingService } from '@/services/GradingService';
 
 @Controller('/workspaces')
 export class WorkspaceController {
 
   private readonly workspaceService: WorkspaceService;
   private readonly authService: AuthService;
+  private readonly gradingService: GradingService;
 
   public constructor(
     @Inject('WORKSPACE_PACKAGE') workspaceClient: ClientGrpc,
     @Inject('AUTH_PACKAGE') authClient: ClientGrpc,
+    @Inject('GRADING_PACKAGE') gradingClient: ClientGrpc,
   ) {
     this.workspaceService = workspaceClient.getService('WorkspaceService');
     this.authService = authClient.getService('AuthService');
+    this.gradingService = gradingClient.getService('GradingService');
   }
 
   @Get('/')
@@ -38,9 +42,7 @@ export class WorkspaceController {
     const { workspaces } = await firstValueFrom(
       this.workspaceService.getAllWorkspacesByUserId({ userId }),
     );
-    const participantIds = workspaces
-      .map((workspace) => workspace.participants.map((participant) => participant.userId))
-      .flat();
+    const participantIds = getParticipantsFromWorkspaces(workspaces);
     const { users } = await firstValueFrom(
       this.authService.getUserByIds({ userIds: participantIds }),
     );
@@ -59,22 +61,31 @@ export class WorkspaceController {
 
   @Get('/:workspaceId/questions')
   @UseGuards(AuthGuard, WorkspaceGuard)
-  public getQuestionsByWorkspaceId(
+  public async getQuestionsByWorkspaceId(
     @Param('workspaceId') id: number,
-  ): Observable<PublicQuestion[]> {
-    return this.workspaceService
-      .getQuestionsByWorkspaceId({ id })
-      .pipe(map((response) => response.questions));
+  ): Promise<PublicQuestion[]> {
+    const { questions } = await firstValueFrom(
+      this.workspaceService.getQuestionsByWorkspaceId({ id }),
+    );
+    const questionIds = questions.map((question) => question.id);
+    const { questionSummaries } = await firstValueFrom(
+      this.gradingService.getQuestionSummaryByIds({ questionIds }),
+    );
+    return publicQuestions(questions, questionSummaries);
   }
 
   @Get('/:workspaceId/questions/:questionId')
   @UseGuards(AuthGuard, WorkspaceGuard)
-  public getQuestionById(
+  public async getQuestionById(
     @Param('questionId') id: number,
-  ): Observable<PublicQuestion> {
-    return this.workspaceService
-      .getQuestionById({ id })
-      .pipe(map((response) => response.question));
+  ): Promise<PublicQuestion> {
+    const { question } = await firstValueFrom(
+      this.workspaceService.getQuestionById({ id }),
+    );
+    const { questionSummaries } = await firstValueFrom(
+      this.gradingService.getQuestionSummaryByIds({ questionIds: [question.id] }),
+    );
+    return publicQuestions([question], questionSummaries)[0];
   }
 
 }

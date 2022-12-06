@@ -1,10 +1,19 @@
-import { PublicWorkspaceWithParticipants } from '@codern/external';
-import { User, WorkspaceWithParticipants } from '@codern/internal';
+import { PublicQuestion, PublicWorkspaceWithParticipants } from '@codern/external';
+import {
+  Question, QuestionStatus, QuestionSummary,
+  User, WorkspaceWithParticipants,
+} from '@codern/internal';
 
-export const workspaceWithParticipants = (
+export const getParticipantsFromWorkspaces = (
+  workspaces: WorkspaceWithParticipants[],
+): string[] => workspaces
+  .map((workspace) => workspace.participants.map((participant) => participant.userId))
+  .flat();
+
+export const workspaceWithParticipants = async (
   workspaces: WorkspaceWithParticipants[],
   users: User[],
-): PublicWorkspaceWithParticipants[] => workspaces.map((workspace) => ({
+): Promise<PublicWorkspaceWithParticipants[]> => workspaces.map((workspace) => ({
   ...workspace.workspace,
   participants: workspace.participants
     .map((participant) => {
@@ -16,3 +25,16 @@ export const workspaceWithParticipants = (
       };
     }),
 }));
+
+export const publicQuestions = (
+  questions: Question[],
+  questionSummaries: QuestionSummary[],
+): PublicQuestion[] => questions.map((question) => {
+  const summary = questionSummaries.find((data) => data.questionId === question.id);
+  return {
+    ...question,
+    lastSubmitted: summary?.uploadedAt || 0,
+    status: summary?.status || QuestionStatus.TODO,
+    workspaceId: undefined,
+  };
+});
