@@ -1,30 +1,16 @@
-import { Input } from '@/features/common/Input';
+import { Spinner } from '@/features/common/Spinner';
 import { Text } from '@/features/common/Text';
-import { QuestionTableList } from '@/features/workspace/QuestionTableList';
-import { PublicQuestion } from '@codern/external';
-import { MagnifyingGlassIcon, ArrowSmallDownIcon } from '@heroicons/react/24/outline';
+import { QuestionTableListSkeleton } from '@/features/workspace/skeleton/QuestionTableListSkeleton';
+import { ArrowSmallDownIcon } from '@heroicons/react/24/outline';
 
-type QuestionTableProps = {
-  questions: PublicQuestion[], 
-};
-
-export const QuestionTable = ({
-  questions,
-}: QuestionTableProps) => {
+export const QuestionTableSkeleton = () => {
   return (
     <div className="flex flex-col">
       <div className="flex flex-row justify-between items-center space-x-4 mb-6">
         <div className="flex flex-row items-center space-x-2">
           <Text color="primary" className="text-2xl font-semibold">Question</Text>
-          <Text color="secondary">({questions.length})</Text>
+          <Spinner className="animate-spin w-5 h-5 text-neutral-400" />
         </div>
-
-        <Input
-          type="text"
-          icon={<MagnifyingGlassIcon />}
-          placeholder="Search by name, description, status"
-          className="w-96"
-        />
       </div>
 
       <table className="table-auto text-left">
@@ -41,17 +27,8 @@ export const QuestionTable = ({
           </tr>
         </thead>
         <tbody>
-          {questions.map((question, index) => (
-            <QuestionTableList
-              key={question.id}
-              id={question.id}
-              index={index}
-              name={question.name}
-              description={question.description}
-              level={question.level}
-              status={question.status}
-              lastSubmitted={question.lastSubmitted}
-            />
+          {Array(3).fill(0).map(() => (
+            <QuestionTableListSkeleton />
           ))}
         </tbody>
       </table>

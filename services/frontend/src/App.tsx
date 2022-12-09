@@ -21,7 +21,7 @@ export const App = () => {
           component={DashboardPage}
         />
         <AuthenticatedRoute
-          path="/workspace/:creatorId/:workspaceId"
+          path="/workspace/:workspaceId"
           component={WorkspacePage}
         />
         <AuthenticatedRoute

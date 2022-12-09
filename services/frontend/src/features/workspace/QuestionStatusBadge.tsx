@@ -1,16 +1,15 @@
 import { Text } from '@/features/common/Text';
-import { Question } from '@/stores/QuestionStore';
 import { classNames } from '@/utils/Classes';
+import { PublicQuestion } from '@codern/external';
 
-const getColorByStatus = (status: Question['status']) => ({
-  todo: 'bg-neutral-500',
-  wait: 'bg-yellow-500',
-  error: 'bg-red-500',
-  done: 'bg-green-500',
+const getColorByStatus = (status: PublicQuestion['status']) => ({
+  TODO: 'bg-neutral-500',
+  ERROR: 'bg-red-500',
+  DONE: 'bg-green-500',
 }[status]);
 
 type QuestionStatusBadgeProps = {
-  status: Question['status'],
+  status: PublicQuestion['status'],
 };
 
 export const QuestionStatusBadge = ({
@@ -23,7 +22,7 @@ export const QuestionStatusBadge = ({
         getColorByStatus(status),
       )} />
       <Text color="secondary" className="text-sm md:text-base capitalize">
-        {status}
+        {status.toLowerCase()}
       </Text>
     </div>
   );

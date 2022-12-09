@@ -8,6 +8,8 @@ import { GoogleService } from '@/services/GoogleService';
 import { UserRepository } from '@/repositories/UserRepository';
 import { UserService } from '@/services/UserService';
 import { SessionService } from '@/services/SessionService';
+import { OrganizationRepositroy } from '@/repositories/OrganizationRepository';
+import { OrganizationService } from '@/services/OrganizationService';
 
 @Module({
   imports: [
@@ -16,11 +18,13 @@ import { SessionService } from '@/services/SessionService';
   ],
   controllers: [AuthController],
   providers: [
+    OrganizationRepositroy,
     SessionRepository,
     UserRepository,
 
     AuthService,
     GoogleService,
+    OrganizationService,
     SessionService,
     UserService,
   ],

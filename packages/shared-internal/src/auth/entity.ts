@@ -9,3 +9,8 @@ export enum AuthProvider {
   SELF = 'SELF',
   GOOGLE = 'GOOGLE',
 }
+
+export type Owner = {
+  id: string,
+  displayName: string,
+};

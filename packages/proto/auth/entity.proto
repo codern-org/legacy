@@ -7,3 +7,8 @@ message User {
   string displayName= 3;
   string profileUrl = 4;
 }
+
+message Owner {
+  string id = 1;
+  string displayName = 2;
+}

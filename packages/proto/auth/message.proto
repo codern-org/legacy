@@ -35,3 +35,11 @@ message GetUserByIdsRequest {
 message GetUserByIdsResponse {
   repeated User users = 1;
 }
+
+message GetOwnerDetailRequest {
+  string ownerId = 1;
+}
+
+message GetOwnerDetailResponse {
+  Owner owner = 1;
+}

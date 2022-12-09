@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import {
   ExpectedInvalidError, ExpectedNotFoundError, GoogleAuthRequest,
   AuthProvider,
+  Owner,
 } from '@codern/internal';
 import { Timestamp } from '@codern/shared';
 import { User } from '@prisma/client';
@@ -10,6 +11,7 @@ import { GoogleService } from '@/services/GoogleService';
 import { UserService } from '@/services/UserService';
 import { SessionService } from '@/services/SessionService';
 import { AuthError } from '@/utils/errors/AuthError';
+import { OrganizationService } from '@/services/OrganizationService';
 
 @Injectable()
 export class AuthService {
@@ -17,15 +19,18 @@ export class AuthService {
   private readonly googleService: GoogleService;
   private readonly sessionService: SessionService;
   private readonly userService: UserService;
+  private readonly organizationService: OrganizationService;
 
   public constructor(
     googleService: GoogleService,
     sessionService: SessionService,
     userService: UserService,
+    organizationService: OrganizationService,
   ) {
     this.googleService = googleService;
     this.sessionService = sessionService;
     this.userService = userService;
+    this.organizationService = organizationService;
   }
 
   public async authenticateOrThrow(incomingSession: string): Promise<User> {
@@ -73,6 +78,24 @@ export class AuthService {
     }
 
     return this.sessionService.createSession(user.id, data.userAgent, data.ipAddress);
+  }
+
+  public async getOwnerDetailOrThrow(ownerId: string): Promise<Owner> {
+    const isOrganization = ownerId.startsWith('org:');
+    if (isOrganization) {
+      const organizationId = Number.parseInt(ownerId.split(':')[1], 10);
+      const organization = await this.organizationService.getOrganizationOrThrow(organizationId);
+      return {
+        id: organization.id.toString(),
+        displayName: organization.displayName,
+      };
+    }
+
+    const user = await this.userService.getUserOrThrow(ownerId);
+    return {
+      id: user.id,
+      displayName: user.displayName,
+    };
   }
 
 }

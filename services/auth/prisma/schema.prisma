@@ -37,16 +37,10 @@ model Session {
 }
 
 model Organization {
-  id      Int    @id @default(autoincrement())
-  name    String
-  owner   User   @relation(fields: [ownerId], references: [id])
-  ownerId String
-}
-
-model Workspace {
-  id      Int    @id @default(autoincrement())
-  name    String
-  ownerId String // Can be the User or Organization
+  id          Int    @id @default(autoincrement())
+  displayName String
+  owner       User   @relation(fields: [ownerId], references: [id])
+  ownerId     String
 }
 
 model Privilege {

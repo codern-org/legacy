@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import {
-  AuthRequest, AuthResponse, GetUserByIdsRequest,
+  AuthRequest, AuthResponse, GetOwnerDetailRequest, GetOwnerDetailResponse, GetUserByIdsRequest,
   GetUserByIdsResponse, GoogleAuthRequest, GoogleAuthResponse,
   GoogleAuthUrlResponse, LogoutRequest,
 } from '@codern/internal';
@@ -16,5 +16,7 @@ export interface AuthService {
   loginWithGoogle(data: GoogleAuthRequest): Observable<GoogleAuthResponse>;
 
   getUserByIds(data: GetUserByIdsRequest): Observable<GetUserByIdsResponse>;
+
+  getOwnerDetail(data: GetOwnerDetailRequest): Observable<GetOwnerDetailResponse>;
 
 }

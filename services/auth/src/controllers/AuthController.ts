@@ -3,7 +3,7 @@ import { GrpcMethod } from '@nestjs/microservices';
 import {
   AuthRequest, GoogleAuthRequest, GoogleAuthResponse,
   GoogleAuthUrlResponse, LogoutRequest, AuthResponse,
-  GetUserByIdsRequest, GetUserByIdsResponse,
+  GetUserByIdsRequest, GetUserByIdsResponse, GetOwnerDetailRequest, GetOwnerDetailResponse,
 } from '@codern/internal';
 import { GoogleService } from '@/services/GoogleService';
 import { AuthService } from '@/services/AuthService';
@@ -54,6 +54,12 @@ export class AuthController {
   ): Promise<GetUserByIdsResponse> {
     const users = await this.userService.getUserByIds(data.userIds);
     return { users };
+  }
+
+  @GrpcMethod('AuthService')
+  public async getOwnerDetail(data: GetOwnerDetailRequest): Promise<GetOwnerDetailResponse> {
+    const owner = await this.authService.getOwnerDetailOrThrow(data.ownerId);
+    return { owner };
   }
 
 }

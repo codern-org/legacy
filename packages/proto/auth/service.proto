@@ -10,4 +10,5 @@ service AuthService {
   rpc GetGoogleOAuthUrl(Empty) returns (GoogleAuthUrlResponse);
   rpc LoginWithGoogle(GoogleAuthRequest) returns (GoogleAuthResponse);
   rpc GetUserByIds(GetUserByIdsRequest) returns (GetUserByIdsResponse);
+  rpc GetOwnerDetail(GetOwnerDetailRequest) returns (GetOwnerDetailResponse);
 }

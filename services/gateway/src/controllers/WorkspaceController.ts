@@ -3,7 +3,7 @@ import {
   UseGuards, Param,
 } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
-import { firstValueFrom, map, Observable } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import {
   PublicUser, PublicWorkspaceWithParticipants, PublicQuestion,
   PublicWorkspace,
@@ -51,12 +51,16 @@ export class WorkspaceController {
 
   @Get('/:workspaceId')
   @UseGuards(AuthGuard, WorkspaceGuard)
-  public getWorkspaceById(
+  public async getWorkspaceById(
     @Param('workspaceId') workspaceId: number,
-  ): Observable<PublicWorkspace> {
-    return this.workspaceService
-      .getWorkspaceById({ workspaceId })
-      .pipe(map((response) => response.workspace));
+  ): Promise<PublicWorkspace> {
+    const { workspace } = await firstValueFrom(
+      this.workspaceService.getWorkspaceById({ workspaceId }),
+    );
+    const { owner } = await firstValueFrom(
+      this.authService.getOwnerDetail({ ownerId: workspace.ownerId }),
+    );
+    return { ...workspace, ownerName: owner.displayName };
   }
 
   @Get('/:workspaceId/questions')

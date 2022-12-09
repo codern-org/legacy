@@ -1,4 +1,4 @@
-import { User } from './entity';
+import { Owner, User } from './entity';
 
 export type AuthRequest = {
   session: string,
@@ -32,4 +32,12 @@ export type GetUserByIdsRequest = {
 
 export type GetUserByIdsResponse = {
   users: User[],
+};
+
+export type GetOwnerDetailRequest = {
+  ownerId: string,
+};
+
+export type GetOwnerDetailResponse = {
+  owner: Owner,
 };

@@ -3,7 +3,7 @@ import {
   WorkspaceParticipants,
 } from '@codern/internal';
 
-export type PublicWorkspace = Workspace;
+export type PublicWorkspace = Workspace & { ownerName: string };
 
 export type PublicWorkspaceWithParticipants = Workspace & {
   participants: Omit<WorkspaceParticipants & { profileUrl: string }, 'workspaceId'>[],

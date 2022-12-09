@@ -1,16 +1,22 @@
 import { Text } from '@/features/common/Text';
 import { QuestionStatusBadge } from '@/features/workspace/QuestionStatusBadge';
-import { Question } from '@/stores/QuestionStore';
+import { PublicQuestionStatus } from '@codern/external';
 import { getCurrentUrl, route } from 'preact-router';
 
-type QuestionTableListProps = Omit<Question, 'detail'> & {
+type QuestionTableListProps = {
+  id: number,
   index: number,
+  name: string,
+  description: string,
+  level: string,
+  status: PublicQuestionStatus,
+  lastSubmitted: number,
 };
 
 export const QuestionTableList = ({
   id,
   index,
-  title,
+  name,
   description,
   level,
   status,
@@ -26,12 +32,12 @@ export const QuestionTableList = ({
       </td>
 
       <td className="px-2 md:px-4 py-4">
-        <Text color="primary" className="font-medium">{title}</Text>
+        <Text color="primary" className="font-medium">{name}</Text>
         <Text color="secondary" className="hidden md:block text-sm">{description}</Text>
       </td>
 
       <td className="hidden md:table-cell px-2 md:px-4 py-4">
-        <Text color="secondary" className="capitalize">{level}</Text>
+        <Text color="secondary" className="capitalize">{level.toLowerCase()}</Text>
       </td>
 
       <td className="px-2 md:px-4 py-4">
@@ -40,10 +46,10 @@ export const QuestionTableList = ({
 
       <td className="hidden md:table-cell px-2 md:px-4 py-4">
         <Text color="secondary" className="text-sm">
-          {lastSubmitted.toLocaleDateString('th-TH')}
+          {new Date(lastSubmitted).toLocaleDateString('th-TH')}
         </Text>
         <Text color="secondary" className="text-xs">
-          {lastSubmitted.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+          {new Date(lastSubmitted).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
         </Text>
       </td>
     </tr>

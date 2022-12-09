@@ -10,7 +10,7 @@ const main = async (): Promise<void> => {
     update: {},
     create: {
       id: 1,
-      name: 'Vectier',
+      name: 'Veclab',
       profilePath: 'https://cdn.discordapp.com/attachments/935377151765647402/935384123294486618/vectier2022-logo-white.png',
       ownerId: '1',
       createdAt: Timestamp.now(),
