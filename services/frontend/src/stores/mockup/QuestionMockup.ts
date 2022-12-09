@@ -1,60 +1,44 @@
-import { Question } from '@/stores/QuestionStore';
+import { PublicQuestion, PublicQuestionStatus } from '@codern/external';
 
-const mockQuestionDetail = `
-# นายกีรติกรกับก๋วยเตี๋ยวของเขา
-
-นาย A อยากกินก๋วยเตี๋ยว ต้องเขียนโค้ดแบบไหนโดยใช้ **Graph algorithm** ในการจำลองการเดินทางไปกินก๋วยเตี๋ยวเส้นเล็กบะหมี่น้ำตกไม่ใส่ผัก
-
-> โดย 1+1 ต้องเท่ากับ 2 ลูกชิ้นหมูเป็นลูกชิ้นไก่ หมูสับไข่ต้มยางมะตูม ผักกาดมะเขือเทศ
-
-#### ***ข้อห้าม***
-- **ห้ามเดินเลี้ยวขาวเลี้ยวซ้ายติดกัน เดียวล้ม**
-- **ห้ามกินเหลือ**
-- ห้ามอะไรก็ได้แต่อย่าห้ามผมขอเงินแม่
-
-### ตัวอย่างผลการทำงาน
-
-| Input | Output |
-| ----- | ------ |
-| ลูกชิ้น  | หมู     |
-| ไก่    | ผัก     |
-`;
-
-export const mockQuestions: Question[] = [
+export const mockQuestions: PublicQuestion[] = [
   {
     id: 1,
-    title: 'Porama walker',
+    name: 'Porama walker',
     description: 'The hardest path algorithm ever',
-    detail: mockQuestionDetail,
+    detailPath: '/mockup/question1.md',
     level: 'hard',
-    status: 'wait',
-    lastSubmitted: new Date(),
+    status: PublicQuestionStatus.DONE,
+    createdAt: Date.now(),
+    lastSubmitted: Date.now(),
   },
   {
     id: 2,
-    title: 'Keeratikorn Eating',
+    name: 'Keeratikorn Eating',
     description: 'The easiest noodle algorithm',
-    detail: mockQuestionDetail,
+    detailPath: '/mockup/question1.md',
     level: 'easy',
-    status: 'done',
-    lastSubmitted: new Date(),
+    status: PublicQuestionStatus.DONE,
+    createdAt: Date.now(),
+    lastSubmitted: Date.now(),
   },
   {
     id: 3,
-    title: 'Chicken',
+    name: 'Chicken',
     description: 'Need to eat a chicken before code',
-    detail: mockQuestionDetail,
+    detailPath: '/mockup/question1.md',
     level: 'easy',
-    status: 'error',
-    lastSubmitted: new Date(),
+    status: PublicQuestionStatus.DONE,
+    createdAt: Date.now(),
+    lastSubmitted: Date.now(),
   },
   {
     id: 4,
-    title: 'Noodle',
+    name: 'Noodle',
     description: 'Need to eat a chicken before code',
-    detail: mockQuestionDetail,
+    detailPath: '/mockup/question1.md',
     level: 'medium',
-    status: 'todo',
-    lastSubmitted: new Date(),
+    status: PublicQuestionStatus.DONE,
+    createdAt: Date.now(),
+    lastSubmitted: Date.now(),
   },
 ];

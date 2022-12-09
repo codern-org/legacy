@@ -6,8 +6,9 @@ import { route } from 'preact-router';
 const MAX_PROFILE_DISPLAY = 5;
 
 type WorkspaceCardProps = {
-  title: string,
-  creator: string,
+  id: number,
+  name: string,
+  creatorId: string,
   creatorProfile: string,
   progress: number,
   participantsProfile: string[],
@@ -15,8 +16,9 @@ type WorkspaceCardProps = {
 };
 
 export const WorkspaceCard = ({
-  title,
-  creator,
+  id,
+  name,
+  creatorId,
   creatorProfile,
   progress,
   participantsProfile,
@@ -28,7 +30,7 @@ export const WorkspaceCard = ({
         "flex flex-col p-6 border rounded-md bg-primary shadow-md transition-theme hover:cursor-pointer",
         special ? 'border-2 border-gradient-1' : 'border-primary border-primary-hover',
       )}
-      onClick={() => route(`/workspace/${creator}/${title}`)}
+      onClick={() => route(`/workspace/${id}`)}
     >
       <div className="flex flex-row items-center space-x-2 mb-4">
         <span
@@ -36,8 +38,8 @@ export const WorkspaceCard = ({
           style={{ backgroundImage: `url(${creatorProfile})` }}
         />
         <div className="flex flex-col items-start">
-          <Text className="text-base font-semibold">{title}</Text>
-          <Text color="secondary" className="text-sm font-semibold">{creator}</Text>
+          <Text className="text-base font-semibold">{name}</Text>
+          <Text color="secondary" className="text-sm font-semibold">{creatorId}</Text>
         </div>
       </div>
 

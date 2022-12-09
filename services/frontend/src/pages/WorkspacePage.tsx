@@ -4,10 +4,10 @@ import { QuestionTableSkeleton } from '@/features/workspace/skeleton/QuestionTab
 import { WorkspaceTopPanel } from '@/features/workspace/WorkspaceTopPanel';
 import { WorkspaceTopPanelSkeleton } from '@/features/workspace/skeleton/WorkspaceTopPanelSkeleton';
 import { fetch } from '@/utils/Fetch';
-import { PublicWorkspace } from '@codern/external';
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect } from 'preact/hooks';
 import { useAtom } from 'jotai';
 import { questionsAtom } from '@/stores/QuestionStore';
+import { workspaceAtom } from '@/stores/WorkspaceStore';
 
 type WorkspacePageProps = {
   workspaceId: string,
@@ -16,20 +16,32 @@ type WorkspacePageProps = {
 export const WorkspacePage = ({
   workspaceId,
 }: WorkspacePageProps) => {
-  const [workspace, setWorkspace] = useState<PublicWorkspace | null>(null);
+  const [workspace, setWorkspace] = useAtom(workspaceAtom);
   const [questions, setQuestions] = useAtom(questionsAtom);
 
   useEffect(() => {
     // TODO: error handling
+    let workspaceTimer: number;
+    let questionsTimer: number;
+
     fetch
       .get(`/workspaces/${workspaceId}`)
-      .then((response) => setWorkspace(response.data))
+      .then((response) => {
+        workspaceTimer = setTimeout(() => setWorkspace(response.data), 500);
+      })
       .catch(() => {});
 
     fetch
       .get(`/workspaces/${workspaceId}/questions`)
-      .then((response) => setQuestions(response.data))
+      .then((response) => {
+        questionsTimer = setTimeout(() => setQuestions(response.data), 500);
+      })
       .catch(() => {});
+
+    return () => {
+      clearTimeout(workspaceTimer);
+      clearTimeout(questionsTimer);
+    };
   }, []);
 
   return (

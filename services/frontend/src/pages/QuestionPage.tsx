@@ -2,31 +2,28 @@ import { Navbar } from '@/features/common/navbar/Navbar';
 import { EditorPaneSkeleton } from '@/features/question/EditorPaneSkeleton';
 import { QuestionPane } from '@/features/question/QuestionPane';
 import { QuestionPaneSkeleton } from '@/features/question/QuestionPaneSkeleton';
-import { mockQuestions } from '@/stores/mockup/QuestionMockup';
-import { Question } from '@/stores/QuestionStore';
+import { PublicQuestion } from '@codern/external';
 import { Suspense, lazy } from 'preact/compat';
 import { useEffect, useState } from 'preact/hooks';
 
 const EditorPane = lazy(() => import('@/features/question/EditorPane'));
 
 type QuestionPageProps = {
-  creatorId?: string,
-  workspaceId?: string,
-  questionId?: string,
+  workspaceId: string,
+  questionId: string,
 };
 
 export const QuestionPage = ({
-  creatorId,
   workspaceId,
   questionId,
 }: QuestionPageProps) => {
-  const [question, setQuestion] = useState<Question | null>(null);
+  const [question, setQuestion] = useState<PublicQuestion | null>(null);
 
   // TODO: real fetch
   useEffect(() => {
     if (!questionId) return;
     setTimeout(() => {
-      setQuestion(mockQuestions.filter((question) => question.id === Number.parseInt(questionId))[0]);
+      // setQuestion(mockQuestions.filter((question) => question.id === Number.parseInt(questionId))[0]);
     }, 1000);
   }, [questionId]);
 
@@ -38,8 +35,7 @@ export const QuestionPage = ({
         <section className="w-6/12">
           {question
             ? (<QuestionPane
-                creatorId={creatorId!}
-                workspaceId={workspaceId!}
+                workspaceId={workspaceId}
                 question={question}
               />)
             : (<QuestionPaneSkeleton />)

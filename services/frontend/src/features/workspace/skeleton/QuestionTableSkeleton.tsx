@@ -6,7 +6,7 @@ import { ArrowSmallDownIcon } from '@heroicons/react/24/outline';
 export const QuestionTableSkeleton = () => {
   return (
     <div className="flex flex-col">
-      <div className="flex flex-row justify-between items-center space-x-4 mb-6">
+      <div className="flex flex-row justify-between items-center space-x-4 mt-1 mb-7">
         <div className="flex flex-row items-center space-x-2">
           <Text color="primary" className="text-2xl font-semibold">Question</Text>
           <Spinner className="animate-spin w-5 h-5 text-neutral-400" />

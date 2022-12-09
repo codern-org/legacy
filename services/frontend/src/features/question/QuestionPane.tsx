@@ -12,13 +12,11 @@ const sections = ['problem', 'submission'] as const;
 export type QuestionPaneSection = typeof sections[number];
 
 type QuestionPaneProps = {
-  creatorId: string,
   workspaceId: string,
   question: PublicQuestion,
 };
 
 export const QuestionPane = ({
-  creatorId,
   workspaceId,
   question,
 }: QuestionPaneProps) => {
@@ -30,7 +28,7 @@ export const QuestionPane = ({
         <div className="flex flex-row items-center">
           <ChevronLeftIcon
             className="w-4 h-4 mr-1 text-black dark:text-white hover:cursor-pointer"
-            onClick={() => route(`/workspace/${creatorId}/${workspaceId}`)}
+            onClick={() => route(`/workspace/${workspaceId}`)}
           />
           <Text color="primary" className="mr-2">{question.name}</Text>
           <Text color="secondary" className="capitalize">({question.level})</Text>

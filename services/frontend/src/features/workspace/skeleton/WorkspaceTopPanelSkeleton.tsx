@@ -13,8 +13,8 @@ export const WorkspaceTopPanelSkeleton = () => {
           className="w-10 h-10 flex justify-center items-center bg-neutral-100 dark:bg-neutral-700 rounded-md transition-theme"
         />
         <div className="space-y-2">
-          <div className="w-24 h-3 bg-neutral-300 dark:bg-neutral-800 rounded-lg" />
-          <div className="w-24 h-3 bg-neutral-300 dark:bg-neutral-700 rounded-lg" />
+          <div className="w-24 h-5 bg-neutral-300 dark:bg-neutral-800 rounded-lg" />
+          <div className="w-24 h-4 bg-neutral-300 dark:bg-neutral-700 rounded-lg" />
         </div>
       </div>
     </div>

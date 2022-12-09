@@ -25,7 +25,7 @@ export const App = () => {
           component={WorkspacePage}
         />
         <AuthenticatedRoute
-          path="/workspace/:creatorId/:workspaceId/:questionId"
+          path="/workspace/:workspaceId/:questionId"
           component={QuestionPage}
         />
       </Router>
