@@ -86,7 +86,7 @@ export class AuthService {
       const organizationId = Number.parseInt(ownerId.split(':')[1], 10);
       const organization = await this.organizationService.getOrganizationOrThrow(organizationId);
       return {
-        id: organization.id.toString(),
+        id: `org:${organization.id.toString()}`,
         displayName: organization.displayName,
       };
     }

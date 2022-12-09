@@ -3,7 +3,7 @@ import {
   UseGuards, Param,
 } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, forkJoin, map } from 'rxjs';
 import {
   PublicUser, PublicWorkspaceWithParticipants, PublicQuestion,
   PublicWorkspace,
@@ -13,7 +13,10 @@ import { User } from '@/utils/decorators/AuthDecorator';
 import { AuthGuard } from '@/utils/guards/AuthGuard';
 import { WorkspaceGuard } from '@/utils/guards/WorkspaceGuard';
 import { AuthService } from '@/services/AuthService';
-import { getParticipantsFromWorkspaces, publicQuestions, workspaceWithParticipants } from '@/utils/Serializer';
+import {
+  getOwnerIdsFromWorkspaces, getParticipantsFromWorkspaces, publicQuestions,
+  workspaceWithParticipants,
+} from '@/utils/Serializer';
 import { GradingService } from '@/services/GradingService';
 
 @Controller('/workspaces')
@@ -42,11 +45,17 @@ export class WorkspaceController {
     const { workspaces } = await firstValueFrom(
       this.workspaceService.getAllWorkspacesByUserId({ userId }),
     );
+    // TODO: optimize
+    const owners = await firstValueFrom(
+      forkJoin(getOwnerIdsFromWorkspaces(workspaces)
+        .map((ownerId) => this.authService.getOwnerDetail({ ownerId })
+          .pipe(map((response) => response.owner)))),
+    );
     const participantIds = getParticipantsFromWorkspaces(workspaces);
     const { users } = await firstValueFrom(
       this.authService.getUserByIds({ userIds: participantIds }),
     );
-    return workspaceWithParticipants(workspaces, users);
+    return workspaceWithParticipants(workspaces, users, owners);
   }
 
   @Get('/:workspaceId')

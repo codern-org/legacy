@@ -8,8 +8,8 @@ const MAX_PROFILE_DISPLAY = 5;
 type WorkspaceCardProps = {
   id: number,
   name: string,
-  creatorId: string,
-  creatorProfile: string,
+  ownerName: string,
+  profilePath: string,
   progress: number,
   participantsProfile: string[],
   special?: boolean,
@@ -18,8 +18,8 @@ type WorkspaceCardProps = {
 export const WorkspaceCard = ({
   id,
   name,
-  creatorId,
-  creatorProfile,
+  ownerName,
+  profilePath,
   progress,
   participantsProfile,
   special,
@@ -35,18 +35,17 @@ export const WorkspaceCard = ({
       <div className="flex flex-row items-center space-x-2 mb-4">
         <span
           className="w-10 h-10 bg-neutral-100 dark:bg-neutral-700 bg-cover bg-center rounded-md transition-theme"
-          style={{ backgroundImage: `url(${creatorProfile})` }}
+          style={{ backgroundImage: `url(${profilePath})` }}
         />
         <div className="flex flex-col items-start">
           <Text className="text-base font-semibold">{name}</Text>
-          <Text color="secondary" className="text-sm font-semibold">{creatorId}</Text>
+          <Text color="secondary" className="text-sm font-semibold">{ownerName}</Text>
         </div>
       </div>
 
       <div className="flex flex-col">
         <Text color="secondary" className="text-xs mr-auto mb-1">Participants</Text>
         <div className="flex flex-row items-center -space-x-3 mb-2 transform -translate-x-1">
-          {/* TODO: real image */}
           {participantsProfile.slice(0, MAX_PROFILE_DISPLAY).map((url, i) => (
             <img
               key={i}

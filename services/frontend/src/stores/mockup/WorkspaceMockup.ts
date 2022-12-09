@@ -12,6 +12,7 @@ export const mockWorkspaces: PublicWorkspaceWithParticipants[] = [
     id: 1,
     name: 'Vectier Lab',
     ownerId: '1',
+    ownerName: 'Vectier',
     createdAt: Timestamp.now(),
     profilePath: '/vectier2022-logo-white.png',
     participants: [

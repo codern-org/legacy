@@ -1,5 +1,6 @@
 import { PublicQuestion, PublicWorkspaceWithParticipants } from '@codern/external';
 import {
+  Owner,
   Question, QuestionStatus, QuestionSummary,
   User, WorkspaceWithParticipants,
 } from '@codern/internal';
@@ -10,21 +11,30 @@ export const getParticipantsFromWorkspaces = (
   .map((workspace) => workspace.participants.map((participant) => participant.userId))
   .flat();
 
+export const getOwnerIdsFromWorkspaces = (
+  workspaces: WorkspaceWithParticipants[],
+): string[] => [...new Set(workspaces.map(({ workspace }) => workspace.ownerId))];
+
 export const workspaceWithParticipants = async (
   workspaces: WorkspaceWithParticipants[],
   users: User[],
-): Promise<PublicWorkspaceWithParticipants[]> => workspaces.map((workspace) => ({
-  ...workspace.workspace,
-  participants: workspace.participants
-    .map((participant) => {
-      const profile = users.find((user) => user.id === participant.userId);
-      return {
-        ...participant,
-        profileUrl: profile ? profile.profileUrl : '',
-        workspaceId: undefined,
-      };
-    }),
-}));
+  owners: Owner[],
+): Promise<PublicWorkspaceWithParticipants[]> => workspaces.map((workspace) => {
+  const ownerData = owners.find((owner) => owner.id === workspace.workspace.ownerId);
+  return {
+    ...workspace.workspace,
+    ownerName: ownerData ? ownerData.displayName : '',
+    participants: workspace.participants
+      .map((participant) => {
+        const userData = users.find((user) => user.id === participant.userId);
+        return {
+          ...participant,
+          profileUrl: userData ? userData.profileUrl : '',
+          workspaceId: undefined,
+        };
+      }),
+  };
+});
 
 export const publicQuestions = (
   questions: Question[],

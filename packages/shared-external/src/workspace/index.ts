@@ -5,7 +5,7 @@ import {
 
 export type PublicWorkspace = Workspace & { ownerName: string };
 
-export type PublicWorkspaceWithParticipants = Workspace & {
+export type PublicWorkspaceWithParticipants = PublicWorkspace & {
   participants: Omit<WorkspaceParticipants & { profileUrl: string }, 'workspaceId'>[],
 };
 

@@ -48,8 +48,8 @@ export const WorkspaceDeck = ({
             key={index}
             id={workspace.id}
             name={workspace.name}
-            creatorId={workspace.ownerId} // TODO: use creator name
-            creatorProfile={workspace.profilePath}
+            ownerName={workspace.ownerName}
+            profilePath={workspace.profilePath}
             participantsProfile={workspace.participants.map((participant) => participant.profileUrl)}
             progress={10} // TODO: real progress
           />
