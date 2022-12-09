@@ -28,7 +28,7 @@ There are many ways in which you can participate in this project to continue evo
 - [Submit bugs and feature request](https://github.com/vectier/codern/issues)
 - Fixing issues and contributing directly to the code base by [submitting pull requests](https://github.com/vectier/codern/pulls)
 
-Refer to our [Contribution guildines](https://github.com/vectier/codern/blob/main/docs/contribution.md) and [Coding standards](). If you are interested to submit the pull request to the code base.
+Refer to our [Contribution guildines](https://github.com/vectier/codern/blob/main/docs/contribution.md) and [Coding standards](https://github.com/vectier/codern/blob/main/docs/coding-standards.md). If you are interested to submit the pull request to the code base.
 
 ## Backers
 
