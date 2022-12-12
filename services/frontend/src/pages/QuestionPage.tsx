@@ -2,9 +2,11 @@ import { Navbar } from '@/features/common/navbar/Navbar';
 import { EditorPaneSkeleton } from '@/features/question/EditorPaneSkeleton';
 import { QuestionPane } from '@/features/question/QuestionPane';
 import { QuestionPaneSkeleton } from '@/features/question/QuestionPaneSkeleton';
-import { PublicQuestion } from '@codern/external';
+import { questionAtom } from '@/stores/QuestionStore';
+import { fetch } from '@/utils/Fetch';
+import { useAtom } from 'jotai';
 import { Suspense, lazy } from 'preact/compat';
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect } from 'preact/hooks';
 
 const EditorPane = lazy(() => import('@/features/question/EditorPane'));
 
@@ -17,14 +19,18 @@ export const QuestionPage = ({
   workspaceId,
   questionId,
 }: QuestionPageProps) => {
-  const [question, setQuestion] = useState<PublicQuestion | null>(null);
+  const [question, setQuestion] = useAtom(questionAtom);
 
-  // TODO: real fetch
   useEffect(() => {
-    if (!questionId) return;
-    setTimeout(() => {
-      // setQuestion(mockQuestions.filter((question) => question.id === Number.parseInt(questionId))[0]);
-    }, 1000);
+    // TODO: error handling
+    let timer: number;
+    fetch
+      .get(`/workspaces/${workspaceId}/questions/${questionId}`)
+      .then((response) => {
+        timer = setTimeout(() => { setQuestion(response.data) }, 500);
+      })
+      .catch(() => {});
+    return () => clearTimeout(timer);
   }, [questionId]);
 
   return (
