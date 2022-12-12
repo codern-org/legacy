@@ -28,7 +28,7 @@ export type Question = {
   name: string,
   description: string,
   detailPath: string,
-  level: string,
+  level: QuestionLevel,
   workspaceId: number,
   createdAt: number,
 };

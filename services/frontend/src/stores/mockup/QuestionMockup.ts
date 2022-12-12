@@ -1,4 +1,4 @@
-import { PublicQuestion, PublicQuestionStatus } from '@codern/external';
+import { PublicQuestion, PublicQuestionLevel, PublicQuestionStatus } from '@codern/external';
 
 export const mockQuestions: PublicQuestion[] = [
   {
@@ -6,7 +6,7 @@ export const mockQuestions: PublicQuestion[] = [
     name: 'Porama walker',
     description: 'The hardest path algorithm ever',
     detailPath: '/mockup/question1.md',
-    level: 'hard',
+    level: PublicQuestionLevel.HARD,
     status: PublicQuestionStatus.DONE,
     createdAt: Date.now(),
     lastSubmitted: Date.now(),
@@ -16,7 +16,7 @@ export const mockQuestions: PublicQuestion[] = [
     name: 'Keeratikorn Eating',
     description: 'The easiest noodle algorithm',
     detailPath: '/mockup/question1.md',
-    level: 'easy',
+    level: PublicQuestionLevel.EASY,
     status: PublicQuestionStatus.DONE,
     createdAt: Date.now(),
     lastSubmitted: Date.now(),
@@ -26,7 +26,7 @@ export const mockQuestions: PublicQuestion[] = [
     name: 'Chicken',
     description: 'Need to eat a chicken before code',
     detailPath: '/mockup/question1.md',
-    level: 'easy',
+    level: PublicQuestionLevel.MEDIUM,
     status: PublicQuestionStatus.DONE,
     createdAt: Date.now(),
     lastSubmitted: Date.now(),
@@ -36,7 +36,7 @@ export const mockQuestions: PublicQuestion[] = [
     name: 'Noodle',
     description: 'Need to eat a chicken before code',
     detailPath: '/mockup/question1.md',
-    level: 'medium',
+    level: PublicQuestionLevel.HARD,
     status: PublicQuestionStatus.DONE,
     createdAt: Date.now(),
     lastSubmitted: Date.now(),

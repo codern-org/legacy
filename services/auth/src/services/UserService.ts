@@ -73,7 +73,7 @@ export class UserService {
       password: hashedPassword,
       displayName: '',
       profileUrl: avatarUrl,
-      provider: 'SELF',
+      provider: AuthProvider.SELF,
       createdAt: Timestamp.now(),
     });
   }

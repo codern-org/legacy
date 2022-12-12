@@ -6,7 +6,7 @@ export enum Language {
 export type Submission = {
   id: number,
   questionId: number,
-  userId: number,
+  userId: string,
   language: Language,
   filePath: string,
   result: string,
@@ -28,6 +28,12 @@ export enum TestcaseStatus {
   PASS = '0',
   ERROR_TIMEOUT = '1',
   ERROR_OUR_OF_MEMORY = '2',
+}
+
+export enum GradingStatus {
+  UPLOADING = 'UPLOADING',
+  GRADING = 'GRADING',
+  COMPLETED = 'COMPLETED',
 }
 
 export type QuestionSummary = {

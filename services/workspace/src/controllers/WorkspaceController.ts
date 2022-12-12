@@ -5,6 +5,7 @@ import {
   GetQuestionByIdResponse, GetQuestionsByWorkspaceIdRequest, GetQuestionsByWorkspaceIdResponse,
   GetWorkspaceByIdRequest, GetWorkspaceByIdResponse, ValidateUserInWorkspaceRequest,
   ValidateQuestionInWorkspaceRequest,
+  Question,
 } from '@codern/internal';
 import { WorkspaceService } from '@/services/WorkspaceService';
 
@@ -50,13 +51,13 @@ export class WorkspaceController {
     data: GetQuestionsByWorkspaceIdRequest,
   ): Promise<GetQuestionsByWorkspaceIdResponse> {
     const questions = await this.workspaceService.getQuestionsByWorkspaceId(data.id);
-    return { questions };
+    return { questions: questions as Question[] };
   }
 
   @GrpcMethod('WorkspaceService')
   public async getQuestionById(data: GetQuestionByIdRequest): Promise<GetQuestionByIdResponse> {
     const question = await this.workspaceService.getQuestionByIdOrThrow(data.id);
-    return { question };
+    return { question: question as Question };
   }
 
 }

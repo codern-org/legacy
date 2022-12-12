@@ -4,21 +4,16 @@ import { Button } from '@/features/common/Button';
 import { Input } from '@/features/common/Input';
 import { Text } from '@/features/common/Text';
 import { fetch } from '@/utils/Fetch';
-import { PublicGoogleAuthUrlResponse } from '@codern/external';
+import { PublicAuthProvider, PublicGoogleAuthUrlResponse } from '@codern/external';
 import { route } from 'preact-router';
 import { useState } from 'preact/hooks';
 
-enum LoginProvider {
-  SELF,
-  GOOGLE,
-};
-
 export const LoginForm = () => {
-  const [isLoggingIn, setIsLoggingIn] = useState<LoginProvider>();
+  const [isLoggingIn, setIsLoggingIn] = useState<PublicAuthProvider>();
 
   const login = () => {
     // TODO: add real logic
-    setIsLoggingIn(LoginProvider.SELF);
+    setIsLoggingIn(PublicAuthProvider.SELF);
     setTimeout(() => {
       setIsLoggingIn(undefined);
       route('/dashboard');
@@ -27,7 +22,7 @@ export const LoginForm = () => {
 
   const loginWithGoogle = () => {
     // TODO: error handling
-    setIsLoggingIn(LoginProvider.GOOGLE);
+    setIsLoggingIn(PublicAuthProvider.GOOGLE);
     fetch
       .get<PublicGoogleAuthUrlResponse>('/auth/google')
       .then((response) => window.location.href = response.data.url)
@@ -57,14 +52,14 @@ export const LoginForm = () => {
       />
 
       <Button
-        loading={isLoggingIn === LoginProvider.SELF}
+        loading={isLoggingIn === PublicAuthProvider.SELF}
         onClick={login}
       >
         Login
       </Button>
       <Button
         color="secondary"
-        loading={isLoggingIn === LoginProvider.GOOGLE}
+        loading={isLoggingIn === PublicAuthProvider.GOOGLE}
         onClick={loginWithGoogle}
       >
         <img src={GoogleIcon} alt="" className="w-4 h-4" />
