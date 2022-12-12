@@ -16,5 +16,13 @@ export default ({ mode }) => {
       port: Number.parseInt(process.env.VITE_PORT),
     },
     base: process.env.VITE_BASE_URL,
+    optimizeDeps: {
+      include: ['@codern/external'],
+    },
+    build: {
+      commonjsOptions: {
+        include: [/external/, /node_modules/],
+      },
+    }, 
   });
 };
