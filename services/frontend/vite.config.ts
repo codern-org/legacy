@@ -1,12 +1,17 @@
 import { defineConfig, loadEnv } from 'vite';
 import preact from '@preact/preset-vite';
 import path from 'path';
+import commonjs from 'vite-plugin-commonjs';
 
 export default ({ mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 
   return defineConfig({
-    plugins: [preact()],
+    // https://github.com/vitejs/vite/discussions/8726
+    plugins: [
+      preact(),
+      commonjs(),
+    ],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, 'src'),
