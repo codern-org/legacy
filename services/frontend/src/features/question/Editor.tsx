@@ -28,6 +28,14 @@ export const Editor = () => {
   const [codes, setCodes] = useAtom(editorCodeAtom);
   const [editorRef, setEditorRef] = useAtom(editorRefAtom);
 
+  // Clean up
+  useEffect(() => {
+    return () => {
+      setSettings({ ...settings, isLoaded: 'unload' });
+      setEditorRef({ monacoEditor: null, monaco: null });
+    };
+  }, []);
+
   // Sync theme after monaco instance initiated
   useEffect(() => {
     if (settings.isLoaded === 'unload') return;
