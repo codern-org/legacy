@@ -23,8 +23,8 @@ export class SubmissionRepository {
     });
   }
 
-  public getSubmissionsByQuestionId(id: number): Promise<Submission[]> {
-    return this.prismaService.submission.findMany({ where: { id } });
+  public getSubmissionsByQuestionId(questionId: number): Promise<Submission[]> {
+    return this.prismaService.submission.findMany({ where: { questionId } });
   }
 
   public updateSubmission(id: number, data: Prisma.SubmissionUpdateInput): Promise<Submission> {

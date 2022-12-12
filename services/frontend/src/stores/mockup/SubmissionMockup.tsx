@@ -1,50 +1,25 @@
-import { Submission } from '@/stores/SubmissionStore';
+import { PublicLanguage, PublicSubmission } from '@codern/external';
+import { Timestamp } from '@codern/shared';
 
-export const mockSubmissions: Submission[] = [
+export const mockSubmissions: PublicSubmission[] = [
   {
     id: 1,
-    date: new Date(),
-    language: 'c',
-    testcases: [
-      { pass: true },
-      { pass: true },
-      { pass: false, info: 'Time out' },
-    ],
+    language: PublicLanguage.C,
+    filePath: '',
+    result: '000112',
+    uploadedAt: Timestamp.now(),
   },
   {
     id: 2,
-    date: new Date(),
-    language: 'cpp',
-    testcases: [
-      { pass: true },
-      { pass: false, info: 'Out of memory' },
-    ],
+    language: PublicLanguage.C,
+    filePath: '',
+    result: '100112',
+    uploadedAt: Timestamp.now(),
   },
   {
-    id: 3,
-    date: new Date(),
-    language: 'cpp',
-    testcases: [
-      { pass: true },
-      { pass: true },
-    ],
+    id: 2,
+    language: PublicLanguage.C,
+    filePath: '',
+    uploadedAt: Timestamp.now(),
   },
-  {
-    id: 4,
-    date: new Date(),
-    language: 'c',
-    testcases: [
-      { pass: true },
-      { pass: true },
-    ],
-  },
-  {
-    id: 5,
-    date: new Date(),
-    language: 'c',
-    testcases: [
-      { pass: true },
-      { pass: true },
-    ],
-  }
 ]

@@ -22,6 +22,7 @@ export enum QuestionStatus {
 export enum SubmissionStatus {
   ERROR = 'ERROR',
   PASS = 'PASS',
+  GRADING = 'GRADING',
 }
 
 export enum TestcaseStatus {

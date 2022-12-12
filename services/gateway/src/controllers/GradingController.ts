@@ -4,9 +4,8 @@ import {
 } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { MultipartFile } from '@fastify/multipart';
-import { firstValueFrom, map, Observable } from 'rxjs';
-import { PublicGradeResponse, PublicUser } from '@codern/external';
-import { Submission } from '@codern/internal';
+import { firstValueFrom, Observable } from 'rxjs';
+import { PublicGradeResponse, PublicSubmission, PublicUser } from '@codern/external';
 import { FileService } from '@/services/FileService';
 import { GradingService } from '@/services/GradingService';
 import { AuthGuard } from '@/utils/guards/AuthGuard';
@@ -15,6 +14,7 @@ import { User } from '@/utils/decorators/AuthDecorator';
 import { File } from '@/utils/decorators/FileDecorator';
 import { GradeParams } from '@/utils/dtos/GradingDtos';
 import { WorkspaceGuard } from '@/utils/guards/WorkspaceGuard';
+import { publishSubmissions } from '@/utils/Serializer';
 
 @Controller('/workspaces')
 export class GradingController {
@@ -52,9 +52,9 @@ export class GradingController {
   @UseGuards(AuthGuard, WorkspaceGuard)
   public getSubmissionsByQuestionId(
     @Param('questionId') questionId: number,
-  ): Observable<Submission[]> {
+  ): Observable<PublicSubmission[]> {
     return this.gradingService.getSubmissionsByQuestionId({ questionId })
-      .pipe(map((response) => response.submissions));
+      .pipe(publishSubmissions);
   }
 
 }

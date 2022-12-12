@@ -1,13 +1,4 @@
-import { EditorLanguage } from '@/stores/EditorStore'
+import { PublicSubmission } from '@codern/external';
+import { atom } from 'jotai';
 
-export type Testcase = {
-  pass: boolean,
-  info?: string,
-};
-
-export type Submission = {
-  id: number,
-  date: Date,
-  language: EditorLanguage,
-  testcases: Testcase[],
-}
+export const submissionsAtom = atom<PublicSubmission[] | null>(null);

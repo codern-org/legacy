@@ -1,21 +1,34 @@
+import { Spinner } from '@/features/common/Spinner';
 import { Text } from '@/features/common/Text';
 import { SubmissionStatusBadge } from '@/features/question/submission/SubmissionStatusBadge';
-import { Submission } from '@/stores/SubmissionStore';
 import { classNames } from '@/utils/Classes';
+import { PublicLanguage, PublicSubmissionStatus } from '@codern/external';
 import { Disclosure, Transition } from '@headlessui/react';
 import { ChevronUpIcon } from '@heroicons/react/24/outline';
 
-type SubmissionListProps = Omit<Submission, 'id'> & {
+const ERROR_INFO: { [key: string]: string } = {
+  '1': 'Timeout',
+  '2': 'Out of memory',
+};
+
+type SubmissionListProps = {
   index: number,
+  language: PublicLanguage,
+  result?: string,
+  uploadedAt: number,
 };
 
 export const SubmissionList = ({
   index,
-  date,
   language,
-  testcases,
+  result,
+  uploadedAt,
 }: SubmissionListProps) => {
-  const isPass = !testcases.some((testcase) => !testcase.pass);
+  const status = (result)
+    ? (Number.parseInt(result) === 0)
+      ? PublicSubmissionStatus.PASS
+      : PublicSubmissionStatus.ERROR
+    : PublicSubmissionStatus.GRADING;
 
   return (
     <div className="space-y-1">
@@ -30,14 +43,14 @@ export const SubmissionList = ({
                     Language: {language}
                   </Text>
                   <Text color="secondary" className="text-xs">
-                    {date.toLocaleDateString('th-TH')}&nbsp;
-                    {date.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+                    {new Date(uploadedAt).toLocaleDateString('th-TH')}&nbsp;
+                    {new Date(uploadedAt).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
                   </Text>
                 </div>
               </div>
 
               <div className="flex flex-row items-center space-x-4">
-                <SubmissionStatusBadge pass={isPass} />
+                <SubmissionStatusBadge status={status} />
                 <Text color="secondary">
                   <ChevronUpIcon className={classNames('w-5 h-5', !open && 'transform rotate-180')} />
                 </Text>
@@ -54,21 +67,26 @@ export const SubmissionList = ({
               leaveTo="transform opacity-0 -translate-y-4"
             >
               <Disclosure.Panel className="px-4 py-2 rounded-lg">
-                {testcases.map((testcase, index) => (
+                {result && [...result].map((result, index) => (
                   <span className="flex flex-row space-x-2 font-mono text-xs">
-                    <Text color="secondary">
-                      Case {index + 1}
-                    </Text>
+                    <Text color="secondary">Case {index + 1}</Text>
                     <Text color="secondary" className={classNames(
-                      testcase.pass ? 'text-green-500' : 'text-red-500',
+                      (result === '0') ? 'text-green-500' : 'text-red-500',
                     )}>
-                      {testcase.pass ? 'Pass' : 'Error'}
-                      {!testcase.pass && (
-                        <> ({testcase.info})</>
+                      {(result === '0') ? 'Pass' : 'Error'}&nbsp;
+                      {(result !== '0') && (
+                        <>({ERROR_INFO[result] || 'Error'})</>
                       )}
                     </Text>
                   </span>
                 ))}
+
+                {!result && (
+                  <div className="flex flex-row justify-center items-center space-x-2">
+                    <Spinner className="animate-spin w-5 h-5 text-neutral-400" />
+                    <Text color="secondary" className="animate-pulse">Grading...</Text>
+                  </div>
+                )}
               </Disclosure.Panel>
             </Transition>
           </>

@@ -1,17 +1,30 @@
 import { SubmissionList } from '@/features/question/submission/SubmissionList';
 import { SubmissionListSkeleton } from '@/features/question/submission/SubmissionListSkeleton';
-import { mockSubmissions } from '@/stores/mockup/SubmissionMockup';
-import { Submission } from '@/stores/SubmissionStore';
+import { fetch } from '@/utils/Fetch';
+import { PublicSubmission } from '@codern/external';
 import { useEffect, useState } from 'preact/hooks';
 
-export const SubmissionSection = () => {
-  const [submissions, setSubmissions] = useState<Submission[] | null>(null);
+type SubmissionSectionProps = {
+  workspaceId: number,
+  questionId: number,
+};
 
-  // TODO: real fetch
+export const SubmissionSection = ({
+  workspaceId,
+  questionId,
+}: SubmissionSectionProps) => {
+  const [submissions, setSubmissions] = useState<PublicSubmission[] | null>(null);
+
   useEffect(() => {
-    setTimeout(() => {
-      setSubmissions(mockSubmissions);
-    }, 1000);
+    // TODO: error handling
+    let timer: number;
+    fetch
+      .get(`/workspaces/${workspaceId}/questions/${questionId}/submissions`)
+      .then((response) => {
+        timer = setTimeout(() => setSubmissions(response.data), 500);
+      })
+      .catch(() => {});
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -22,9 +35,9 @@ export const SubmissionSection = () => {
         <SubmissionList
           key={submission.id}
           index={index}
-          date={submission.date}
           language={submission.language}
-          testcases={submission.testcases}
+          result={submission.result}
+          uploadedAt={submission.uploadedAt}
         />
       ))}
     </div>
