@@ -2,11 +2,10 @@ import { Navbar } from '@/features/common/navbar/Navbar';
 import { EditorPaneSkeleton } from '@/features/question/EditorPaneSkeleton';
 import { QuestionPane } from '@/features/question/QuestionPane';
 import { QuestionPaneSkeleton } from '@/features/question/QuestionPaneSkeleton';
-import { questionAtom } from '@/stores/QuestionStore';
 import { fetch } from '@/utils/Fetch';
-import { useAtom } from 'jotai';
+import { PublicQuestion } from '@codern/external';
 import { Suspense, lazy } from 'preact/compat';
-import { useEffect } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 
 const EditorPane = lazy(() => import('@/features/question/EditorPane'));
 
@@ -19,7 +18,7 @@ export const QuestionPage = ({
   workspaceId,
   questionId,
 }: QuestionPageProps) => {
-  const [question, setQuestion] = useAtom(questionAtom);
+  const [question, setQuestion] = useState<PublicQuestion | null>(null);
 
   useEffect(() => {
     // TODO: error handling
@@ -27,11 +26,11 @@ export const QuestionPage = ({
     fetch
       .get(`/workspaces/${workspaceId}/questions/${questionId}`)
       .then((response) => {
-        timer = setTimeout(() => { setQuestion(response.data) }, 500);
+        timer = setTimeout(() => { setQuestion(response.data) }, 100);
       })
       .catch(() => {});
     return () => clearTimeout(timer);
-  }, [questionId]);
+  }, []);
 
   return (
     <div className="h-screen flex flex-col dark:bg-neutral-900 transition-theme">

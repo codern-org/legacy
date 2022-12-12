@@ -21,7 +21,7 @@ export const SubmissionSection = ({
     fetch
       .get(`/workspaces/${workspaceId}/questions/${questionId}/submissions`)
       .then((response) => {
-        timer = setTimeout(() => setSubmissions(response.data), 500);
+        timer = setTimeout(() => setSubmissions(response.data), 100);
       })
       .catch(() => {});
     return () => clearTimeout(timer);

@@ -1,13 +1,16 @@
 import { MojiBunMascot } from '@/features/common/MojiBunMascot';
 import { Text } from '@/features/common/Text';
 import { DashboardHeaderCard } from '@/features/dashboard/DashboardHeaderCard';
-import { workspacesAtom } from '@/stores/WorkspaceStore';
 import { classNames } from '@/utils/Classes';
-import { useAtom } from 'jotai';
+import { PublicWorkspace } from '@codern/external';
 
-export const DashboardHeader = () => {
-  const [workspaces] = useAtom(workspacesAtom);
+type DashboardHeaderProps = {
+  workspaces: PublicWorkspace[] | null,
+};
 
+export const DashboardHeader = ({
+  workspaces,
+}: DashboardHeaderProps) => {
   return (
     <header className="bg-neutral-50 dark:bg-black border-b border-primary transition-theme">
       <div className="container w-full overflow-hidden p-6">

@@ -4,10 +4,8 @@ import { QuestionTableSkeleton } from '@/features/workspace/skeleton/QuestionTab
 import { WorkspaceTopPanel } from '@/features/workspace/WorkspaceTopPanel';
 import { WorkspaceTopPanelSkeleton } from '@/features/workspace/skeleton/WorkspaceTopPanelSkeleton';
 import { fetch } from '@/utils/Fetch';
-import { useEffect } from 'preact/hooks';
-import { useAtom } from 'jotai';
-import { questionsAtom } from '@/stores/QuestionStore';
-import { workspaceAtom } from '@/stores/WorkspaceStore';
+import { useEffect, useState } from 'preact/hooks';
+import { PublicQuestion, PublicWorkspace } from '@codern/external';
 
 type WorkspacePageProps = {
   workspaceId: string,
@@ -16,8 +14,8 @@ type WorkspacePageProps = {
 export const WorkspacePage = ({
   workspaceId,
 }: WorkspacePageProps) => {
-  const [workspace, setWorkspace] = useAtom(workspaceAtom);
-  const [questions, setQuestions] = useAtom(questionsAtom);
+  const [workspace, setWorkspace] = useState<PublicWorkspace | null>(null);
+  const [questions, setQuestions] = useState<PublicQuestion[] | null>(null);
 
   useEffect(() => {
     // TODO: error handling
@@ -27,14 +25,14 @@ export const WorkspacePage = ({
     fetch
       .get(`/workspaces/${workspaceId}`)
       .then((response) => {
-        workspaceTimer = setTimeout(() => setWorkspace(response.data), 500);
+        workspaceTimer = setTimeout(() => setWorkspace(response.data), 100);
       })
       .catch(() => {});
 
     fetch
       .get(`/workspaces/${workspaceId}/questions`)
       .then((response) => {
-        questionsTimer = setTimeout(() => setQuestions(response.data), 500);
+        questionsTimer = setTimeout(() => setQuestions(response.data), 100);
       })
       .catch(() => {});
 
