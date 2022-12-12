@@ -1,10 +1,10 @@
 import { Submission, QuestionSummary, Language } from './entity';
 
-export type GetSubmissionsRequest = {
-  id: number,
+export type GetSubmissionsByQuestionIdRequest = {
+  questionId: number,
 };
 
-export type GetSubmissionsResponse = {
+export type GetSubmissionsByQuestionIdResponse = {
   submissions: Submission[],
 };
 
@@ -37,7 +37,7 @@ export type GradeResponse = {
 };
 
 export type GetQuestionSummaryByIdRequest = {
-  questionIds: number[];
+  questionIds: number[],
 };
 
 export type GetQuestionSummaryByIdResponse = {

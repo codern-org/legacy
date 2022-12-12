@@ -1,11 +1,12 @@
 import {
-  Controller, Inject, Param,
+  Controller, Get, Inject, Param,
   Post, UseGuards,
 } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { MultipartFile } from '@fastify/multipart';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, map, Observable } from 'rxjs';
 import { PublicGradeResponse, PublicUser } from '@codern/external';
+import { Submission } from '@codern/internal';
 import { FileService } from '@/services/FileService';
 import { GradingService } from '@/services/GradingService';
 import { AuthGuard } from '@/utils/guards/AuthGuard';
@@ -45,6 +46,15 @@ export class GradingController {
     }));
     await this.fileService.upload(file, filePath);
     return firstValueFrom(this.gradingService.grade({ submissionId }));
+  }
+
+  @Get('/:workspaceId/questions/:questionId/submissions')
+  @UseGuards(AuthGuard, WorkspaceGuard)
+  public getSubmissionsByQuestionId(
+    @Param('questionId') questionId: number,
+  ): Observable<Submission[]> {
+    return this.gradingService.getSubmissionsByQuestionId({ questionId })
+      .pipe(map((response) => response.submissions));
   }
 
 }

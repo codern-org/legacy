@@ -2,11 +2,11 @@ syntax = "proto3";
 package codern.grading;
 import "common.proto"; 
 
-message GetSubmissionsRequest {
-  int32 id = 1;
+message GetSubmissionsByQuestionIdRequest {
+  int32 questionId = 1;
 }
 
-message GetSubmissionsResponse {
+message GetSubmissionsByQuestionIdResponse {
   repeated Submission submissions = 1;
 }
 

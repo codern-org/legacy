@@ -5,7 +5,7 @@ import "grading/entity.proto";
 import "grading/message.proto"; 
 
 service GradingService {
-  rpc GetSubmissions(GetSubmissionsRequest) returns (GetSubmissionsResponse);
+  rpc GetSubmissionsByQuestionId(GetSubmissionsByQuestionIdRequest) returns (GetSubmissionsByQuestionIdResponse);
   rpc SaveCode(SaveCodeRequest) returns (Empty);
   rpc Submit(SubmitRequest) returns (SubmitResponse);
   rpc Grade(GradeRequest) returns (GradeResponse);

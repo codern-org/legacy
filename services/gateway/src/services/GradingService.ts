@@ -1,6 +1,6 @@
 import {
   GetQuestionSummaryByIdRequest, GetQuestionSummaryByIdResponse,
-  GetSubmissionsRequest, GetSubmissionsResponse, GradeRequest,
+  GetSubmissionsByQuestionIdRequest, GetSubmissionsByQuestionIdResponse, GradeRequest,
   GradeResponse, SaveCodeRequest, SubmitRequest,
   SubmitResponse,
 } from '@codern/internal';
@@ -8,7 +8,9 @@ import { Observable } from 'rxjs';
 
 export interface GradingService {
 
-  getSubmission(data: GetSubmissionsRequest): Observable<GetSubmissionsResponse>;
+  getSubmissionsByQuestionId(
+    data: GetSubmissionsByQuestionIdRequest
+  ): Observable<GetSubmissionsByQuestionIdResponse>;
 
   saveCode(data: SaveCodeRequest): Observable<void>;
 

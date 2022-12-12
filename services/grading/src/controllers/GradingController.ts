@@ -3,7 +3,9 @@ import { GrpcMethod } from '@nestjs/microservices';
 import {
   GetQuestionSummaryByIdRequest,
   GetQuestionSummaryByIdResponse,
-  GradeRequest, GradeResponse, SubmitRequest,
+  GetSubmissionsByQuestionIdRequest,
+  GetSubmissionsByQuestionIdResponse,
+  GradeRequest, GradeResponse, Submission, SubmitRequest,
   SubmitResponse,
 } from '@codern/internal';
 import { GradingService } from '@/services/GradingService';
@@ -35,6 +37,15 @@ export class GradingController {
     const { questionIds } = data;
     const questionSummaries = await this.gradingService.getQuestionSummaryByIds(questionIds);
     return { questionSummaries };
+  }
+
+  @GrpcMethod('GradingService')
+  public async getSubmissionsByQuestionId(
+    data: GetSubmissionsByQuestionIdRequest,
+  ): Promise<GetSubmissionsByQuestionIdResponse> {
+    const { questionId } = data;
+    const submissions = await this.gradingService.getSubmissionsByQuestionId(questionId);
+    return { submissions: submissions as Submission[] };
   }
 
 }

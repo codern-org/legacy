@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import {
   ExpectedNotFoundError, GradeResponse, SubmitResponse,
-  Language, QuestionSummary, QuestionStatus, TestcaseStatus,
+  Language, QuestionSummary, QuestionStatus, TestcaseStatus, GradingStatus,
 } from '@codern/internal';
 import { Timestamp } from '@codern/shared';
-import { Submission, GradingStatus } from '@prisma/client';
+import { Submission } from '@prisma/client';
 import { SubmissionRepository } from '@/repositories/SubmissionRepository';
 import { QueueSerivce } from '@/services/QueueService';
 import { TestcaseRepository } from '@/repositories/TestcaseRepository';
@@ -134,6 +134,10 @@ export class GradingService {
   public getTestcaseStatus(submissionResult: string): TestcaseStatus[] {
     return [...submissionResult]
       .map((result) => Object.values(TestcaseStatus)[Number.parseInt(result, 10)]);
+  }
+
+  public getSubmissionsByQuestionId(id: number): Promise<Submission[]> {
+    return this.submissionRepository.getSubmissionsByQuestionId(id);
   }
 
 }
