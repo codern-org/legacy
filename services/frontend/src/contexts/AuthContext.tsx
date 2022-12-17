@@ -14,7 +14,7 @@ export enum AuthStatus {
 type AuthContextType = {
   user: PublicUser | null,
   authStatus: AuthStatus,
-  auth: () => void,
+  auth: (callback?: () => void) => void,
   logout: () => void,
 };
 
@@ -35,13 +35,14 @@ export const AuthProvider = ({
   const [user, setUser] = useState<PublicUser | null>(null);
   const [authStatus, setAuthStatus] = useState<AuthStatus>(AuthStatus.AUTHENTICATING);
 
-  const auth = useCallback(() => {
+  const auth = useCallback((callback?: () => void) => {
     // TODO: ux on error
     fetch
       .get<PublicUser>('/auth/me')
       .then((response) => {
         setAuthStatus(AuthStatus.AUTHENTICATED);
         setUser(response.data);
+        callback && callback();
       })
       .catch(() => {
         setAuthStatus(AuthStatus.UNAUTHENTICATED);
