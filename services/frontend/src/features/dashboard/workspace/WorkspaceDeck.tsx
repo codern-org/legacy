@@ -14,8 +14,11 @@ export const WorkspaceDeck = ({
 }: WorkspaceDeckProps) => {
   return (
     <div className="h-full flex flex-col overflow-y-auto">
-      <div className="flex flex-row items-center  mb-4">
-        <Text color="primary" className="text-xl font-semibold mr-auto">Workspace</Text>
+      <div className="flex flex-row items-center mb-4">
+        <div className="flex items-end mr-auto">
+          <Text color="primary" className="text-xl font-semibold mr-2">Workspace</Text>
+          <Text color="secondary" className="sm:hidden mr-auto">({workspaces.length})</Text>
+        </div>
         <Button color="primary" size="sm">
           <PlusSmallIcon className="w-6 h-6 sm:-mx-2" />
           <span className="hidden sm:block">Add Workspace</span>

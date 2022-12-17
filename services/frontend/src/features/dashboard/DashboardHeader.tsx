@@ -13,13 +13,13 @@ export const DashboardHeader = ({
 }: DashboardHeaderProps) => {
   return (
     <header className="bg-neutral-50 dark:bg-black border-b border-primary transition-theme">
-      <div className="container w-full overflow-hidden p-6">
+      <div className="container w-full overflow-hidden px-6 py-4 sm:py-6">
         <div className="relative">
           <div className="flex flex-col">
-            <Text color="primary" className="text-2xl font-semibold mr-auto mb-4">
+            <Text color="primary" className="text-2xl font-semibold mr-auto sm:mb-4">
               Dashboard
             </Text>
-            <div className="flex flex-row space-x-6">
+            <div className="hidden sm:flex flex-row space-x-6">
               <DashboardHeaderCard
                 label="Total Workspaces"
                 value={workspaces ? workspaces.length : 0}
