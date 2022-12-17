@@ -26,18 +26,20 @@ export const ProfileDropdown = () => {
             leaveTo="transform scale-80 opacity-0 -translate-y-2"
           >
             <Popover.Panel className="absolute top-0 right-0 border border-neutral-300 dark:border-neutral-700 transform translate-y-10 rounded-md shadow-lg transition-theme">
-              <div className="flex flex-col space-y-3 p-4 bg-white dark:bg-black rounded-md transition-theme">
-                <Text color="primary">{user.email}</Text>
+              <div className="flex flex-col space-y-2 p-3 bg-white dark:bg-black rounded-md transition-theme">
+                <Text color="primary" className="px-2 py-1">{user.email}</Text>
 
-                <span className="flex flex-row justify-between items-center space-x-2">
+                <span className="flex flex-row justify-between items-center space-x-2 px-2 py-1">
                   <Text color="secondary" className="text-sm">Theme</Text>
-                  <SwitchThemeButton direction="down" />
+                  <div className="scale-90">
+                    <SwitchThemeButton direction="down" />
+                  </div>
                 </span>
 
                 <div className="border-t border-neutral-300 dark:border-neutral-700" />
 
                 <ProfileDropdownButton
-                  icon={<ArrowLeftOnRectangleIcon />}
+                  icon={<ArrowLeftOnRectangleIcon className="w-5 h-5" />}
                   text="Logout"
                   onClick={logout}
                 />

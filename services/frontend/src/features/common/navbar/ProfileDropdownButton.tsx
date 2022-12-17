@@ -18,9 +18,9 @@ export const ProfileDropdownButton = ({
     <button
       type="button"
       onClick={onClick}
-      className="hover:bg-neutral-300 dark:hover:bg-neutral-800 text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-white rounded-md btn-animate w-full flex flex-row space-x-2"
+      className="w-full flex flex-row items-center space-x-1 px-2 py-1 hover:bg-neutral-300 dark:hover:bg-neutral-800 text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-white rounded-md btn-animate"
     >
-      <span className="w-6 h-6">{icon}</span>
+      {icon}
       <p className={classNames(responsive && 'hidden lg:block')}>{text}</p>
     </button>
   );
