@@ -6,6 +6,7 @@ import { WorkspacePage } from '@/pages/WorkspacePage';
 import { QuestionPage } from '@/pages/QuestionPage';
 import { AuthenticatedRoute } from '@/features/auth/AuthenticatedRoute';
 import { AuthProvider } from '@/contexts/AuthContext';
+import { NotFoundPage } from '@/pages/error/NotFoundPage';
 
 export const App = () => {
   return (
@@ -27,6 +28,11 @@ export const App = () => {
         <AuthenticatedRoute
           path="/workspace/:workspaceId/:questionId"
           component={QuestionPage}
+        />
+
+        <Route
+          default
+          component={NotFoundPage}
         />
       </Router>
     </AuthProvider>
