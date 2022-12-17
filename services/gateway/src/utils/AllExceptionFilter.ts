@@ -3,12 +3,21 @@ import {
   HttpException, HttpStatus, Logger,
 } from '@nestjs/common';
 import { ErrorDetail, GrpcStatus } from '@codern/internal';
-import { FastifyReply } from 'fastify';
+import { FastifyReply, FastifyRequest } from 'fastify';
 
 type GrpcError = {
   code: GrpcStatus,
   error: string,
   details: string,
+};
+
+type ValidationError = {
+  response: {
+    statusCode: number,
+    message: string[],
+    error: string,
+  },
+  status: number,
 };
 
 @Catch()
@@ -22,54 +31,123 @@ export class AllExceptionFilter implements ExceptionFilter {
 
   public catch(exception: unknown, host: ArgumentsHost): void {
     const ctx = host.switchToHttp();
+    const request = ctx.getRequest<FastifyRequest>();
     const response = ctx.getResponse<FastifyReply>();
+
+    const initialExceptionMessage = {
+      path: request.url,
+      userAgent: request.headers['user-agent'],
+      ip: request.ip,
+    };
 
     // Catch all error from GRPC client
     if (this.isGrpcError(exception)) {
       try {
-        const error = JSON.parse(exception.details);
+        const error: ErrorDetail = JSON.parse(exception.details);
+        const statusCode = this.mapStatusCodeGrpcWithHttp(exception.code);
+
+        this.logger.error({
+          ...initialExceptionMessage,
+          name: error.error,
+          message: error.message,
+          code: error.code,
+        }, {}, 'GrpcException');
+
         response
-          .code(this.mapStatusCodeGrpcWithHttp(exception.code))
-          .send(error);
+          .code(statusCode)
+          .send({
+            path: request.url,
+            error: error.error,
+            message: error.message,
+            code: error.code,
+          });
       } catch (error) {
         if (error instanceof SyntaxError) {
-          this.logger.error(exception.details, error, 'GrpcParsingError');
+          this.logger.error({
+            ...initialExceptionMessage,
+            name: error.name,
+            message: error.message,
+          }, exception.details, 'GrpcParsingError');
         } else {
-          this.logger.error(error, error, 'UnexpectedError');
+          this.logger.error({
+            ...initialExceptionMessage,
+            name: exception.error,
+            message: exception.details,
+          }, error, 'UnexpectedError');
         }
-        this.responseInternalError(response, 'X-000-002');
+        this.responseInternalError(request, response, 'X-000-002');
       }
       return;
     }
 
+    // Catch all validation pipe error
+    if (this.isValidationPipeError(exception)) {
+      this.logger.error({
+        ...initialExceptionMessage,
+        name: exception.response.error,
+        message: exception.response.message,
+      }, {}, 'ValidationException');
+
+      response
+        .code(exception.status)
+        .send({
+          path: request.url,
+          error: exception.response.error,
+          message: exception.response.message,
+          code: 'VP-000-001',
+        });
+    }
+
     // Catch all HTTP exceptions
     if (exception instanceof HttpException) {
-      throw exception;
+      this.logger.error({
+        ...initialExceptionMessage,
+        name: exception.name,
+        message: exception.message,
+      }, {}, 'HttpException');
+
+      response
+        .code(exception.getStatus())
+        .send({
+          path: request.url,
+          error: exception.name,
+          message: exception.message,
+          code: 'HE-000-001',
+        });
     }
 
     // Catch all posible Node.js Error instances
     if (exception instanceof Error) {
-      this.logger.error(exception.message, exception.stack, 'UnexpectedError');
-      this.responseInternalError(response, 'X-000-001');
+      this.logger.error({
+        ...initialExceptionMessage,
+        name: exception.name,
+        message: exception.message,
+      }, exception.stack, 'UnexpectedError');
+      this.responseInternalError(request, response, 'X-000-001');
       return;
     }
 
-    this.logger.error(exception, exception, 'CriticalUnexpectedError');
-    this.responseInternalError(response, 'X-999-999');
+    this.logger.error({
+      ...initialExceptionMessage,
+      name: exception,
+      message: exception,
+    }, exception, 'CriticalUnexpectedError');
+    this.responseInternalError(request, response, 'X-999-999');
   }
 
-  private internalServerError(code: string): ErrorDetail {
-    return {
-      code,
-      error: 'Internal server errror',
-      message: 'Something went wrong in the internal server',
-    };
-  }
-
-  private responseInternalError(response: FastifyReply, code: string): void {
+  private responseInternalError(
+    request: FastifyRequest,
+    response: FastifyReply,
+    code: string,
+  ): void {
     response
       .code(HttpStatus.INTERNAL_SERVER_ERROR)
-      .send(this.internalServerError(code));
+      .send({
+        path: request.url,
+        error: 'Internal server errror',
+        message: 'Something went wrong in the internal server',
+        code,
+      });
   }
 
   private isGrpcError(error: unknown): error is GrpcError {
@@ -79,6 +157,18 @@ export class AllExceptionFilter implements ExceptionFilter {
       && ('code' in error)
       && ('details' in error)
       && ('message' in error)
+    );
+  }
+
+  private isValidationPipeError(error: unknown): error is ValidationError {
+    return (
+      (typeof error === 'object')
+      && (error !== null)
+      && ('response' in error)
+      && ('statusCode' in (error as any).response)
+      && ('message' in (error as any).response)
+      && ('error' in (error as any).response)
+      && ('status' in error)
     );
   }
 
