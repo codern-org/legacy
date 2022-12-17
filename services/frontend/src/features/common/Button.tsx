@@ -5,6 +5,7 @@ import { route } from 'preact-router';
 
 type ButtonProps = {
   children: ComponentChildren,
+  type?: 'button' | 'submit',
   loading?: boolean,
   color?: 'primary' | 'secondary',
   size?: 'base' | 'sm',
@@ -33,6 +34,7 @@ const buttonClasses = {
 export const Button = ({
   children,
   loading,
+  type = 'button',
   color = 'primary',
   size = 'base',
   href,
@@ -67,6 +69,7 @@ export const Button = ({
 
   return (
     <button
+      type={type}
       className={classNames(
         className,
         buttonClasses.common,
