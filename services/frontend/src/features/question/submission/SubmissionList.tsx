@@ -70,14 +70,14 @@ export const SubmissionList = ({
                 {result && [...result].map((result, index) => (
                   <span className="flex flex-row space-x-2 font-mono text-xs">
                     <Text color="secondary">Case {index + 1}</Text>
-                    <Text color="secondary" className={classNames(
+                    <span className={classNames(
                       (result === '0') ? 'text-green-500' : 'text-red-500',
                     )}>
                       {(result === '0') ? 'Pass' : 'Error'}&nbsp;
                       {(result !== '0') && (
                         <>({ERROR_INFO[result] || 'Error'})</>
                       )}
-                    </Text>
+                    </span>
                   </span>
                 ))}
 
