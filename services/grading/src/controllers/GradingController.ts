@@ -5,7 +5,7 @@ import {
   GetQuestionSummaryByIdResponse,
   GetSubmissionsByQuestionIdRequest,
   GetSubmissionsByQuestionIdResponse,
-  GradeRequest, GradeResponse, Submission, SubmitRequest,
+  GradeRequest, GradeResponse, ResultRequest, Submission, SubmitRequest,
   SubmitResponse,
 } from '@codern/internal';
 import { GradingService } from '@/services/GradingService';
@@ -31,8 +31,9 @@ export class GradingController {
   }
 
   @EventPattern('result')
-  public async result(data: any): Promise<void> {
-    console.log(data);
+  public async result(data: ResultRequest): Promise<void> {
+    this.gradingService.result(data.submissionId, data.result);
+    // TODO: emit data to socket
   }
 
   @GrpcMethod('GradingService')

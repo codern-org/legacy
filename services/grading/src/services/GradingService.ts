@@ -77,6 +77,13 @@ export class GradingService {
     };
   }
 
+  public async result(submissionId: number, result: string): Promise<void> {
+    await this.submissionRepository.updateSubmission(submissionId, {
+      status: GradingStatus.COMPLETED,
+      result,
+    });
+  }
+
   public async getQuestionSummaryByIds(ids: number[]): Promise<QuestionSummary[]> {
     const submissions = await this.submissionRepository.getSubmissionByQuestionIds(ids);
     const lastSubmissions = this.filterLastSubmission(submissions);

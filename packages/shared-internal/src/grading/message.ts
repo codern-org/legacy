@@ -36,6 +36,11 @@ export type GradeResponse = {
   filePath: string,
 };
 
+export type ResultRequest = {
+  submissionId: number,
+  result: string,
+};
+
 export type GetQuestionSummaryByIdRequest = {
   questionIds: number[],
 };
