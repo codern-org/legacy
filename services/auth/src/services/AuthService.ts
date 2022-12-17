@@ -4,6 +4,7 @@ import {
   ExpectedInvalidError, ExpectedNotFoundError, GoogleAuthRequest,
   AuthProvider,
   Owner,
+  LoginRequest,
 } from '@codern/internal';
 import { Timestamp } from '@codern/shared';
 import { User } from '@prisma/client';
@@ -44,14 +45,14 @@ export class AuthService {
     await this.sessionService.destroySession(session.id);
   }
 
-  public async loginOrThrow(email: string, password: string): Promise<User> {
-    const user = await this.userService.getUserWithSelfProvider(email);
-    if (!user) throw new ExpectedInvalidError(AuthError.InvalidCredentials);
+  public async loginOrThrow(data: LoginRequest): Promise<string> {
+    const user = await this.userService.getUserWithSelfProvider(data.email);
+    if (!user) throw new ExpectedNotFoundError(AuthError.NotFound);
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await bcrypt.compare(data.password, user.password);
     if (!isPasswordValid) throw new ExpectedInvalidError(AuthError.InvalidCredentials);
 
-    return user;
+    return this.sessionService.createSession(user.id, data.userAgent, data.ipAddress);
   }
 
   public async loginWithGoogleOrThrow(data: GoogleAuthRequest): Promise<string> {

@@ -1,7 +1,8 @@
 import {
-  Controller, Get, Headers,
-  Inject, Ip, Query,
-  Redirect, Res, UseGuards,
+  Body, Controller, Get,
+  Headers, Inject, Ip,
+  Post, Query, Redirect,
+  Res, UseGuards,
 } from '@nestjs/common';
 import { PublicGoogleAuthUrlResponse, PublicUser } from '@codern/external';
 import { ClientGrpc } from '@nestjs/microservices';
@@ -11,6 +12,7 @@ import { ConfigService } from '@nestjs/config';
 import { AuthService } from '@/services/AuthService';
 import { AuthGuard } from '@/utils/guards/AuthGuard';
 import { Session, User } from '@/utils/decorators/AuthDecorator';
+import { LoginDto } from '@/utils/dtos/AuthDtos';
 
 @Controller('/auth')
 export class AuthController {
@@ -30,6 +32,23 @@ export class AuthController {
   @UseGuards(AuthGuard)
   public authenticate(@User() userData: PublicUser): PublicUser {
     return userData;
+  }
+
+  @Post('/login')
+  public async login(
+    @Body() body: LoginDto,
+    @Ip() ipAddress: string,
+    @Headers('user-agent') userAgent: string,
+    @Res({ passthrough: true }) response: FastifyReply,
+  ): Promise<{ success: boolean }> {
+    const { email, password } = body;
+    const result = await firstValueFrom(
+      this.authService.login({
+        email, password, userAgent, ipAddress,
+      }),
+    );
+    response.header('Set-Cookie', result.cookieHeader);
+    return { success: true };
   }
 
   @Get('/logout')

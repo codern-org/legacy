@@ -8,6 +8,17 @@ export type AuthResponse = {
   user: User,
 };
 
+export type LoginRequest = {
+  email: string,
+  password: string,
+  ipAddress: string,
+  userAgent: string,
+};
+
+export type LoginResponse = {
+  cookieHeader: string,
+};
+
 export type LogoutRequest = {
   session: string,
 };

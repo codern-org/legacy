@@ -1,13 +1,16 @@
 import { Observable } from 'rxjs';
 import {
-  AuthRequest, AuthResponse, GetOwnerDetailRequest, GetOwnerDetailResponse, GetUserByIdsRequest,
-  GetUserByIdsResponse, GoogleAuthRequest, GoogleAuthResponse,
-  GoogleAuthUrlResponse, LogoutRequest,
+  AuthRequest, AuthResponse, GetOwnerDetailRequest,
+  GetOwnerDetailResponse, GetUserByIdsRequest, GetUserByIdsResponse,
+  GoogleAuthRequest, GoogleAuthResponse, GoogleAuthUrlResponse,
+  LoginRequest, LoginResponse, LogoutRequest,
 } from '@codern/internal';
 
 export interface AuthService {
 
   authenticate(data: AuthRequest): Observable<AuthResponse>;
+
+  login(data: LoginRequest): Observable<LoginResponse>;
 
   logout(data: LogoutRequest): Observable<void>;
 
