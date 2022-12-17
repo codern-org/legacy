@@ -180,6 +180,7 @@ importers:
       preact-router: ^4.1.0
       react: npm:@preact/compat
       react-dom: npm:@preact/compat
+      react-hook-form: ^7.41.0
       tailwind: workspace:*
       typescript: ^4.6.4
       vite: ^3.2.0
@@ -199,6 +200,7 @@ importers:
       preact-router: 4.1.0_preact@10.11.2
       react: /@preact/compat/17.1.2_preact@10.11.2
       react-dom: /@preact/compat/17.1.2_preact@10.11.2
+      react-hook-form: 7.41.0_@preact+compat@17.1.2
     devDependencies:
       '@babel/core': 7.19.6
       '@preact/preset-vite': 2.4.0_mkngqnbm6b4trbinqxm2u2jidy
@@ -3906,6 +3908,15 @@ packages:
     resolution: {integrity: sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==}
     engines: {node: '>=10'}
     dev: true
+
+  /react-hook-form/7.41.0_@preact+compat@17.1.2:
+    resolution: {integrity: sha512-u1cHOXujr+AsNBoeCtcCuRwPh87mXAgKtXqd3qTCBgNFYzVZLXjYgLcynORpAgqhe24r5scucR8+6gfWaXBtHQ==}
+    engines: {node: '>=12.22.0'}
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18
+    dependencies:
+      react: /@preact/compat/17.1.2_preact@10.11.2
+    dev: false
 
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}

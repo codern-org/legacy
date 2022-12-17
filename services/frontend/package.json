@@ -23,7 +23,8 @@
     "preact": "^10.11.2",
     "preact-router": "^4.1.0",
     "react": "npm:@preact/compat",
-    "react-dom": "npm:@preact/compat"
+    "react-dom": "npm:@preact/compat",
+    "react-hook-form": "^7.41.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
