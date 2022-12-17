@@ -45,6 +45,9 @@ export class WorkspaceController {
     const { workspaces } = await firstValueFrom(
       this.workspaceService.getAllWorkspacesByUserId({ userId }),
     );
+
+    if (workspaces.length === 0) return [];
+
     // TODO: optimize
     const owners = await firstValueFrom(
       forkJoin(getOwnerIdsFromWorkspaces(workspaces)
