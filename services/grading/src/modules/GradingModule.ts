@@ -24,7 +24,7 @@ import { TestcaseRepository } from '@/repositories/TestcaseRepository';
             transport: Transport.RMQ,
             options: {
               urls: [url],
-              queue: 'grading',
+              queue: 'grading-grade',
               queueOptions: { durable: true },
             },
           };

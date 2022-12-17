@@ -283,6 +283,7 @@ importers:
       '@nestjs/config': ^2.2.0
       '@nestjs/core': ^9.1.6
       '@nestjs/microservices': ^9.1.6
+      '@nestjs/platform-fastify': ^9.1.6
       '@prisma/client': ^4.6.0
       '@types/node': ^18.11.4
       amqp-connection-manager: ^4.1.9
@@ -311,6 +312,7 @@ importers:
       '@nestjs/config': 2.2.0_yjxybkvltbh2d3oivnq5etx3oi
       '@nestjs/core': 9.1.6_chrjhvo72slcybvlgaz2t656fi
       '@nestjs/microservices': 9.1.6_xoefyg7re5wksxjszbe4d7n3mu
+      '@nestjs/platform-fastify': 9.1.6_6whalgrsvisgjemghedgkfq7dm
       '@prisma/client': 4.6.1_prisma@4.6.1
       amqp-connection-manager: 4.1.9_amqplib@0.10.3
       amqplib: 0.10.3

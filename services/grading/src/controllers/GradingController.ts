@@ -1,5 +1,5 @@
 import { Controller } from '@nestjs/common';
-import { GrpcMethod } from '@nestjs/microservices';
+import { EventPattern, GrpcMethod } from '@nestjs/microservices';
 import {
   GetQuestionSummaryByIdRequest,
   GetQuestionSummaryByIdResponse,
@@ -28,6 +28,11 @@ export class GradingController {
   @GrpcMethod('GradingService')
   public async grade(data: GradeRequest): Promise<GradeResponse> {
     return this.gradingService.grade(data.submissionId);
+  }
+
+  @EventPattern('result')
+  public async result(data: any): Promise<void> {
+    console.log(data);
   }
 
   @GrpcMethod('GradingService')
