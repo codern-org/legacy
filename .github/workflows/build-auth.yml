@@ -1,0 +1,15 @@
+name: Build and push Auth service
+
+on:
+  push:
+    paths:
+      - services/auth/**
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: vectier/codern/.github/workflows/build-and-push.yml@main
+    with:
+      context: .
+      dockerfile: services/auth/Dockerfile
+      tag: ghcr.io/vectier/codern-auth
