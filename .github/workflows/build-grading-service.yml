@@ -1,0 +1,15 @@
+name: Build and push Grading service
+
+on:
+  push:
+    paths:
+      - services/grading/**
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: vectier/codern/.github/workflows/build-and-push.yml@main
+    with:
+      context: .
+      dockerfile: services/grading/Dockerfile
+      tag: ghcr.io/vectier/codern-grading

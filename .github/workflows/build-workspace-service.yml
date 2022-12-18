@@ -1,0 +1,15 @@
+name: Build and push Workspace service
+
+on:
+  push:
+    paths:
+      - services/workspace/**
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: vectier/codern/.github/workflows/build-and-push.yml@main
+    with:
+      context: .
+      dockerfile: services/workspace/Dockerfile
+      tag: ghcr.io/vectier/codern-workspace

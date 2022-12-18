@@ -1,0 +1,15 @@
+name: Build and push Gateway service
+
+on:
+  push:
+    paths:
+      - services/gateway/**
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: vectier/codern/.github/workflows/build-and-push.yml@main
+    with:
+      context: .
+      dockerfile: services/gateway/Dockerfile
+      tag: ghcr.io/vectier/codern-gateway
