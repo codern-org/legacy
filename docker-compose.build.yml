@@ -23,3 +23,27 @@ services:
       - 3001:3001
     volumes:
       - ./.volumes/auth/logs/:/app/logs/
+
+  workspace:
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: ./services/workspace/Dockerfile
+    env_file:
+      - ./services/workspace/.env
+    ports:
+      - 3002:3002
+    volumes:
+      - ./.volumes/workspace/logs/:/app/logs/
+
+  grading:
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: ./services/grading/Dockerfile
+    env_file:
+      - ./services/grading/.env
+    ports:
+      - 3003:3003
+    volumes:
+      - ./.volumes/grading/logs/:/app/logs/
