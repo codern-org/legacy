@@ -33,7 +33,7 @@ const bootstrap = async (): Promise<void> => {
   app.register(fastifyMultipart);
   app.register(fastifyCookie);
 
-  await app.listen(port);
+  await app.listen(port, '0.0.0.0');
   logger.log(`Gateway service is listening on port ${port}`);
 };
 
