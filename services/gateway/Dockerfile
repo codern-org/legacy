@@ -26,7 +26,7 @@ RUN corepack enable
 COPY --from=installer /app/out/json/ .
 COPY --from=installer /app/out/pnpm-lock.yaml .
 RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store pnpm fetch
-RUN pnpm install --offline --frozen-lockfile
+RUN pnpm install --offline --frozen-lockfile --ignore-scripts
 
 # Build the application
 COPY --from=installer /app/out/full/ .
@@ -36,7 +36,7 @@ RUN pnpm turbo run build --filter=gateway...
 # Install only production dependencies
 RUN rm -rf node_modules && pnpm recursive exec -- rm -rf ./node_modules ./src
 RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store pnpm fetch
-RUN pnpm install --offline --frozen-lockfile --prod
+RUN pnpm install --offline --frozen-lockfile --ignore-scripts --prod
 
 # Copy protocol buffer language (.proto) for gRPC
 COPY ./packages/proto/ ./proto

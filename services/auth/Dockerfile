@@ -28,7 +28,7 @@ ENV PRISMA_SKIP_POSTINSTALL_GENERATE=true
 COPY --from=installer /app/out/json/ .
 COPY --from=installer /app/out/pnpm-lock.yaml .
 RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store pnpm fetch
-RUN pnpm install --offline --frozen-lockfile
+RUN pnpm install --offline --frozen-lockfile --ignore-scripts
 
 # Copy sourcecode
 COPY --from=installer /app/out/full/ .
@@ -46,7 +46,7 @@ RUN mv /app/services/auth/node_modules/.prisma /tmp/
 # Install only production dependencies
 RUN rm -rf node_modules && pnpm recursive exec -- rm -rf ./node_modules ./src
 RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store pnpm fetch
-RUN pnpm install --offline --frozen-lockfile --prod
+RUN pnpm install --offline --frozen-lockfile --ignore-scripts --prod
 
 # Move Prisma client into production node modules
 RUN mv /tmp/.prisma /app/services/auth/node_modules/
