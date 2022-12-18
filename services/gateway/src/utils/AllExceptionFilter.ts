@@ -168,9 +168,9 @@ export class AllExceptionFilter implements ExceptionFilter {
       (typeof error === 'object')
       && (error !== null)
       && ('response' in error)
-      && ('statusCode' in (error as any).response)
-      && ('message' in (error as any).response)
-      && ('error' in (error as any).response)
+      && ((error as any).response.statusCode)
+      && ((error as any).response.message)
+      && ((error as any).response.error)
       && ('status' in error)
     );
   }

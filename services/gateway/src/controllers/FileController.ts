@@ -1,5 +1,5 @@
 import {
-  Controller, Get, Request,
+  Controller, Get, NotFoundException, Param, Request,
   Response,
 } from '@nestjs/common';
 import { FastifyReply, FastifyRequest } from 'fastify';
@@ -18,8 +18,10 @@ export class FileController {
   @Get('/profile/:userId')
   public getUserProfileImage(
     @Request() request: FastifyRequest,
+    @Param('userId') userId: string,
     @Response({ passthrough: true }) response: FastifyReply,
   ): Observable<void> {
+    if (!userId) throw new NotFoundException();
     return this.fileService.stream(request.url, response);
   }
 

@@ -1,8 +1,8 @@
 import { MultipartFile } from '@fastify/multipart';
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import FormData from 'form-data';
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable } from 'rxjs';
 import { ConfigService } from '@nestjs/config';
 import { FastifyReply } from 'fastify';
 
@@ -27,6 +27,13 @@ export class FileService {
         response.headers(stream.headers);
         response.header('server', 'Codern File System 1.0');
         return stream.data;
+      }))
+      .pipe(catchError((error) => {
+        if (error.response) {
+          throw new HttpException(error.response.statusText, error.response.status);
+        } else {
+          throw new HttpException('Something went wrong on streaming from file system', 500);
+        }
       }));
   }
 
