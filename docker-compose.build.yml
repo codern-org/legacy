@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: ./services/gateway/Dockerfile
+    env_file:
+      - ./services/gateway/.env
     ports:
       - 3000:3000
     volumes:
@@ -15,6 +17,8 @@ services:
     build:
       context: .
       dockerfile: ./services/auth/Dockerfile
+    env_file:
+      - ./services/auth/.env
     ports:
       - 3001:3001
     volumes:
