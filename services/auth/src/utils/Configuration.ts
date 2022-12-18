@@ -1,5 +1,6 @@
 export type Configuration = {
   gatewayUrl: string,
+  filerUrl: string,
   sessionSecret: string,
   googleApp: {
     clientId: string,
@@ -9,6 +10,7 @@ export type Configuration = {
 
 export const configuration = (): Configuration => ({
   gatewayUrl: process.env.GATEWAY_URL || '',
+  filerUrl: process.env.FILER_URL || '',
   sessionSecret: process.env.SESSION_SECRET || 'secret',
   googleApp: {
     clientId: process.env.GOOGLE_CLIENT_ID || '',

@@ -10,6 +10,7 @@ import {
 } from '@codern/internal';
 import { Timestamp } from '@codern/shared';
 import { firstValueFrom } from 'rxjs';
+import { ConfigService } from '@nestjs/config';
 import { UserRepository } from '@/repositories/UserRepository';
 import { generateAvatar } from '@/utils/AvatarGenerator';
 import { Validator } from '@/utils/Validator';
@@ -22,13 +23,16 @@ export type SelfProviderUser = Omit<User, 'password'> & { password: string };
 export class UserService {
 
   private readonly httpService: HttpService;
+  private readonly configService: ConfigService;
   private readonly userRepository: UserRepository;
 
   public constructor(
     httpService: HttpService,
+    configService: ConfigService,
     userRepository: UserRepository,
   ) {
     this.httpService = httpService;
+    this.configService = configService;
     this.userRepository = userRepository;
   }
 
@@ -105,9 +109,12 @@ export class UserService {
     formData.append('file', svgBuffer, { filename: 'avatar.svg' });
 
     try {
-      const fileUrl = `http://localhost:8888/profile/${id}`;
-      await firstValueFrom(this.httpService.post(fileUrl, formData));
-      return fileUrl;
+      const filerUrl = this.configService.get('filerUrl');
+      const gatewayUrl = this.configService.get('gatewayUrl');
+      const filePath = `profile/${id}`;
+      const publicFileUrl = `${gatewayUrl}/file/${filePath}`;
+      await firstValueFrom(this.httpService.post(`${filerUrl}/${filePath}`, formData));
+      return publicFileUrl;
     } catch (error) {
       throw new Error('Cannot connect to file service');
     }

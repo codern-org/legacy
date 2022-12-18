@@ -10,8 +10,6 @@ import { FileService } from '@/services/FileService';
     HttpModule,
   ],
   controllers: [GradingController],
-  providers: [
-    FileService,
-  ],
+  providers: [FileService],
 })
 export class GradingModule {}

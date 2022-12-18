@@ -7,6 +7,7 @@ import { GatewayModule } from '@/modules/GatewayModule';
 import { GradingModule } from '@/modules/GradingModule';
 import { configuration } from '@/utils/Configuration';
 import { WorkspaceModule } from '@/modules/WorkspaceModule';
+import { FileModule } from '@/modules/FileModule';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { WorkspaceModule } from '@/modules/WorkspaceModule';
 
     GatewayModule,
     AuthModule,
+    FileModule,
     GradingModule,
     WorkspaceModule,
   ],
