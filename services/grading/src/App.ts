@@ -30,7 +30,11 @@ const bootstrap = async (): Promise<void> => {
       package: 'codern.grading',
       protoPath: 'root.proto',
       loader: {
-        includeDirs: [join(__dirname, '../../../packages/proto')],
+        includeDirs: [
+          (process.env.NODE_ENV === 'production')
+            ? join(process.cwd(), 'proto')
+            : join(__dirname, '../../../packages/proto'),
+        ],
         keepCase: true,
       },
     },
