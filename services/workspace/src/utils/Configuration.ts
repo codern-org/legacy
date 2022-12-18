@@ -3,5 +3,5 @@ export type Configuration = {
 };
 
 export const configuration = (): Configuration => ({
-  gatewayUrl: process.env.GATEWAY_URL || '',
+  gatewayUrl: process.env.GATEWAY_URL || 'http://localhost:3000',
 });

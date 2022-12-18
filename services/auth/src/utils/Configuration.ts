@@ -9,8 +9,8 @@ export type Configuration = {
 };
 
 export const configuration = (): Configuration => ({
-  gatewayUrl: process.env.GATEWAY_URL || '',
-  filerUrl: process.env.FILER_URL || '',
+  gatewayUrl: process.env.GATEWAY_URL || 'http://localhost:3000',
+  filerUrl: process.env.FILER_URL || 'http://localhost:8888',
   sessionSecret: process.env.SESSION_SECRET || 'secret',
   googleApp: {
     clientId: process.env.GOOGLE_CLIENT_ID || '',
