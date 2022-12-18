@@ -61,6 +61,7 @@ export class AllExceptionFilter implements ExceptionFilter {
             message: error.message,
             code: error.code,
           });
+        return;
       } catch (error) {
         if (error instanceof SyntaxError) {
           this.logger.error({
@@ -96,6 +97,7 @@ export class AllExceptionFilter implements ExceptionFilter {
           message: exception.response.message,
           code: 'VP-000-001',
         });
+      return;
     }
 
     // Catch all HTTP exceptions
@@ -114,6 +116,7 @@ export class AllExceptionFilter implements ExceptionFilter {
           message: exception.message,
           code: 'HE-000-001',
         });
+      return;
     }
 
     // Catch all posible Node.js Error instances
