@@ -11,7 +11,8 @@
     "db:push": "prisma db push",
     "db:seed": "prisma db seed",
     "dev": "tsnd --respawn --transpile-only --exit-child --watch src -r tsconfig-paths/register src/App.ts",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "start": "node ./dist/App.js"
   },
   "dependencies": {
     "@codern/internal": "workspace:*",

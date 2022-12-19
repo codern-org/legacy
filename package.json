@@ -12,7 +12,8 @@
     "db:seed": "turbo run db:seed",
     "dev": "cross-env FORCE_COLOR=1 turbo run dev",
     "lint": "turbo run lint",
-    "preinstall": "npx only-allow pnpm"
+    "preinstall": "npx only-allow pnpm",
+    "start": "turbo run start"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",

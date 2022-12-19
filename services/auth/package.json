@@ -10,7 +10,8 @@
     "db:migrate": "prisma migrate dev",
     "db:push": "prisma db push",
     "dev": "tsnd --respawn --transpile-only --exit-child --watch src -r tsconfig-paths/register src/App.ts",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "start": "node ./dist/App.js"
   },
   "dependencies": {
     "@codern/shared": "workspace:*",

@@ -6,7 +6,7 @@
     "build": "tsc && vite build",
     "clean": "rimraf node_modules .turbo dist",
     "dev": "vite --host",
-    "preview": "vite preview"
+    "start": "vite preview"
   },
   "dependencies": {
     "@codern/external": "workspace:*",
