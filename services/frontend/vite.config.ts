@@ -6,7 +6,6 @@ export default ({ mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 
   return defineConfig({
-    // https://github.com/vitejs/vite/discussions/8726
     plugins: [
       preact(),
     ],
@@ -19,5 +18,13 @@ export default ({ mode }) => {
       port: Number.parseInt(process.env.VITE_PORT),
     },
     base: process.env.VITE_BASE_URL,
+    optimizeDeps: {
+      include: ['@codern/external', '@codern/internal'],
+    },
+    build: {
+      commonjsOptions: {
+        include: [/external/, /internal/, /node_modules/]
+      },
+    },
   });
 };

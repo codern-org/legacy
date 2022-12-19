@@ -2,7 +2,6 @@
   "name": "websocket",
   "version": "0.0.0",
   "private": true,
-  "type": "module",
   "scripts": {
     "build": "tsc && tsc-alias",
     "clean": "rimraf node_modules .turbo dist logs",
