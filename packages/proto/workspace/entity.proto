@@ -25,7 +25,9 @@ message Question {
   string name = 2;
   string description = 3;
   string detailPath = 4;
-  string level = 5;
-  int32 workspaceId = 6;
-  uint64 createdAt = 7;
+  int32 memoryLimit = 5;
+  int32 timeLimit  = 6;
+  string level = 7;
+  int32 workspaceId = 8;
+  uint64 createdAt = 9;
 }

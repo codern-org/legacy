@@ -1,11 +1,14 @@
 import { PublicQuestion, PublicQuestionLevel, PublicQuestionStatus } from '@codern/external';
 
+// TODO: EIEI
 export const mockQuestions: PublicQuestion[] = [
   {
     id: 1,
     name: 'Porama walker',
     description: 'The hardest path algorithm ever',
     detailPath: '/mockup/question1.md',
+    memoryLimit: 1024,
+    timeLimit: 100,
     level: PublicQuestionLevel.HARD,
     status: PublicQuestionStatus.DONE,
     createdAt: Date.now(),
@@ -16,6 +19,8 @@ export const mockQuestions: PublicQuestion[] = [
     name: 'Keeratikorn Eating',
     description: 'The easiest noodle algorithm',
     detailPath: '/mockup/question1.md',
+    memoryLimit: 1024,
+    timeLimit: 100,
     level: PublicQuestionLevel.EASY,
     status: PublicQuestionStatus.DONE,
     createdAt: Date.now(),
@@ -26,6 +31,8 @@ export const mockQuestions: PublicQuestion[] = [
     name: 'Chicken',
     description: 'Need to eat a chicken before code',
     detailPath: '/mockup/question1.md',
+    memoryLimit: 2048,
+    timeLimit: 300,
     level: PublicQuestionLevel.MEDIUM,
     status: PublicQuestionStatus.DONE,
     createdAt: Date.now(),
@@ -36,6 +43,8 @@ export const mockQuestions: PublicQuestion[] = [
     name: 'Noodle',
     description: 'Need to eat a chicken before code',
     detailPath: '/mockup/question1.md',
+    memoryLimit: 4096,
+    timeLimit: 400,
     level: PublicQuestionLevel.HARD,
     status: PublicQuestionStatus.DONE,
     createdAt: Date.now(),

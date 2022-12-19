@@ -28,6 +28,8 @@ export type Question = {
   name: string,
   description: string,
   detailPath: string,
+  memoryLimit: number,
+  timeLimit: number,
   level: QuestionLevel,
   workspaceId: number,
   createdAt: number,
