@@ -184,7 +184,6 @@ importers:
       tailwind: workspace:*
       typescript: ^4.6.4
       vite: ^3.2.0
-      vite-plugin-commonjs: ^0.6.1
     dependencies:
       '@codern/external': link:../../packages/shared-external
       '@codern/shared': link:../../packages/shared-all
@@ -209,7 +208,6 @@ importers:
       tailwind: link:../../packages/tailwind
       typescript: 4.8.4
       vite: 3.2.1
-      vite-plugin-commonjs: 0.6.1
 
   services/gateway:
     specifiers:
@@ -4601,12 +4599,6 @@ packages:
     resolution: {integrity: sha512-nYXQLCBkpJ8X6ltALua9dRrZDHVYxjJ1wgskNt1lH9fzGjs3tgojGSCBjmEPwkWS1y29+DrizMTW19Pr9uB2nw==}
     engines: {node: '>= 0.10'}
     dev: false
-
-  /vite-plugin-commonjs/0.6.1:
-    resolution: {integrity: sha512-UtWqZen2CpbJziFmYRH6fkTew3ExHcIKpB0uLVF8TVGAL0wVTyr6V+TRqWzFyX069u/yWr/AZfYDQCX+Rx34iw==}
-    dependencies:
-      fast-glob: 3.2.12
-    dev: true
 
   /vite/3.2.1:
     resolution: {integrity: sha512-ADtMkfHuWq4tskJsri2n2FZkORO8ZyhI+zIz7zTrDAgDEtct1jdxOg3YsZBfHhKjmMoWLOSCr+64qrEDGo/DbQ==}
