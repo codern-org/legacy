@@ -8,7 +8,8 @@ on:
       - packages/shared-external/**
       - packages/shared-internal/**
       - packages/tailwind/**
-      - services/tsconfig/**
+      - packages/tsconfig/**
+      - services/frontend/**
   workflow_dispatch:
 
 jobs:
