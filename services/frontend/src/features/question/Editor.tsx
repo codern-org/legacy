@@ -20,7 +20,13 @@ const options: MonacoEditorOptions = {
   smoothScrolling: true,
 };
 
-export const Editor = () => {
+type EditorProps = {
+  freeze?: boolean,
+};
+
+export const Editor = ({
+  freeze,
+}: EditorProps) => {
   const forceRender = useReducer(() => ({}), {})[1] as () => void;
 
   const [, , selectedTheme] = useTheme();

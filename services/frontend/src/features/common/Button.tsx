@@ -13,6 +13,7 @@ type ButtonProps = {
   active?: boolean,
   className?: string,
   onClick?: (event: MouseEvent) => void,
+  disabled?: boolean,
 };
 
 const buttonClasses = {
@@ -41,6 +42,7 @@ export const Button = ({
   active,
   className,
   onClick,
+  disabled,
 }: ButtonProps) => {
   const handleClick = (event: MouseEvent) => {
     event.preventDefault();
@@ -78,6 +80,7 @@ export const Button = ({
         active && buttonClasses.active[color],
       )}
       onClick={handleClick}
+      disabled={disabled}
     >
       {loading && (
         <div className="w-4 h-4 mr-2 animate-spin"><Spinner /></div>

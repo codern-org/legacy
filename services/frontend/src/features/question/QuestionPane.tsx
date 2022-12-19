@@ -46,7 +46,7 @@ export const QuestionPane = ({
         <QuestionStatusBadge status={question.status} />
       </div>
 
-      <div className="flex flex-row mb-8 space-x-2 pb-4 border-b border-primary">
+      <div className="flex flex-row mb-4 space-x-2 pb-4 border-b border-primary">
         {sections.map((section) => (
           <Button
             key={section}

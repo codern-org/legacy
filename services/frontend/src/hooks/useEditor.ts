@@ -30,8 +30,20 @@ export const useEditor = () => {
     setSettings({ ...settings, language: language });
   };
 
+  const getCode = () => {
+    if (!editorRef.monacoEditor) return null;
+    
+    const editor = editorRef.monacoEditor;
+    const model = editor.getModel();
+
+    if (!model) return null;
+    return model.getValue();
+  };
+
   return {
     resetCode,
     changeLanguage,
+    settings,
+    getCode,
   };
 };

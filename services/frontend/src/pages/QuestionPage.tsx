@@ -48,7 +48,10 @@ export const QuestionPage = ({
         </section>
         <section className="w-6/12">
           <Suspense fallback={<EditorPaneSkeleton />}>
-            <EditorPane />
+            <EditorPane
+              workspaceId={workspaceId}
+              questionId={questionId}
+            />
           </Suspense>
         </section>
       </main>

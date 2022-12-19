@@ -6,7 +6,7 @@ export const QuestionPaneSkeleton = () => {
         <div className="w-14 h-5 mb-6 border border-primary rounded-lg" />
       </div>
 
-      <div className="flex flex-row mb-8 space-x-2 pb-4 border-b border-primary">
+      <div className="flex flex-row mb-4 space-x-2 pb-4 border-b border-primary">
         <div className="w-2/12 h-8 border border-primary rounded-lg" />
         <div className="w-2/12 h-8 border border-primary rounded-lg" />
       </div>
