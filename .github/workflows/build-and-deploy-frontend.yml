@@ -1,0 +1,77 @@
+name: Build and deploy Frontend
+
+on:
+  push:
+    paths:
+      - packages/eslint-config-vectier/**
+      - packages/shared-all/**
+      - packages/shared-external/**
+      - packages/shared-internal/**
+      - packages/tailwind/**
+      - services/tsconfig/**
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build and deploy
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        id: pnpm-install
+        with:
+          version: 7
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpn cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Setup turbo
+        run: |
+          pnpm i -g turbo
+          turbo prune --scope=frontend
+
+      - name: Install dependencies
+        working-directory: ./out
+        run: pnpm i
+
+      - name: Setup env file
+        working-directory: ./out/services/frontend
+        run: |
+          echo "${{ secrets.FRONTEND_ENV_FILE }}" > .env
+
+      - name: Build
+        working-directory: ./out
+        run: pnpm build
+
+      - name: Deploy
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASS }}
+          port: ${{ secrets.SSH_PORT }}
+          rm: true
+          source: ./out/services/frontend/dist/*
+          target: /home/codern/dist/frontend
+          strip_components: 4
+      
