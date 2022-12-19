@@ -3,10 +3,11 @@ import { Markdown } from '@/features/common/Makdown';
 import { Text } from '@/features/common/Text';
 import { SubmissionSection } from '@/features/question/submission/SubmissionSection';
 import { QuestionStatusBadge } from '@/features/workspace/QuestionStatusBadge';
+import { fetch } from '@/utils/Fetch';
 import { PublicQuestion } from '@codern/external';
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { route } from 'preact-router';
-import { useState } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 
 const sections = ['problem', 'submission'] as const;
 export type QuestionPaneSection = typeof sections[number];
@@ -21,6 +22,14 @@ export const QuestionPane = ({
   question,
 }: QuestionPaneProps) => {
   const [currentSection, setCurrentSection] = useState<QuestionPaneSection>('problem');
+  const [questionMarkdown, setQuestionMarkdown] = useState<string | null>(null);
+
+  useEffect(() => {
+    // TODO: error handling
+    fetch
+      .get(question.detailPath)
+      .then((response) => setQuestionMarkdown(response.data));
+  }, [question.detailPath]);
 
   return (
     <div className="h-full flex flex-col p-6 border border-primary rounded-lg">
@@ -52,7 +61,7 @@ export const QuestionPane = ({
         ))}
       </div>
       <div className="py-4 overflow-y-auto">
-        {currentSection === 'problem' && (<Markdown markdown={question.detailPath} />)}
+        {currentSection === 'problem' && (<Markdown markdown={questionMarkdown || ''} />)}
         {currentSection === 'submission' && (
           <SubmissionSection
             workspaceId={Number.parseInt(workspaceId)}
