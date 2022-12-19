@@ -3,6 +3,12 @@ import { ClientRMQ } from '@nestjs/microservices';
 import { Language } from '@codern/internal';
 import { catchError, Observable, throwError } from 'rxjs';
 
+export type FileSource = {
+  name: string,
+  sourceType: string,
+  source: string,
+};
+
 @Injectable()
 export class QueueSerivce {
 
@@ -12,9 +18,24 @@ export class QueueSerivce {
     this.client = client;
   }
 
-  public grade(submissionId: number, language: Language, testcasePath: string): Observable<void> {
+  public grade(
+    submissionId: number,
+    type: Language,
+    softLimitMemory: number,
+    softLimitTime: number,
+    filesSource: FileSource[],
+  ): Observable<void> {
     return this.client
-      .emit('grade', { submissionId, language, testcasePath })
+      .emit(
+        'grade',
+        {
+          submissionId,
+          type,
+          softLimitMemory,
+          softLimitTime,
+          filesSource,
+        },
+      )
       .pipe(catchError(throwError));
   }
 

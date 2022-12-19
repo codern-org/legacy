@@ -5,28 +5,36 @@ import {
 } from '@codern/internal';
 import { Timestamp } from '@codern/shared';
 import { Submission } from '@prisma/client';
+import { ConfigService } from '@nestjs/config';
 import { SubmissionRepository } from '@/repositories/SubmissionRepository';
-import { QueueSerivce } from '@/services/QueueService';
+import { FileSource, QueueSerivce } from '@/services/QueueService';
 import { TestcaseRepository } from '@/repositories/TestcaseRepository';
 import { GradingError } from '@/utils/errors/GradingError';
+import { QuestionRepository } from '@/repositories/QuestionRepository';
 
 type QuestionIdWithStatus = Pick<Submission, 'questionId'> & { status: QuestionStatus };
 
 @Injectable()
 export class GradingService {
 
+  private readonly configService: ConfigService;
   private readonly queueService: QueueSerivce;
   private readonly submissionRepository: SubmissionRepository;
   private readonly testcaseRepository: TestcaseRepository;
+  private readonly questionRepository: QuestionRepository;
 
   public constructor(
+    configService: ConfigService,
     queueService: QueueSerivce,
     submissionRepository: SubmissionRepository,
     testcaseRepository: TestcaseRepository,
+    questionRepository: QuestionRepository,
   ) {
+    this.configService = configService;
     this.queueService = queueService;
     this.submissionRepository = submissionRepository;
     this.testcaseRepository = testcaseRepository;
+    this.questionRepository = questionRepository;
   }
 
   public async submit(
@@ -63,10 +71,24 @@ export class GradingService {
     const testcase = await this.testcaseRepository.getTestcaseByQuestionId(submission.questionId);
     if (!testcase) throw new ExpectedNotFoundError(GradingError.TestcaseNotFound);
 
+    const question = await this.questionRepository.getQuestionByQuestionId(submission.questionId);
+    if (!question) throw new ExpectedNotFoundError(GradingError.QuestionNotFound);
+
+    const filerUrl = this.configService.get('publicFilerUrl');
+    const sourceUrl = `${filerUrl}${submission.filePath}`;
+
+    const filesSource: FileSource[] = [{
+      name: 'source',
+      sourceType: 'URL',
+      source: sourceUrl,
+    }];
+
     this.queueService.grade(
       submission.id,
       submission.language as Language,
-      testcase.filePath,
+      question.memoryLimit,
+      question.timeLimit,
+      filesSource,
     );
 
     return {

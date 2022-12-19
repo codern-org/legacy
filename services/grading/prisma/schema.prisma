@@ -25,14 +25,14 @@ enum Language {
 }
 
 model Submission {
-  id         Int              @id @default(autoincrement())
+  id         Int           @id @default(autoincrement())
   questionId Int
   userId     String
   language   Language
   status     GradingStatus
   result     String?
   filePath   String
-  uploadedAt Int              @db.UnsignedInt
+  uploadedAt Int           @db.UnsignedInt
 }
 
 model Editor {
@@ -43,4 +43,10 @@ model Editor {
   savedAt    Int      @db.UnsignedInt
 
   @@id([userId, questionId, language])
+}
+
+model Question {
+  questionId  Int @id
+  memoryLimit Int
+  timeLimit   Int
 }
