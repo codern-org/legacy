@@ -27,6 +27,11 @@ import { QuestionRepository } from '@/repositories/QuestionRepository';
               urls: [url],
               queue: 'grading-grade',
               queueOptions: { durable: true },
+              serializer: {
+                serialize(value): unknown {
+                  return value.data;
+                },
+              },
             },
           };
         },
