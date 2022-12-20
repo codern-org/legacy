@@ -24,7 +24,10 @@ export class SubmissionRepository {
   }
 
   public getSubmissionsByQuestionId(questionId: number): Promise<Submission[]> {
-    return this.prismaService.submission.findMany({ where: { questionId } });
+    return this.prismaService.submission.findMany({
+      where: { questionId },
+      orderBy: { uploadedAt: 'desc' },
+    });
   }
 
   public updateSubmission(id: number, data: Prisma.SubmissionUpdateInput): Promise<Submission> {
