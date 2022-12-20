@@ -21,10 +21,12 @@ const options: MonacoEditorOptions = {
 };
 
 type EditorProps = {
+  questionId: string,
   freeze?: boolean,
 };
 
 export const Editor = ({
+  questionId,
   freeze,
 }: EditorProps) => {
   const forceRender = useReducer(() => ({}), {})[1] as () => void;
@@ -82,7 +84,9 @@ export const Editor = ({
 
   const handleCodeChange = (value: string | undefined) => {
     // setCodes({ ...codes, [settings.language]: value });
-    // TODO: debounce auto save
+    // TODO: debounce auto save and use backend mechanism
+    if (!value) return;
+    localStorage.setItem(`code-${settings.language}-${questionId}`, value);
   };
 
   // Initialize monaco and set the reference to retrieve editor/monaco instance later
@@ -91,10 +95,13 @@ export const Editor = ({
   const handleEditorDidMount = (editor: MonacoEditor, monaco: Monaco) => {
     setEditorRef({ monacoEditor: editor, monaco: monaco });
 
-    const defaultLanguage = settings.language;
-    const defaultCode = codes[defaultLanguage];
-    const defaultModel = monaco.editor.getModel(monaco.Uri.file('/main'))!;
 
+    // TODO: refactor initial load code from props
+    const defaultLanguage = settings.language;
+    let defaultCode = localStorage.getItem(`code-${defaultLanguage}-${questionId}`);
+    if (!defaultCode) defaultCode = codes[defaultLanguage];
+
+    const defaultModel = monaco.editor.getModel(monaco.Uri.file('/main'))!;
     defaultModel.setValue(defaultCode);
     monaco.editor.setModelLanguage(defaultModel, defaultLanguage);
 

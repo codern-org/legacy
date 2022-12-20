@@ -49,7 +49,7 @@ const EditorPane = ({
 
   return (
     <div className="h-full flex flex-col">
-      <Editor freeze={isSubmitting} />
+      <Editor questionId={questionId} freeze={isSubmitting} />
 
       <div className="flex flex-row justify-between space-x-2 mt-6">
         <div className="flex flex-row space-x-2">
