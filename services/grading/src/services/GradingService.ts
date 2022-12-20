@@ -105,7 +105,6 @@ export class GradingService {
   }
 
   public async result(submissionId: number, result: string): Promise<void> {
-    console.log('updated: ', submissionId, result);
     await this.submissionRepository.updateSubmission(submissionId, {
       status: GradingStatus.COMPLETED,
       result,
