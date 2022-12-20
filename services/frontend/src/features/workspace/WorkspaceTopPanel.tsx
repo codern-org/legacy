@@ -22,7 +22,7 @@ export const WorkspaceTopPanel = ({
           onClick={() => route('/dashboard')}
         />
         <span
-          className="w-10 h-10 flex justify-center items-center bg-neutral-100 dark:bg-neutral-700 bg-cover bg-center rounded-md transition-theme"
+          className="w-10 h-10 flex-none justify-center items-center bg-neutral-100 dark:bg-neutral-700 bg-cover bg-center rounded-md transition-theme"
           style={{ backgroundImage: `url(${profilePath})` }}
         />
         <div>

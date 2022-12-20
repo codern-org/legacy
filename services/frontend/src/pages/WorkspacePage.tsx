@@ -43,7 +43,7 @@ export const WorkspacePage = ({
   }, []);
 
   return (
-    <div className="h-screen flex flex-col dark:bg-black transition-theme">
+    <div className="min-h-screen flex flex-col dark:bg-black transition-theme">
       <Navbar />
 
       <main className="container w-full h-full flex flex-col p-6">

@@ -34,7 +34,7 @@ export const WorkspaceCard = ({
     >
       <div className="flex flex-row items-center space-x-2 mb-4">
         <span
-          className="w-10 h-10 bg-neutral-100 dark:bg-neutral-700 bg-cover bg-center rounded-md transition-theme"
+          className="w-10 h-10 flex-none bg-neutral-100 dark:bg-neutral-700 bg-cover bg-center rounded-md transition-theme"
           style={{ backgroundImage: `url(${profilePath})` }}
         />
         <div className="flex flex-col items-start">

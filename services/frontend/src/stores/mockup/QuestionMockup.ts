@@ -1,6 +1,5 @@
 import { PublicQuestion, PublicQuestionLevel, PublicQuestionStatus } from '@codern/external';
 
-// TODO: EIEI
 export const mockQuestions: PublicQuestion[] = [
   {
     id: 1,

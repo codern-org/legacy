@@ -61,7 +61,10 @@ export const QuestionPane = ({
         ))}
       </div>
       <div className="py-4 overflow-y-auto">
-        {currentSection === 'problem' && (<Markdown markdown={questionMarkdown || ''} />)}
+        {((currentSection === 'problem') && (questionMarkdown))
+          && (<Markdown markdown={questionMarkdown} />)
+        }
+
         {currentSection === 'submission' && (
           <SubmissionSection
             workspaceId={Number.parseInt(workspaceId)}
