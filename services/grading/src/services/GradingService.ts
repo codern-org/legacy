@@ -75,13 +75,18 @@ export class GradingService {
     if (!question) throw new ExpectedNotFoundError(GradingError.QuestionNotFound);
 
     const filerUrl = this.configService.get('publicFilerUrl');
-    const sourceUrl = `${filerUrl}${submission.filePath}`;
 
-    const filesSource: FileSource[] = [{
+    const submissionFileSource: FileSource = {
       name: 'source',
       sourceType: 'URL',
-      source: sourceUrl,
-    }];
+      source: `${filerUrl}${submission.filePath}`,
+    };
+    const testcaseFileSource: FileSource = {
+      name: 'testcase.zip',
+      sourceType: 'URL',
+      source: `${filerUrl}${testcase.filePath}`,
+    };
+    const filesSource: FileSource[] = [submissionFileSource, testcaseFileSource];
 
     this.queueService.grade(
       submission.id,
@@ -100,6 +105,7 @@ export class GradingService {
   }
 
   public async result(submissionId: number, result: string): Promise<void> {
+    console.log('updated: ', submissionId, result);
     await this.submissionRepository.updateSubmission(submissionId, {
       status: GradingStatus.COMPLETED,
       result,
