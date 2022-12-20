@@ -220,6 +220,7 @@ importers:
       '@codern/shared': workspace:*
       '@fastify/cookie': ^8.3.0
       '@fastify/multipart': ^7.3.0
+      '@grpc/grpc-js': ^1.7.3
       '@nestjs/axios': ^1.0.0
       '@nestjs/common': ^9.1.6
       '@nestjs/config': ^2.2.0
@@ -251,11 +252,12 @@ importers:
       '@codern/shared': link:../../packages/shared-all
       '@fastify/cookie': 8.3.0
       '@fastify/multipart': 7.3.0
+      '@grpc/grpc-js': 1.7.3
       '@nestjs/axios': 1.0.0_yjxybkvltbh2d3oivnq5etx3oi
       '@nestjs/common': 9.1.6_x6yqyveuahcdef4z4mxykmuv6a
       '@nestjs/config': 2.2.0_yjxybkvltbh2d3oivnq5etx3oi
       '@nestjs/core': 9.1.6_hjunegrat7oas4kqnasq47vm5u
-      '@nestjs/microservices': 9.1.6_s4q6n7voikzzkduiw3bfefg47i
+      '@nestjs/microservices': 9.1.6_wrhdmynp3joaqfjf36f64vcvmm
       '@nestjs/platform-fastify': 9.1.6_6whalgrsvisgjemghedgkfq7dm
       '@nestjs/platform-socket.io': 9.2.1_q55nn6swoaqsas25lbfvcgavra
       '@nestjs/websockets': 9.2.1_s3iasavanb7n5mx3e6rqgt4l4e
@@ -903,7 +905,7 @@ packages:
       reflect-metadata: ^0.1.12
       rxjs: ^6.0.0 || ^7.0.0
     dependencies:
-      '@nestjs/common': 9.1.6_yzt46al3aifnexifjjdb4dxxja
+      '@nestjs/common': 9.1.6_x6yqyveuahcdef4z4mxykmuv6a
       axios: 1.1.3
       reflect-metadata: 0.1.13
       rxjs: 7.5.7
@@ -966,7 +968,7 @@ packages:
       reflect-metadata: ^0.1.13
       rxjs: ^6.0.0 || ^7.2.0
     dependencies:
-      '@nestjs/common': 9.1.6_yzt46al3aifnexifjjdb4dxxja
+      '@nestjs/common': 9.1.6_x6yqyveuahcdef4z4mxykmuv6a
       dotenv: 16.0.1
       dotenv-expand: 8.0.3
       lodash: 4.17.21
@@ -1027,7 +1029,7 @@ packages:
         optional: true
     dependencies:
       '@nestjs/common': 9.1.6_x6yqyveuahcdef4z4mxykmuv6a
-      '@nestjs/microservices': 9.1.6_s4q6n7voikzzkduiw3bfefg47i
+      '@nestjs/microservices': 9.1.6_wrhdmynp3joaqfjf36f64vcvmm
       '@nestjs/websockets': 9.2.1_s3iasavanb7n5mx3e6rqgt4l4e
       '@nuxtjs/opencollective': 0.3.2
       fast-safe-stringify: 2.1.1
@@ -1087,7 +1089,7 @@ packages:
       tslib: 2.4.0
     dev: false
 
-  /@nestjs/microservices/9.1.6_s4q6n7voikzzkduiw3bfefg47i:
+  /@nestjs/microservices/9.1.6_wrhdmynp3joaqfjf36f64vcvmm:
     resolution: {integrity: sha512-ppcA+ihIEJRvjpGc/ognlWwpp3Kra6wyH66BvqWJiNQa8T44V4Jrgn4mhQkd91TuVlGVS2vhG2KGeColLb70Sw==}
     peerDependencies:
       '@grpc/grpc-js': '*'
@@ -1123,6 +1125,7 @@ packages:
       nats:
         optional: true
     dependencies:
+      '@grpc/grpc-js': 1.7.3
       '@nestjs/common': 9.1.6_x6yqyveuahcdef4z4mxykmuv6a
       '@nestjs/core': 9.1.6_hjunegrat7oas4kqnasq47vm5u
       '@nestjs/websockets': 9.2.1_s3iasavanb7n5mx3e6rqgt4l4e
@@ -3656,7 +3659,7 @@ packages:
       '@nestjs/common': ^5.0.0 || ^6.6.0 || ^7.0.0 || ^8.0.0 || ^9.0.0
       winston: ^3.0.0
     dependencies:
-      '@nestjs/common': 9.1.6_yzt46al3aifnexifjjdb4dxxja
+      '@nestjs/common': 9.1.6_x6yqyveuahcdef4z4mxykmuv6a
       fast-safe-stringify: 2.1.1
       winston: 3.8.2
     dev: false

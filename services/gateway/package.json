@@ -15,6 +15,7 @@
     "@codern/shared": "workspace:*",
     "@fastify/cookie": "^8.3.0",
     "@fastify/multipart": "^7.3.0",
+    "@grpc/grpc-js": "^1.7.3",
     "@nestjs/axios": "^1.0.0",
     "@nestjs/common": "^9.1.6",
     "@nestjs/config": "^2.2.0",
