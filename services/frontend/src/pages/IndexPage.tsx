@@ -17,7 +17,7 @@ export const IndexPage = () => {
 
         <section className="hidden lg:block w-1/2 h-full bg-gradient-to-tl from-neutral-400 dark:from-neutral-800 to-neutral-100 dark:to-neutral-500">
           <div className="h-full flex justify-center items-center text-4xl font-bold text-white">
-            Advertise
+            Currently Maintenance
           </div>
         </section>
       </main>
