@@ -8,6 +8,7 @@ import { PublicQuestion } from '@codern/external';
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { route } from 'preact-router';
 import { useEffect, useState } from 'preact/hooks';
+import { toast } from 'react-toastify';
 
 const sections = ['problem', 'submission'] as const;
 export type QuestionPaneSection = typeof sections[number];
@@ -25,14 +26,14 @@ export const QuestionPane = ({
   const [questionMarkdown, setQuestionMarkdown] = useState<string | null>(null);
 
   useEffect(() => {
-    // TODO: error handling
     fetch
       .get(question.detailPath)
-      .then((response) => setQuestionMarkdown(response.data));
+      .then((response) => setQuestionMarkdown(response.data))
+      .catch(() => toast.error('Cannot retrieve question detail'))
   }, [question.detailPath]);
 
   return (
-    <div className="h-full flex flex-col p-6 border border-primary rounded-lg">
+    <div className="h-full flex flex-col p-6 border border-primary rounded-lg bg-white dark:bg-neutral-900">
       <div className="flex flex-row justify-between items-center mb-4 pb-4 border-b border-primary">
         <div className="flex flex-row items-center">
           <ChevronLeftIcon

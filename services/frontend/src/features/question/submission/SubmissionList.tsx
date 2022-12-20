@@ -7,8 +7,8 @@ import { Disclosure, Transition } from '@headlessui/react';
 import { ChevronUpIcon } from '@heroicons/react/24/outline';
 
 const ERROR_INFO: { [key: string]: string } = {
-  '1': 'Timeout',
-  '2': 'Out of memory',
+  '2': 'Timeout',
+  '3': 'Out of memory',
 };
 
 type SubmissionListProps = {
@@ -74,7 +74,7 @@ export const SubmissionList = ({
                       (result === '0') ? 'text-green-500' : 'text-red-500',
                     )}>
                       {(result === '0') ? 'Pass' : 'Error'}&nbsp;
-                      {(result !== '0') && (
+                      {(Number.parseInt(result) > 1) && (
                         <>({ERROR_INFO[result] || 'Error'})</>
                       )}
                     </span>

@@ -11,6 +11,7 @@ import { useState } from 'preact/hooks';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { XCircleIcon } from '@heroicons/react/24/outline';
 import { usePreAuth } from '@/contexts/AuthContext';
+import { toast } from 'react-toastify';
 
 type LoginFormData = {
   email: string,
@@ -45,12 +46,11 @@ export const LoginForm = () => {
   };
 
   const loginWithGoogle = () => {
-    // TODO: error handling
     setIsLoggingIn(PublicAuthProvider.GOOGLE);
     fetch
       .get<PublicGoogleAuthUrlResponse>('/auth/google')
       .then((response) => window.location.href = response.data.url)
-      .catch(() => {});
+      .catch(() => toast.error('Authentication Fail'));
   };
 
   return (

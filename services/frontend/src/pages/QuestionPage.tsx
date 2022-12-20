@@ -6,6 +6,7 @@ import { fetch } from '@/utils/Fetch';
 import { PublicQuestion } from '@codern/external';
 import { Suspense, lazy } from 'preact/compat';
 import { useEffect, useState } from 'preact/hooks';
+import { toast } from 'react-toastify';
 
 const EditorPane = lazy(() => import('@/features/question/EditorPane'));
 
@@ -21,19 +22,18 @@ export const QuestionPage = ({
   const [question, setQuestion] = useState<PublicQuestion | null>(null);
 
   useEffect(() => {
-    // TODO: error handling
     let timer: number;
     fetch
       .get(`/workspaces/${workspaceId}/questions/${questionId}`)
       .then((response) => {
         timer = setTimeout(() => { setQuestion(response.data) }, 100);
       })
-      .catch(() => {});
+      .catch(() => toast.error('Cannot retrieve question data'));
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <div className="h-screen flex flex-col dark:bg-neutral-900 transition-theme">
+    <div className="h-screen flex flex-col bg-neutral-100 dark:bg-neutral-900 transition-theme">
       <Navbar />
 
       <main className="container w-full h-full flex flex-row space-x-6 p-6 overflow-hidden">

@@ -6,19 +6,19 @@ import { WorkspaceDeck } from '@/features/dashboard/workspace/WorkspaceDeck';
 import { fetch } from '@/utils/Fetch';
 import { PublicWorkspaceWithParticipants } from '@codern/external';
 import { useEffect, useState } from 'preact/hooks';
+import { toast } from 'react-toastify';
 
 export const DashboardPage = () => {
   const [workspaces, setWorkspaces] = useState<PublicWorkspaceWithParticipants[] | null>(null);
 
   useEffect(() => {
-    // TODO: error handling
     let timer: number;
     fetch
       .get('/workspaces')
       .then((response) => {
         timer = setTimeout(() => setWorkspaces(response.data), 100);
       })
-      .catch(() => {});
+      .catch(() => toast.error('Cannot retrieve workspace data'));
     return () => clearTimeout(timer);
   }, []);
 

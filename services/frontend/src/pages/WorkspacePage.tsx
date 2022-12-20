@@ -6,6 +6,7 @@ import { WorkspaceTopPanelSkeleton } from '@/features/workspace/skeleton/Workspa
 import { fetch } from '@/utils/Fetch';
 import { useEffect, useState } from 'preact/hooks';
 import { PublicQuestion, PublicWorkspace } from '@codern/external';
+import { toast } from 'react-toastify';
 
 type WorkspacePageProps = {
   workspaceId: string,
@@ -18,7 +19,6 @@ export const WorkspacePage = ({
   const [questions, setQuestions] = useState<PublicQuestion[] | null>(null);
 
   useEffect(() => {
-    // TODO: error handling
     let workspaceTimer: number;
     let questionsTimer: number;
 
@@ -27,14 +27,14 @@ export const WorkspacePage = ({
       .then((response) => {
         workspaceTimer = setTimeout(() => setWorkspace(response.data), 100);
       })
-      .catch(() => {});
+      .catch(() => toast.error('Cannot retrieve workspace data'));
 
     fetch
       .get(`/workspaces/${workspaceId}/questions`)
       .then((response) => {
         questionsTimer = setTimeout(() => setQuestions(response.data), 100);
       })
-      .catch(() => {});
+      .catch(() => toast.error('Cannot retrieve question data'));
 
     return () => {
       clearTimeout(workspaceTimer);

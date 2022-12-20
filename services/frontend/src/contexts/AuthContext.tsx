@@ -44,8 +44,10 @@ export const AuthProvider = ({
         setUser(response.data);
         callback && callback();
       })
-      .catch(() => {
-        toast.error('Authentication Fail');
+      .catch((error) => {
+        if (error?.response?.status !== 400) { 
+          toast.error('Authentication Fail');
+        }
         setAuthStatus(AuthStatus.UNAUTHENTICATED);
       })
   }, []);

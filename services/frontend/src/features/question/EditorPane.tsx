@@ -5,6 +5,7 @@ import { isSupportedEditorLanguage } from '@/stores/EditorStore';
 import { fetch } from '@/utils/Fetch';
 import { ArrowPathIcon, Cog6ToothIcon } from '@heroicons/react/24/outline';
 import { useState } from 'preact/hooks';
+import { toast } from 'react-toastify';
 
 type EditorPaneProps = {
   workspaceId: string,
@@ -38,12 +39,11 @@ const EditorPane = ({
 
     const formData = new FormData();
     formData.append('file', new Blob([code]), 'src');
-    
-    // TODO: error handling
+  
     fetch
       .post(`/workspaces/${workspaceId}/questions/${questionId}/grade/${language}`, formData)
       .then(() => {})
-      .catch(() => {})
+      .catch(() => toast.error('Cannot submit your sourcecode'))
       .finally(() => setTimeout(() => setIsSubmitting(false), 1000));
   };
 
