@@ -1,4 +1,6 @@
 import '@/assets/css/index.css';
+import '@/assets/css/toast.css';
+
 import { DashboardPage } from '@/pages/DashboardPage';
 import { IndexPage } from '@/pages/IndexPage';
 import Router, { Route } from 'preact-router';
@@ -7,34 +9,40 @@ import { QuestionPage } from '@/pages/QuestionPage';
 import { AuthenticatedRoute } from '@/features/auth/AuthenticatedRoute';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { NotFoundPage } from '@/pages/error/NotFoundPage';
+import { SocketProvider } from '@/contexts/SocketContext';
+import { Toast } from '@/features/common/Toast';
 
-export const App = () => {
+export const App = () => { 
   return (
     <AuthProvider>
-      <Router>
-        <Route
-          path="/"
-          component={IndexPage}
-        />
+      <SocketProvider>
+        <Toast /> 
 
-        <AuthenticatedRoute
-          path="/dashboard"
-          component={DashboardPage}
-        />
-        <AuthenticatedRoute
-          path="/workspace/:workspaceId"
-          component={WorkspacePage}
-        />
-        <AuthenticatedRoute
-          path="/workspace/:workspaceId/:questionId"
-          component={QuestionPage}
-        />
+        <Router>
+          <Route
+            path="/"
+            component={IndexPage}
+          />
 
-        <Route
-          default
-          component={NotFoundPage}
-        />
-      </Router>
+          <AuthenticatedRoute
+            path="/dashboard"
+            component={DashboardPage}
+          />
+          <AuthenticatedRoute
+            path="/workspace/:workspaceId"
+            component={WorkspacePage}
+          />
+          <AuthenticatedRoute
+            path="/workspace/:workspaceId/:questionId"
+            component={QuestionPage}
+          />
+
+          <Route
+            default
+            component={NotFoundPage}
+          />
+        </Router>
+      </SocketProvider>
     </AuthProvider>
   );
 };

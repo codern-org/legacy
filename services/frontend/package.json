@@ -23,7 +23,9 @@
     "preact-router": "^4.1.0",
     "react": "npm:@preact/compat",
     "react-dom": "npm:@preact/compat",
-    "react-hook-form": "^7.41.0"
+    "react-hook-form": "^7.41.0",
+    "react-toastify": "^9.1.1",
+    "socket.io-client": "^4.5.4"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

@@ -4,6 +4,7 @@ import { PublicUser } from '@codern/external';
 import { ComponentChildren, createContext } from 'preact';
 import { route } from 'preact-router';
 import { useCallback, useContext, useEffect, useMemo, useState } from 'preact/hooks';
+import { toast } from 'react-toastify';
 
 export enum AuthStatus {
   AUTHENTICATING = 'AUTHENTICATING',
@@ -36,7 +37,6 @@ export const AuthProvider = ({
   const [authStatus, setAuthStatus] = useState<AuthStatus>(AuthStatus.AUTHENTICATING);
 
   const auth = useCallback((callback?: () => void) => {
-    // TODO: ux on error
     fetch
       .get<PublicUser>('/auth/me')
       .then((response) => {
@@ -45,6 +45,7 @@ export const AuthProvider = ({
         callback && callback();
       })
       .catch(() => {
+        toast.error('Authentication Fail');
         setAuthStatus(AuthStatus.UNAUTHENTICATED);
       })
   }, []);
