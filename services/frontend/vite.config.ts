@@ -18,6 +18,9 @@ export default ({ mode }) => {
       port: Number.parseInt(process.env.VITE_PORT),
     },
     base: process.env.VITE_BASE_URL,
+    define: {
+      APP_VERSION: JSON.stringify(process.env.npm_package_version),
+    },
     optimizeDeps: {
       include: ['@codern/external', '@codern/internal'],
     },
