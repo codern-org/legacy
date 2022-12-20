@@ -10,7 +10,7 @@ type WorkspaceCardProps = {
   name: string,
   ownerName: string,
   profilePath: string,
-  progress: number,
+  // progress: number,
   participantsProfile: string[],
   special?: boolean,
 };
@@ -20,7 +20,7 @@ export const WorkspaceCard = ({
   name,
   ownerName,
   profilePath,
-  progress,
+  // progress,
   participantsProfile,
   special,
 }: WorkspaceCardProps) => {
@@ -64,10 +64,10 @@ export const WorkspaceCard = ({
         </div>
       </div>
 
-      <div className="flex flex-col items-start">
+      {/* <div className="flex flex-col items-start">
         <Text color="secondary" className="text-xs mb-1">Progress ({progress}%)</Text>
         <ProgressBar progress={progress} />
-      </div>
+      </div> */}
     </div>
   );
 };

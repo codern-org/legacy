@@ -9,40 +9,37 @@ import { QuestionPage } from '@/pages/QuestionPage';
 import { AuthenticatedRoute } from '@/features/auth/AuthenticatedRoute';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { NotFoundPage } from '@/pages/error/NotFoundPage';
-import { SocketProvider } from '@/contexts/SocketContext';
 import { Toast } from '@/features/common/Toast';
 
-export const App = () => { 
+export const App = () => {
   return (
     <AuthProvider>
-      <SocketProvider>
-        <Toast /> 
+      <Toast />
 
-        <Router>
-          <Route
-            path="/"
-            component={IndexPage}
-          />
+      <Router>
+        <Route
+          path="/"
+          component={IndexPage}
+        />
 
-          <AuthenticatedRoute
-            path="/dashboard"
-            component={DashboardPage}
-          />
-          <AuthenticatedRoute
-            path="/workspace/:workspaceId"
-            component={WorkspacePage}
-          />
-          <AuthenticatedRoute
-            path="/workspace/:workspaceId/:questionId"
-            component={QuestionPage}
-          />
+        <AuthenticatedRoute
+          path="/dashboard"
+          component={DashboardPage}
+        />
+        <AuthenticatedRoute
+          path="/workspace/:workspaceId"
+          component={WorkspacePage}
+        />
+        <AuthenticatedRoute
+          path="/workspace/:workspaceId/:questionId"
+          component={QuestionPage}
+        />
 
-          <Route
-            default
-            component={NotFoundPage}
-          />
-        </Router>
-      </SocketProvider>
+        <Route
+          default
+          component={NotFoundPage}
+        />
+      </Router>
     </AuthProvider>
   );
 };
