@@ -37,7 +37,7 @@ export const SubmissionList = ({
           <>
             <Disclosure.Button className="w-full flex flex-row justify-between items-center px-4 py-2 bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 rounded-lg">
               <div className="flex flex-row items-center space-x-4">
-                <Text color="secondary">{index + 1}</Text>
+                <Text color="secondary">{index}</Text>
                 <div className="flex flex-col text-left">
                   <Text color="primary" className="text-sm">
                     Language: {language}

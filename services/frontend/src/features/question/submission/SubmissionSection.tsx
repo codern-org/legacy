@@ -42,15 +42,17 @@ export const SubmissionSection = ({
     <div className="flex flex-col space-y-4">
       {(!submissions) && <SubmissionListSkeleton />}
 
-      {(submissions) && submissions.map((submission, index) => (
-        <SubmissionList
-          key={submission.id}
-          index={index}
-          language={submission.language}
-          result={submission.result}
-          uploadedAt={submission.uploadedAt}
-        />
-      ))}
+      {(submissions) && submissions
+        .map((submission, index, submissions) => (
+          <SubmissionList
+            key={submission.id}
+            index={submissions.length - index}
+            language={submission.language}
+            result={submission.result}
+            uploadedAt={submission.uploadedAt}
+          />
+        )
+      )}
     </div>
   );
 }
