@@ -51,12 +51,12 @@ export const WorkspaceCard = ({
               key={i}
               src={url}
               alt=""
-              className="w-7 h-7 rounded-full border-4 border-white dark:border-black transition-theme"
+              className="w-7 h-7 rounded-full bg-white dark:bg-black border-4 border-white dark:border-black transition-theme"
             />
           ))}
 
           {participantsProfile.length > MAX_PROFILE_DISPLAY && (
-            <div className="w-7 h-7 flex justify-center items-center bg-neutral-300 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-400 rounded-full border-4 border-white dark:border-black transition-theme">
+            <div className="h-7 flex justify-center items-center px-1 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-400 rounded-full border-4 border-white dark:border-black transition-theme">
               <span className="text-xs">+</span>
               <span className="text-xs">{participantsProfile.length - MAX_PROFILE_DISPLAY}</span>
             </div>

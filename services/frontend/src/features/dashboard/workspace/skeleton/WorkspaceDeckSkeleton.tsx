@@ -13,11 +13,11 @@ export const WorkspaceDeckSkeleton = () => {
       </div>
 
       <div className="flex flex-col lg:flex-row mb-6 lg:space-x-2 space-y-4 lg:space-y-0">
-        <div className="w-full lg:w-2/3 h-10 bg-neutral-800 rounded-md" />
+        <div className="w-full lg:w-2/3 h-10 bg-neutral-200 dark:bg-neutral-800 rounded-md" />
 
         <div className="w-full flex flex-row space-x-2">
-          <div className="w-28 h-8 lg:h-10 bg-neutral-700 rounded-md" />
-          <div className="w-28 h-8 lg:h-10 bg-neutral-700 rounded-md" />
+          <div className="w-28 h-8 lg:h-10 bg-neutral-300 dark:bg-neutral-700 rounded-md" />
+          <div className="w-28 h-8 lg:h-10 bg-neutral-300 dark:bg-neutral-700 rounded-md" />
         </div>
       </div>
 
