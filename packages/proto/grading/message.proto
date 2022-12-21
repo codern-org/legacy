@@ -32,10 +32,11 @@ message GradeRequest {
 }
 
 message GradeResponse {
-  int32 submissionId = 1;
+  int32 id = 1;
   int32 questionId = 2;
   string language = 3;
   string filePath = 4;
+  uint64 uploadedAt = 5;
 }
 
 message GetQuestionSummaryByIdsRequest {

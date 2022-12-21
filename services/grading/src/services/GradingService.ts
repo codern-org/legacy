@@ -6,6 +6,7 @@ import {
 import { Timestamp } from '@codern/shared';
 import { Submission } from '@prisma/client';
 import { ConfigService } from '@nestjs/config';
+import { HttpService } from '@nestjs/axios';
 import { SubmissionRepository } from '@/repositories/SubmissionRepository';
 import { FileSource, QueueSerivce } from '@/services/QueueService';
 import { TestcaseRepository } from '@/repositories/TestcaseRepository';
@@ -18,6 +19,7 @@ type QuestionIdWithStatus = Pick<Submission, 'questionId'> & { status: QuestionS
 export class GradingService {
 
   private readonly configService: ConfigService;
+  private readonly httpService: HttpService;
   private readonly queueService: QueueSerivce;
   private readonly submissionRepository: SubmissionRepository;
   private readonly testcaseRepository: TestcaseRepository;
@@ -25,12 +27,14 @@ export class GradingService {
 
   public constructor(
     configService: ConfigService,
+    httpService: HttpService,
     queueService: QueueSerivce,
     submissionRepository: SubmissionRepository,
     testcaseRepository: TestcaseRepository,
     questionRepository: QuestionRepository,
   ) {
     this.configService = configService;
+    this.httpService = httpService;
     this.queueService = queueService;
     this.submissionRepository = submissionRepository;
     this.testcaseRepository = testcaseRepository;
@@ -97,17 +101,34 @@ export class GradingService {
     );
 
     return {
-      submissionId,
+      id: submissionId,
       questionId: submission.questionId,
       language: submission.language as Language,
       filePath: submission.filePath,
+      uploadedAt: submission.uploadedAt,
     };
   }
 
   public async result(submissionId: number, result: string): Promise<void> {
-    await this.submissionRepository.updateSubmission(submissionId, {
+    const submission = await this.submissionRepository.updateSubmission(submissionId, {
       status: GradingStatus.COMPLETED,
       result,
+    });
+
+    // TODO: Investigate why localhost not working instead of 127.0.0.1
+    // TODO: add type
+    const gatewayRawUrl = this.configService.get('gatewayRawUrl');
+    await this.httpService.axiosRef.request({
+      url: `${gatewayRawUrl}/socket/submission/${submissionId}`,
+      method: 'POST',
+      data: {
+        userId: submission.userId,
+        filePath: submission.filePath,
+        id: submission.id,
+        language: submission.language,
+        result: submission.result,
+        uploadedAt: submission.uploadedAt,
+      },
     });
   }
 

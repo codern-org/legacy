@@ -3,9 +3,11 @@ import { Markdown } from '@/features/common/Makdown';
 import { Text } from '@/features/common/Text';
 import { SubmissionSection } from '@/features/question/submission/SubmissionSection';
 import { QuestionStatusBadge } from '@/features/workspace/QuestionStatusBadge';
+import { questionPaneAtom } from '@/stores/PaneStore';
 import { fetch } from '@/utils/Fetch';
 import { PublicQuestion } from '@codern/external';
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
+import { useAtom } from 'jotai';
 import { route } from 'preact-router';
 import { useEffect, useState } from 'preact/hooks';
 import { toast } from 'react-toastify';
@@ -22,14 +24,18 @@ export const QuestionPane = ({
   workspaceId,
   question,
 }: QuestionPaneProps) => {
-  const [currentSection, setCurrentSection] = useState<QuestionPaneSection>('problem');
+  const [currentSection, setCurrentSection] = useAtom(questionPaneAtom);
   const [questionMarkdown, setQuestionMarkdown] = useState<string | null>(null);
 
   useEffect(() => {
+    setCurrentSection('problem');
+
     fetch
       .get(question.detailPath)
       .then((response) => setQuestionMarkdown(response.data))
       .catch(() => toast.error('Cannot retrieve question detail'))
+
+    return () => setCurrentSection('problem');
   }, [question.detailPath]);
 
   return (

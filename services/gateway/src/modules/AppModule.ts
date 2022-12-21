@@ -8,7 +8,7 @@ import { GradingModule } from '@/modules/GradingModule';
 import { configuration } from '@/utils/Configuration';
 import { WorkspaceModule } from '@/modules/WorkspaceModule';
 import { FileModule } from '@/modules/FileModule';
-import { SocketModule } from '@/modules/SocketModule';
+import { SocketModule } from '@/sockets/SocketModule';
 
 @Module({
   imports: [

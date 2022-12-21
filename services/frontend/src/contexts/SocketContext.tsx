@@ -2,7 +2,10 @@ import { ComponentChildren, createContext } from 'preact';
 import { useContext } from 'preact/hooks';
 import { Socket, io } from 'socket.io-client';
 
-export const socket = io('http://localhost:3000');
+export const socket = io(
+  import.meta.env.VITE_WS_URL,
+  { withCredentials: true },
+);
 
 socket.on('connect', () => {
   console.log('Dimension portal is opening...');

@@ -14,6 +14,8 @@ const ERROR_INFO: { [key: string]: string } = {
 
 type SubmissionListProps = {
   index: number,
+  id: number,
+  open?: boolean,
   language: PublicLanguage,
   result?: string,
   uploadedAt: number,
@@ -21,6 +23,8 @@ type SubmissionListProps = {
 
 export const SubmissionList = ({
   index,
+  id,
+  open = false,
   language,
   result,
   uploadedAt,
@@ -33,7 +37,7 @@ export const SubmissionList = ({
 
   return (
     <div className="space-y-1">
-      <Disclosure>
+      <Disclosure defaultOpen={open}>
         {({ open }: { open: boolean }) => (
           <>
             <Disclosure.Button className="w-full flex flex-row justify-between items-center px-4 py-2 bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 rounded-lg">
@@ -88,6 +92,8 @@ export const SubmissionList = ({
                     <Text color="secondary" className="animate-pulse">Grading...</Text>
                   </div>
                 )}
+
+                <span className="text-neutral-300 dark:text-neutral-500 text-xs mt-2">Submission id: {id}</span>
               </Disclosure.Panel>
             </Transition>
           </>

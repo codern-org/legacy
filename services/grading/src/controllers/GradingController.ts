@@ -33,7 +33,6 @@ export class GradingController {
   @EventPattern('result')
   public async result(data: ResultRequest): Promise<void> {
     this.gradingService.result(data.submissionId, data.result);
-    // TODO: emit data to socket
   }
 
   @GrpcMethod('GradingService')

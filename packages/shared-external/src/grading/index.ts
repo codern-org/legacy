@@ -1,7 +1,6 @@
 import {
-  GradeResponse, Language, QuestionLevel, QuestionStatus,
-  QuestionSummary,
-  Submission,
+  GradeResponse, Language, QuestionLevel,
+  QuestionStatus, QuestionSummary, Submission,
   SubmissionStatus,
 } from '@codern/internal';
 

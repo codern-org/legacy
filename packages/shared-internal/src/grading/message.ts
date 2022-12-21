@@ -30,10 +30,11 @@ export type GradeRequest = {
 };
 
 export type GradeResponse = {
-  submissionId: number,
+  id: number,
   questionId: number,
   language: Language,
   filePath: string,
+  uploadedAt: number,
 };
 
 export type ResultRequest = {

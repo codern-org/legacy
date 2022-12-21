@@ -2,8 +2,11 @@ import { Button } from '@/features/common/Button';
 import { Editor } from '@/features/question/Editor';
 import { useEditor } from '@/hooks/useEditor';
 import { isSupportedEditorLanguage } from '@/stores/EditorStore';
+import { lastSubmissionIdAtom, questionPaneAtom, submissionsAtom } from '@/stores/PaneStore';
 import { fetch } from '@/utils/Fetch';
+import { PublicGradeResponse } from '@codern/external';
 import { ArrowPathIcon, Cog6ToothIcon } from '@heroicons/react/24/outline';
+import { useAtom } from 'jotai';
 import { useState } from 'preact/hooks';
 import { toast } from 'react-toastify';
 
@@ -18,6 +21,9 @@ const EditorPane = ({
 }: EditorPaneProps) => {
   const { resetCode, changeLanguage, settings, getCode } = useEditor();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [currentSection, setCurrentSection] = useAtom(questionPaneAtom);
+  const [submissions, setSubmissions] = useAtom(submissionsAtom);
+  const [lastSubmissionId, setLastSubmissionId] = useAtom(lastSubmissionIdAtom);
 
   const handleLanguageChange = (event: Event) => {
     if (!(event.target instanceof HTMLSelectElement)) return;
@@ -41,8 +47,20 @@ const EditorPane = ({
     formData.append('file', new Blob([code]), 'src');
   
     fetch
-      .post(`/workspaces/${workspaceId}/questions/${questionId}/grade/${language}`, formData)
-      .then(() => {})
+      .post<PublicGradeResponse>(
+        `/workspaces/${workspaceId}/questions/${questionId}/grade/${language}`,
+        formData
+      )
+      .then((response) => {
+        const submission = response.data;
+        if (currentSection === 'submission') {
+          setSubmissions([submission, ...(submissions || [])]);
+        } else {
+          // On submission section will automatically update submissions on mount
+          setCurrentSection('submission');
+        }
+        setLastSubmissionId(submission.id);
+      })
       .catch(() => toast.error('Cannot submit your sourcecode'))
       .finally(() => setTimeout(() => setIsSubmitting(false), 1000));
   };
