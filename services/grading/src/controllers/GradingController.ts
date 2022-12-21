@@ -48,8 +48,8 @@ export class GradingController {
   public async getSubmissionsByQuestionId(
     data: GetSubmissionsByQuestionIdRequest,
   ): Promise<GetSubmissionsByQuestionIdResponse> {
-    const { questionId } = data;
-    const submissions = await this.gradingService.getSubmissionsByQuestionId(questionId);
+    const { userId, questionId } = data;
+    const submissions = await this.gradingService.getSubmissionsByQuestionId(questionId, userId);
     return { submissions: submissions as Submission[] };
   }
 

@@ -1,6 +1,7 @@
 import { Submission, QuestionSummary, Language } from './entity';
 
 export type GetSubmissionsByQuestionIdRequest = {
+  userId: string,
   questionId: number,
 };
 

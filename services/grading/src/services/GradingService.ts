@@ -191,8 +191,8 @@ export class GradingService {
       .map((result) => Object.values(TestcaseStatus)[Number.parseInt(result, 10)]);
   }
 
-  public getSubmissionsByQuestionId(id: number): Promise<Submission[]> {
-    return this.submissionRepository.getSubmissionsByQuestionId(id);
+  public getSubmissionsByQuestionId(id: number, userId?: string): Promise<Submission[]> {
+    return this.submissionRepository.getSubmissionsByQuestionId(id, userId);
   }
 
 }

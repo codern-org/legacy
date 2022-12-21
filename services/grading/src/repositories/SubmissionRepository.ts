@@ -23,9 +23,9 @@ export class SubmissionRepository {
     });
   }
 
-  public getSubmissionsByQuestionId(questionId: number): Promise<Submission[]> {
+  public getSubmissionsByQuestionId(questionId: number, userId?: string): Promise<Submission[]> {
     return this.prismaService.submission.findMany({
-      where: { questionId },
+      where: { questionId, userId },
       orderBy: { uploadedAt: 'desc' },
     });
   }

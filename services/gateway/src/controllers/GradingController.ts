@@ -51,9 +51,12 @@ export class GradingController {
   @Get('/:workspaceId/questions/:questionId/submissions')
   @UseGuards(AuthGuard, WorkspaceGuard)
   public getSubmissionsByQuestionId(
+    @User() user: PublicUser,
     @Param('questionId') questionId: number,
   ): Observable<PublicSubmission[]> {
-    return this.gradingService.getSubmissionsByQuestionId({ questionId })
+    const userId = user.id;
+    return this.gradingService
+      .getSubmissionsByQuestionId({ userId, questionId })
       .pipe(publishSubmissions);
   }
 

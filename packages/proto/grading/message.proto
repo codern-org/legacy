@@ -3,7 +3,8 @@ package codern.grading;
 import "common.proto"; 
 
 message GetSubmissionsByQuestionIdRequest {
-  int32 questionId = 1;
+  string userId = 1;
+  int32 questionId = 2;
 }
 
 message GetSubmissionsByQuestionIdResponse {
