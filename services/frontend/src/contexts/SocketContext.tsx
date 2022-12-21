@@ -8,11 +8,15 @@ export const socket = io(
 );
 
 socket.on('connect', () => {
-  console.log('Dimension portal is opening...');
+  console.log('%c🤖 Dimension portal is opening...', 'background-color: black; color: white; font-size: 1.0rem; padding: 0.5rem; border-radius: 0.25rem');
+});
+
+socket.on('disconnect', () => {
+  console.log('%c🤖 Dimension portal is terminated...', 'background-color: red; color: white; font-size: 1.0rem; padding: 0.5rem; border-radius: 0.25rem');
 });
 
 socket.on('reconnect', () => {
-  console.log('Dimension portal is reforming...');
+  console.log('%c🤖 Dimension portal is reforming...', 'background-color: yellow; color: white; font-size: 1.0rem; padding: 0.5rem; border-radius: 0.25rem');
 });
 
 const SocketContext = createContext<Socket>(socket);

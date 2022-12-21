@@ -39,9 +39,13 @@ export class SocketGateway implements OnGatewayInit, OnGatewayConnection, OnGate
       return;
     }
 
-    const { user } = await firstValueFrom(this.authService.authenticate({ session }));
-    this.socketByUserId.set(user.id, client);
-    this.userIdBySocket.set(client, user.id);
+    try {
+      const { user } = await firstValueFrom(this.authService.authenticate({ session }));
+      this.socketByUserId.set(user.id, client);
+      this.userIdBySocket.set(client, user.id);
+    } catch {
+      client.disconnect(true);
+    }
   }
 
   public handleDisconnect(@ConnectedSocket() client: Socket): void {
