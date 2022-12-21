@@ -18,7 +18,7 @@ export class FileController {
     this.fileService = fileService;
   }
 
-  @Get('/workspaces/:workspaceId/questions/:questionId')
+  @Get('/workspaces/:workspaceId/questions/:questionId/:file')
   @UseGuards(AuthGuard, WorkspaceGuard)
   public getQuestionDetail(
     @Request() request: FastifyRequest,
