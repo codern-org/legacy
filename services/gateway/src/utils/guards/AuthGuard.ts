@@ -1,5 +1,6 @@
 import {
-  CanActivate, ExecutionContext, Inject, Injectable, UnauthorizedException,
+  CanActivate, ExecutionContext, Inject,
+  Injectable, UnauthorizedException,
 } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { FastifyRequest } from 'fastify';
@@ -9,10 +10,10 @@ import { AuthService } from '@/services/AuthService';
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-  private readonly client: ClientGrpc;
+  private readonly authService: AuthService;
 
-  public constructor(@Inject('AUTH_PACKAGE') client: ClientGrpc) {
-    this.client = client;
+  public constructor(@Inject('AUTH_PACKAGE') authClient: ClientGrpc) {
+    this.authService = authClient.getService('AuthService');
   }
 
   public async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -21,8 +22,7 @@ export class AuthGuard implements CanActivate {
     const session = request.cookies.sid;
     if (!session) throw new UnauthorizedException();
 
-    const authService = this.client.getService<AuthService>('AuthService');
-    const { user } = await firstValueFrom(authService.authenticate({ session }));
+    const { user } = await firstValueFrom(this.authService.authenticate({ session }));
 
     // Mutate user data from session into request instance
     request.user = user;
