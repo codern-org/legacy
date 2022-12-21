@@ -3,6 +3,7 @@ import { Text } from '@/features/common/Text';
 import { SubmissionStatusBadge } from '@/features/question/submission/SubmissionStatusBadge';
 import { classNames } from '@/utils/Classes';
 import { PublicLanguage, PublicSubmissionStatus } from '@codern/external';
+import { Timestamp } from '@codern/shared';
 import { Disclosure, Transition } from '@headlessui/react';
 import { ChevronUpIcon } from '@heroicons/react/24/outline';
 
@@ -43,8 +44,8 @@ export const SubmissionList = ({
                     Language: {language}
                   </Text>
                   <Text color="secondary" className="text-xs">
-                    {new Date(uploadedAt).toLocaleDateString('th-TH')}&nbsp;
-                    {new Date(uploadedAt).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+                    {Timestamp.from(uploadedAt).toLocaleDateString('th-TH')}&nbsp;
+                    {Timestamp.from(uploadedAt).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
                   </Text>
                 </div>
               </div>

@@ -22,11 +22,11 @@ export default ({ mode }) => {
       APP_VERSION: JSON.stringify(process.env.npm_package_version),
     },
     optimizeDeps: {
-      include: ['@codern/external', '@codern/internal'],
+      include: ['@codern/external', '@codern/internal', '@codern/shared'],
     },
     build: {
       commonjsOptions: {
-        include: [/external/, /internal/, /node_modules/]
+        include: [/external/, /internal/, /shared/, /node_modules/]
       },
     },
   });

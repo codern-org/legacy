@@ -1,6 +1,7 @@
 import { Text } from '@/features/common/Text';
 import { QuestionStatusBadge } from '@/features/workspace/QuestionStatusBadge';
 import { PublicQuestionStatus } from '@codern/external';
+import { Timestamp } from '@codern/shared';
 import { getCurrentUrl, route } from 'preact-router';
 
 type QuestionTableListProps = {
@@ -45,12 +46,18 @@ export const QuestionTableList = ({
       </td>
 
       <td className="hidden md:table-cell px-2 md:px-4 py-4">
-        <Text color="secondary" className="text-sm">
-          {new Date(lastSubmitted).toLocaleDateString('th-TH')}
-        </Text>
-        <Text color="secondary" className="text-xs">
-          {new Date(lastSubmitted).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
-        </Text>
+        {(lastSubmitted === 0)
+          ? (
+            <Text color="secondary">-</Text>
+          ) : (<>
+            <Text color="secondary" className="text-sm">
+              {Timestamp.from(lastSubmitted).toLocaleDateString('th-TH')}
+            </Text>
+            <Text color="secondary" className="text-xs">
+              {Timestamp.from(lastSubmitted).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+            </Text>
+          </>)
+        }
       </td>
     </tr>
   );
