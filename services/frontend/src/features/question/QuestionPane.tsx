@@ -43,11 +43,11 @@ export const QuestionPane = ({
       <div className="flex flex-row justify-between items-center mb-4 pb-4 border-b border-primary">
         <div className="flex flex-row items-center">
           <ChevronLeftIcon
-            className="w-4 h-4 mr-1 text-black dark:text-white hover:cursor-pointer"
+            className="w-7 h-7 mr-1 p-1 text-black dark:text-white hover:text-neutral-400 dark:hover:text-neutral-400 hover:cursor-pointer"
             onClick={() => route(`/workspace/${workspaceId}`)}
           />
-          <Text color="primary" className="mr-2">{question.name}</Text>
-          <Text color="secondary" className="capitalize">({question.level})</Text>
+          <Text color="primary" className="mr-1">{question.name}</Text>
+          <Text color="secondary" className="text-sm capitalize">({question.level})</Text>
         </div>
 
         <QuestionStatusBadge status={question.status} />

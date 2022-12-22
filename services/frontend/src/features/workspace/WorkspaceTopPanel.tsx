@@ -18,7 +18,7 @@ export const WorkspaceTopPanel = ({
     <div className="flex flex-row justify-between items-center space-x-2 mb-6 pb-6 border-b border-neutral-300 dark:border-neutral-700 transition-theme">
       <div className="flex flex-row items-center space-x-2">
         <ChevronLeftIcon
-          className="w-6 h-6 mr-1 text-black dark:text-white hover:cursor-pointer"
+          className="w-6 h-6 mr-1 text-black dark:text-white hover:text-neutral-400 dark:hover:text-neutral-400 hover:cursor-pointer"
           onClick={() => route('/dashboard')}
         />
         <span

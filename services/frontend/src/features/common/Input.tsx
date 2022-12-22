@@ -36,9 +36,15 @@ export const Input = ({
 }: InputProps) => {
   if (type === 'checkbox') {
     return (
-      <div className="flex flex-row">
-        <input type="checkbox" className="accent-black dark:accent-white" />
-        <label className="ml-2 text-neutral-500">{label}</label>
+      <div className="flex flex-row group">
+        <input
+          type="checkbox"
+          id={name}
+          className="accent-black dark:accent-white hover:cursor-pointer"
+        />
+        <label htmlFor={name} className="ml-2 text-neutral-500 hover:cursor-pointer">
+          {label}
+        </label>
       </div>
     );
   }
