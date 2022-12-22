@@ -132,8 +132,8 @@ export class GradingService {
     });
   }
 
-  public async getQuestionSummaryByIds(ids: number[]): Promise<QuestionSummary[]> {
-    const submissions = await this.submissionRepository.getSubmissionByQuestionIds(ids);
+  public async getQuestionSummaryByIds(ids: number[], userId?: string): Promise<QuestionSummary[]> {
+    const submissions = await this.submissionRepository.getSubmissionByQuestionIds(ids, userId);
     const lastSubmissions = this.filterLastSubmission(submissions);
     const questionsStatus = this.getQuestionStatus(submissions);
 

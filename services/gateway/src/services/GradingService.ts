@@ -1,5 +1,5 @@
 import {
-  GetQuestionSummaryByIdRequest, GetQuestionSummaryByIdResponse,
+  GetQuestionSummaryByIdsRequest, GetQuestionSummaryByIdsResponse,
   GetSubmissionsByQuestionIdRequest, GetSubmissionsByQuestionIdResponse, GradeRequest,
   GradeResponse, SaveCodeRequest, SubmitRequest,
   SubmitResponse,
@@ -19,7 +19,7 @@ export interface GradingService {
   grade(data: GradeRequest): Observable<GradeResponse>;
 
   getQuestionSummaryByIds(
-    data: GetQuestionSummaryByIdRequest,
-  ): Observable<GetQuestionSummaryByIdResponse>;
+    data: GetQuestionSummaryByIdsRequest,
+  ): Observable<GetQuestionSummaryByIdsResponse>;
 
 }

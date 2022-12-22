@@ -30,8 +30,8 @@ export class AuthController {
 
   @Get('/me')
   @UseGuards(AuthGuard)
-  public authenticate(@User() userData: PublicUser): PublicUser {
-    return userData;
+  public authenticate(@User() user: PublicUser): PublicUser {
+    return user;
   }
 
   @Post('/login')

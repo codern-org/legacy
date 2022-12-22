@@ -39,9 +39,9 @@ export class WorkspaceController {
   @Get('/')
   @UseGuards(AuthGuard)
   public async getAllWorkspacesByUserId(
-    @User() userData: PublicUser,
+    @User() user: PublicUser,
   ): Promise<PublicWorkspaceWithParticipants[]> {
-    const userId = userData.id;
+    const userId = user.id;
     const { workspaces } = await firstValueFrom(
       this.workspaceService.getAllWorkspacesByUserId({ userId }),
     );
@@ -79,13 +79,17 @@ export class WorkspaceController {
   @UseGuards(AuthGuard, WorkspaceGuard)
   public async getQuestionsByWorkspaceId(
     @Param('workspaceId') id: number,
+    @User() user: PublicUser,
   ): Promise<PublicQuestion[]> {
     const { questions } = await firstValueFrom(
       this.workspaceService.getQuestionsByWorkspaceId({ id }),
     );
     const questionIds = questions.map((question) => question.id);
     const { questionSummaries } = await firstValueFrom(
-      this.gradingService.getQuestionSummaryByIds({ questionIds }),
+      this.gradingService.getQuestionSummaryByIds({
+        userId: user.id,
+        questionIds,
+      }),
     );
     return publicQuestions(questions, questionSummaries);
   }
@@ -94,12 +98,16 @@ export class WorkspaceController {
   @UseGuards(AuthGuard, WorkspaceGuard)
   public async getQuestionById(
     @Param('questionId') id: number,
+    @User() user: PublicUser,
   ): Promise<PublicQuestion> {
     const { question } = await firstValueFrom(
       this.workspaceService.getQuestionById({ id }),
     );
     const { questionSummaries } = await firstValueFrom(
-      this.gradingService.getQuestionSummaryByIds({ questionIds: [question.id] }),
+      this.gradingService.getQuestionSummaryByIds({
+        userId: user.id,
+        questionIds: [question.id],
+      }),
     );
     return publicQuestions([question], questionSummaries)[0];
   }

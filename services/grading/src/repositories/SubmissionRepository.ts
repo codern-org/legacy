@@ -15,9 +15,10 @@ export class SubmissionRepository {
     return this.prismaService.submission.create({ data: submission });
   }
 
-  public getSubmissionByQuestionIds(ids: number[]): Promise<Submission[]> {
+  public getSubmissionByQuestionIds(ids: number[], userId?: string): Promise<Submission[]> {
     return this.prismaService.submission.findMany({
       where: {
+        userId,
         questionId: { in: ids },
       },
     });

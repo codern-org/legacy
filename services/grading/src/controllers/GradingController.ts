@@ -1,8 +1,8 @@
 import { Controller } from '@nestjs/common';
 import { EventPattern, GrpcMethod } from '@nestjs/microservices';
 import {
-  GetQuestionSummaryByIdRequest,
-  GetQuestionSummaryByIdResponse,
+  GetQuestionSummaryByIdsRequest,
+  GetQuestionSummaryByIdsResponse,
   GetSubmissionsByQuestionIdRequest,
   GetSubmissionsByQuestionIdResponse,
   GradeRequest, GradeResponse, ResultRequest, Submission, SubmitRequest,
@@ -37,10 +37,11 @@ export class GradingController {
 
   @GrpcMethod('GradingService')
   public async getQuestionSummaryByIds(
-    data: GetQuestionSummaryByIdRequest,
-  ): Promise<GetQuestionSummaryByIdResponse> {
-    const { questionIds } = data;
-    const questionSummaries = await this.gradingService.getQuestionSummaryByIds(questionIds);
+    data: GetQuestionSummaryByIdsRequest,
+  ): Promise<GetQuestionSummaryByIdsResponse> {
+    const { userId, questionIds } = data;
+    const questionSummaries = await this.gradingService
+      .getQuestionSummaryByIds(questionIds, userId);
     return { questionSummaries };
   }
 
