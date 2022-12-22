@@ -21,6 +21,7 @@ export enum QuestionLevel {
   EASY = 'EASY',
   MEDIUM = 'MEDIUM',
   HARD = 'HARD',
+  REVERSE = 'REVERSE',
 }
 
 export type Question = {

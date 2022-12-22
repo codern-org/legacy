@@ -31,6 +31,7 @@ enum QuestionLevel {
   EASY
   MEDIUM
   HARD
+  REVERSE
 }
 
 model Question {
