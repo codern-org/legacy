@@ -57,6 +57,7 @@ export const AuthProvider = ({
       .get('/auth/logout')
       .finally(() => {
         setAuthStatus(AuthStatus.UNAUTHENTICATED);
+        localStorage.clear();
         route('/');
       });
   }, []);
