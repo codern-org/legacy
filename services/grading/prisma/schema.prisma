@@ -13,10 +13,15 @@ model Testcase {
   filePath   String
 }
 
-enum GradingStatus {
+enum SubmissionStatus {
   UPLOADING
   GRADING
   COMPLETED
+  FAILED_COMPILATION
+  FAILED_MISSING_RESULT
+  TIMEOUT_EXECUTION
+  TIMEOUT_CONTAINER
+  REQUEUE_LIMIT_EXCEEDED
 }
 
 enum Language {
@@ -29,7 +34,7 @@ model Submission {
   questionId Int
   userId     String
   language   Language
-  status     GradingStatus
+  status     SubmissionStatus
   result     String?
   filePath   String
   uploadedAt Int           @db.UnsignedInt

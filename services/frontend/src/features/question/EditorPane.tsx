@@ -4,7 +4,7 @@ import { useEditor } from '@/hooks/useEditor';
 import { isSupportedEditorLanguage } from '@/stores/EditorStore';
 import { lastSubmissionIdAtom, questionPaneAtom, submissionsAtom } from '@/stores/PaneStore';
 import { fetch } from '@/utils/Fetch';
-import { PublicGradeResponse } from '@codern/external';
+import { PublicGradeResponse, PublicSubmissionStatus } from '@codern/external';
 import { ArrowPathIcon, Cog6ToothIcon } from '@heroicons/react/24/outline';
 import { useAtom } from 'jotai';
 import { useState } from 'preact/hooks';
@@ -54,7 +54,10 @@ const EditorPane = ({
       .then((response) => {
         const submission = response.data;
         if (currentSection === 'submission') {
-          setSubmissions([submission, ...(submissions || [])]);
+          setSubmissions([
+            { ...submission, status: PublicSubmissionStatus.GRADING },
+            ...(submissions || [])
+          ]);
         } else {
           // On submission section will automatically update submissions on mount
           setCurrentSection('submission');

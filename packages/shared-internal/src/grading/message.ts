@@ -1,4 +1,7 @@
-import { Submission, QuestionSummary, Language } from './entity';
+import {
+  Submission, QuestionSummary, Language,
+  SubmissionStatus,
+} from './entity';
 
 export type GetSubmissionsByQuestionIdRequest = {
   userId?: string,
@@ -40,6 +43,7 @@ export type GradeResponse = {
 
 export type ResultRequest = {
   submissionId: number,
+  status: SubmissionStatus,
   result: string,
 };
 

@@ -1,4 +1,5 @@
 import { useSocket } from '@/contexts/SocketContext';
+import { Text } from '@/features/common/Text';
 import { SubmissionList } from '@/features/question/submission/SubmissionList';
 import { SubmissionListSkeleton } from '@/features/question/submission/SubmissionListSkeleton';
 import { lastSubmissionIdAtom, submissionsAtom } from '@/stores/PaneStore';
@@ -30,6 +31,7 @@ export const SubmissionSection = ({
         // Update specific submission with mutation
         const updatedSubmission = submissions
           .filter((submission) => submission.id === submission.id)[0];
+        updatedSubmission.status = submission.status;
         updatedSubmission.result = submission.result;
         return submissions.slice();
       });
@@ -54,7 +56,7 @@ export const SubmissionSection = ({
     <div className="flex flex-col space-y-4">
       {(!submissions) && <SubmissionListSkeleton />}
 
-      {(submissions) && submissions
+      {(submissions && (submissions.length !== 0)) && submissions
         .map((submission, index, submissions) => (
           <SubmissionList
             key={submission.id}
@@ -62,10 +64,17 @@ export const SubmissionSection = ({
             open={lastSubmissionId === submission.id}
             index={submissions.length - index}
             language={submission.language}
+            status={submission.status}
             result={submission.result}
             uploadedAt={submission.uploadedAt}
           />
         )
+      )}
+
+      {(submissions && (submissions.length === 0)) && (
+        <Text color="secondary" className="mx-auto">
+          No Submission Found
+        </Text>
       )}
     </div>
   );

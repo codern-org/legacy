@@ -1,7 +1,7 @@
 import {
   Body, Controller, Post,
 } from '@nestjs/common';
-import { Language } from '@codern/internal';
+import { Language, SubmissionStatus } from '@codern/internal';
 import { SocketGateway } from '@/sockets/SocketGateway';
 
 @Controller('/socket')
@@ -20,6 +20,7 @@ export class SocketController {
     @Body('filePath') filePath: string,
     @Body('id') id: number,
     @Body('language') language: Language,
+    @Body('status') status: SubmissionStatus,
     @Body('result') result: string,
     @Body('uploadedAt') uploadedAt: number,
   ): void {
@@ -29,6 +30,7 @@ export class SocketController {
       filePath,
       id,
       language,
+      status,
       result,
       uploadedAt,
     });

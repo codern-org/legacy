@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import {
   ExpectedNotFoundError, GradeResponse, SubmitResponse,
-  Language, QuestionSummary, QuestionStatus, TestcaseStatus, GradingStatus,
+  Language, QuestionSummary, QuestionStatus,
+  TestcaseStatus, SubmissionStatus,
 } from '@codern/internal';
 import { Timestamp } from '@codern/shared';
 import { Submission } from '@prisma/client';
@@ -56,7 +57,7 @@ export class GradingService {
       userId,
       questionId,
       language,
-      status: GradingStatus.UPLOADING,
+      status: SubmissionStatus.UPLOADING,
       filePath,
       uploadedAt,
     });
@@ -69,7 +70,7 @@ export class GradingService {
 
   public async grade(submissionId: number): Promise<GradeResponse> {
     const submission = await this.submissionRepository.updateSubmission(submissionId, {
-      status: GradingStatus.GRADING,
+      status: SubmissionStatus.GRADING,
     });
 
     const testcase = await this.testcaseRepository.getTestcaseByQuestionId(submission.questionId);
@@ -109,9 +110,13 @@ export class GradingService {
     };
   }
 
-  public async result(submissionId: number, result: string): Promise<void> {
+  public async result(
+    submissionId: number,
+    status: SubmissionStatus,
+    result: string | null,
+  ): Promise<void> {
     const submission = await this.submissionRepository.updateSubmission(submissionId, {
-      status: GradingStatus.COMPLETED,
+      status,
       result,
     });
 
@@ -126,6 +131,7 @@ export class GradingService {
         filePath: submission.filePath,
         id: submission.id,
         language: submission.language,
+        status: submission.status,
         result: submission.result,
         uploadedAt: submission.uploadedAt,
       },

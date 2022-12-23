@@ -1,9 +1,8 @@
 import { PublicQuestion, PublicWorkspaceWithParticipants } from '@codern/external';
 import {
-  GetSubmissionsByQuestionIdResponse,
-  Owner,
-  Question, QuestionStatus, QuestionSummary,
-  User, WorkspaceWithParticipants,
+  GetSubmissionsByQuestionIdResponse, Owner, Question,
+  QuestionStatus, QuestionSummary, User,
+  WorkspaceWithParticipants,
 } from '@codern/internal';
 import { map } from 'rxjs';
 
@@ -55,6 +54,7 @@ export const publishSubmissions = map(
   (response: GetSubmissionsByQuestionIdResponse) => response
     .submissions.map((submission) => ({
       ...submission,
+      result: submission.result || undefined,
       questionId: undefined,
       userId: undefined,
     })),

@@ -1,5 +1,5 @@
-import { Spinner } from '@/features/common/Spinner';
 import { Text } from '@/features/common/Text';
+import { SubmissionResult } from '@/features/question/submission/SubmissionResult';
 import { SubmissionStatusBadge } from '@/features/question/submission/SubmissionStatusBadge';
 import { classNames } from '@/utils/Classes';
 import { PublicLanguage, PublicSubmissionStatus } from '@codern/external';
@@ -7,16 +7,12 @@ import { Timestamp } from '@codern/shared';
 import { Disclosure, Transition } from '@headlessui/react';
 import { ChevronUpIcon } from '@heroicons/react/24/outline';
 
-const ERROR_INFO: { [key: string]: string } = {
-  '2': 'Timeout',
-  '3': 'Out of memory',
-};
-
 type SubmissionListProps = {
   index: number,
   id: number,
   open?: boolean,
   language: PublicLanguage,
+  status: PublicSubmissionStatus,
   result?: string,
   uploadedAt: number,
 };
@@ -26,15 +22,10 @@ export const SubmissionList = ({
   id,
   open = false,
   language,
+  status,
   result,
   uploadedAt,
 }: SubmissionListProps) => {
-  const status = (result)
-    ? (Number.parseInt(result) === 0)
-      ? PublicSubmissionStatus.PASS
-      : PublicSubmissionStatus.ERROR
-    : PublicSubmissionStatus.GRADING;
-
   return (
     <div className="space-y-1">
       <Disclosure defaultOpen={open}>
@@ -55,7 +46,10 @@ export const SubmissionList = ({
               </div>
 
               <div className="flex flex-row items-center space-x-4">
-                <SubmissionStatusBadge status={status} />
+                <SubmissionStatusBadge
+                  status={status}
+                  result={result}
+                />
                 <Text color="secondary">
                   <ChevronUpIcon className={classNames('w-5 h-5', !open && 'transform rotate-180')} />
                 </Text>
@@ -72,26 +66,10 @@ export const SubmissionList = ({
               leaveTo="transform opacity-0 -translate-y-4"
             >
               <Disclosure.Panel className="px-4 py-2 rounded-lg">
-                {result && [...result].map((result, index) => (
-                  <span className="flex flex-row space-x-2 font-mono text-xs">
-                    <Text color="secondary">Case {index + 1}</Text>
-                    <span className={classNames(
-                      (result === '0') ? 'text-green-500' : 'text-red-500',
-                    )}>
-                      {(result === '0') ? 'Pass' : 'Error'}&nbsp;
-                      {(Number.parseInt(result) > 1) && (
-                        <>({ERROR_INFO[result] || 'Error'})</>
-                      )}
-                    </span>
-                  </span>
-                ))}
-
-                {!result && (
-                  <div className="flex flex-row justify-center items-center space-x-2">
-                    <Spinner className="animate-spin w-5 h-5 text-neutral-400" />
-                    <Text color="secondary" className="animate-pulse">Grading...</Text>
-                  </div>
-                )}
+                <SubmissionResult
+                  status={status}
+                  result={result}
+                />
 
                 <span className="text-neutral-300 dark:text-neutral-500 text-xs mt-2">Submission id: {id}</span>
               </Disclosure.Panel>

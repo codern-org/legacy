@@ -7,8 +7,9 @@ message Submission {
   string userId = 3;
   string language = 4;
   string filePath = 5;
-  optional string result = 6;
-  uint64 uploadedAt = 7;
+  string status = 6;
+  string result = 7;
+  uint64 uploadedAt = 8;
 }
 
 message QuestionSummary {
