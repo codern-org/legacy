@@ -11,7 +11,7 @@ const FAIL_INFO: { [key: string]: string } = {
 const ERROR_INFO = {
   [PublicSubmissionStatus.FAILED_COMPILATION]: 'Compilation Error',
   [PublicSubmissionStatus.FAILED_MISSING_RESULT]: 'Missing Result',
-  [PublicSubmissionStatus.TIMEOUT_EXECUTION]: 'Executation Timeout',
+  [PublicSubmissionStatus.TIMEOUT_EXECUTION]: 'Execution Timeout',
   [PublicSubmissionStatus.TIMEOUT_CONTAINER]: 'Container Timeout',
   [PublicSubmissionStatus.REQUEUE_LIMIT_EXCEEDED]: 'Requeue Limit Exceed',
 };
