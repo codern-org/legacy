@@ -3,7 +3,7 @@ import {
   AuthRequest, AuthResponse, GetOwnerDetailRequest,
   GetOwnerDetailResponse, GetUserByIdsRequest, GetUserByIdsResponse,
   GoogleAuthRequest, GoogleAuthResponse, GoogleAuthUrlResponse,
-  LoginRequest, LoginResponse, LogoutRequest,
+  LoginRequest, LoginResponse, LogoutRequest, LogoutResponse,
 } from '@codern/internal';
 
 export interface AuthService {
@@ -12,7 +12,7 @@ export interface AuthService {
 
   login(data: LoginRequest): Observable<LoginResponse>;
 
-  logout(data: LogoutRequest): Observable<void>;
+  logout(data: LogoutRequest): Observable<LogoutResponse>;
 
   getGoogleOAuthUrl(any: unknown): Observable<GoogleAuthUrlResponse>;
 

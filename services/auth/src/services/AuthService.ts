@@ -40,9 +40,10 @@ export class AuthService {
     return user;
   }
 
-  public async logoutOrThrow(incomingSession: string): Promise<void> {
+  public async logoutOrThrow(incomingSession: string): Promise<string> {
     const session = await this.sessionService.validateSessionOrThrow(incomingSession);
     await this.sessionService.destroySession(session.id);
+    return this.sessionService.destroySessionCookie();
   }
 
   public async loginOrThrow(data: LoginRequest): Promise<string> {

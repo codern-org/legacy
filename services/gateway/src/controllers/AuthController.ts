@@ -42,12 +42,12 @@ export class AuthController {
     @Res({ passthrough: true }) response: FastifyReply,
   ): Promise<{ success: boolean }> {
     const { email, password } = body;
-    const result = await firstValueFrom(
+    const { cookieHeader } = await firstValueFrom(
       this.authService.login({
         email, password, userAgent, ipAddress,
       }),
     );
-    response.header('Set-Cookie', result.cookieHeader);
+    response.header('Set-Cookie', cookieHeader);
     return { success: true };
   }
 
@@ -56,9 +56,10 @@ export class AuthController {
   public async logout(
     @Res({ passthrough: true }) response: FastifyReply,
     @Session() session: string,
-  ): Promise<void> {
-    await firstValueFrom(this.authService.logout({ session }));
-    response.header('Set-Cookie', 'sid=; path=/ expires=Thu, 01 Jan 1970 00:00:00 GMT');
+  ): Promise<{ success: boolean }> {
+    const { cookieHeader } = await firstValueFrom(this.authService.logout({ session }));
+    response.header('Set-Cookie', cookieHeader);
+    return { success: true };
   }
 
   @Get('/google')

@@ -23,6 +23,10 @@ export type LogoutRequest = {
   session: string,
 };
 
+export type LogoutResponse = {
+  cookieHeader: string,
+};
+
 export type GoogleAuthUrlResponse = {
   url: string,
 };

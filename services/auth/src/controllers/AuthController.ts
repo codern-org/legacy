@@ -4,7 +4,7 @@ import {
   AuthRequest, GoogleAuthRequest, GoogleAuthResponse,
   GoogleAuthUrlResponse, LogoutRequest, AuthResponse,
   GetUserByIdsRequest, GetUserByIdsResponse, GetOwnerDetailRequest,
-  GetOwnerDetailResponse, LoginRequest, LoginResponse,
+  GetOwnerDetailResponse, LoginRequest, LoginResponse, LogoutResponse,
 } from '@codern/internal';
 import { GoogleService } from '@/services/GoogleService';
 import { AuthService } from '@/services/AuthService';
@@ -40,8 +40,9 @@ export class AuthController {
   }
 
   @GrpcMethod('AuthService')
-  public async logout(data: LogoutRequest): Promise<void> {
-    return this.authService.logoutOrThrow(data.session);
+  public async logout(data: LogoutRequest): Promise<LogoutResponse> {
+    const cookieHeader = await this.authService.logoutOrThrow(data.session);
+    return { cookieHeader };
   }
 
   @GrpcMethod('AuthService')

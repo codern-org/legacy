@@ -7,7 +7,7 @@ import "auth/message.proto";
 service AuthService {
   rpc Authenticate(AuthRequest) returns (AuthResponse);
   rpc Login(LoginRequest) returns (LoginResponse);
-  rpc Logout(LogoutRequest) returns (Empty);
+  rpc Logout(LogoutRequest) returns (LogoutResponse);
   rpc GetGoogleOAuthUrl(Empty) returns (GoogleAuthUrlResponse);
   rpc LoginWithGoogle(GoogleAuthRequest) returns (GoogleAuthResponse);
   rpc GetUserByIds(GetUserByIdsRequest) returns (GetUserByIdsResponse);
