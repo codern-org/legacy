@@ -7,6 +7,7 @@ import { fetch } from '@/utils/Fetch';
 import { useEffect, useState } from 'preact/hooks';
 import { PublicQuestion, PublicWorkspace } from '@codern/external';
 import { toast } from 'react-toastify';
+import { Copyright } from '@/features/common/Copyright';
 
 type WorkspacePageProps = {
   workspaceId: string,
@@ -61,6 +62,10 @@ export const WorkspacePage = ({
           : (<QuestionTableSkeleton />)
         }
       </main>
+
+      <footer className="w-full mt-auto py-2 text-center border-t border-primary">
+        <Copyright />
+      </footer>
     </div>
   );
 };

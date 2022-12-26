@@ -1,3 +1,4 @@
+import { Copyright } from '@/features/common/Copyright';
 import { Navbar } from '@/features/common/navbar/Navbar';
 import { EditorPaneSkeleton } from '@/features/question/EditorPaneSkeleton';
 import { QuestionPane } from '@/features/question/QuestionPane';
@@ -33,20 +34,20 @@ export const QuestionPage = ({
   }, []);
 
   return (
-    <div className="h-screen flex flex-col bg-neutral-100 dark:bg-neutral-900 transition-theme">
+    <div className="min-h-screen md:h-screen flex flex-col bg-neutral-100 dark:bg-neutral-900 transition-theme">
       <Navbar />
 
-      <main className="container w-full h-full flex flex-row space-x-6 p-6 overflow-hidden">
-        <section className="w-6/12">
+      <main className="container w-full h-full flex flex-col md:flex-row md:space-x-6 space-y-6 md:space-y-0 p-6 overflow-hidden">
+        <section className="w-full md:w-6/12 h-[75vh] md:h-full">
           {question
             ? (<QuestionPane
-                workspaceId={workspaceId}
-                question={question}
-              />)
+              workspaceId={workspaceId}
+              question={question}
+            />)
             : (<QuestionPaneSkeleton />)
           }
         </section>
-        <section className="w-6/12">
+        <section className="w-full md:w-6/12 h-[75vh] md:h-full">
           <Suspense fallback={<EditorPaneSkeleton />}>
             <EditorPane
               workspaceId={workspaceId}
@@ -55,6 +56,10 @@ export const QuestionPage = ({
           </Suspense>
         </section>
       </main>
+
+      <footer className="w-full py-2 text-center border-t border-primary">
+        <Copyright />
+      </footer>
     </div>
   );
 };

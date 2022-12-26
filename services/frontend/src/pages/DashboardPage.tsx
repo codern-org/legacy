@@ -35,11 +35,11 @@ export const DashboardPage = () => {
             : (<WorkspaceDeckSkeleton />)
           }
         </section>
-
-        <footer className="w-full py-2 text-center border-t border-primary">
-          <Copyright />
-        </footer>
       </main>
+
+      <footer className="w-full py-2 text-center bg-neutral-50 dark:bg-neutral-900 border-t border-primary">
+        <Copyright />
+      </footer>
     </div>
   );
 };
