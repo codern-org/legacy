@@ -5,7 +5,7 @@ import { isSupportedEditorLanguage } from '@/stores/EditorStore';
 import { lastSubmissionIdAtom, questionPaneAtom, submissionsAtom } from '@/stores/PaneStore';
 import { fetch } from '@/utils/Fetch';
 import { PublicGradeResponse, PublicSubmissionStatus } from '@codern/external';
-import { ArrowPathIcon, Cog6ToothIcon } from '@heroicons/react/24/outline';
+import { ArrowPathIcon, Cog6ToothIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { useAtom } from 'jotai';
 import { useState } from 'preact/hooks';
 import { toast } from 'react-toastify';
@@ -110,7 +110,10 @@ const EditorPane = ({
           loading={isSubmitting}
           disabled={isSubmitting}
         >
-          Submit
+          <span>
+            <span className="hidden lg:block">Submit</span>
+            <PaperAirplaneIcon className="w-4 h-4 lg:hidden" />
+          </span>
         </Button>
       </div>
     </div>

@@ -45,7 +45,7 @@ export const SubmissionList = ({
                 </div>
               </div>
 
-              <div className="flex flex-row items-center space-x-4">
+              <div className="flex flex-row items-center space-x-2 lg:space-x-4">
                 <SubmissionStatusBadge
                   status={status}
                   result={result}

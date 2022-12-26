@@ -40,7 +40,7 @@ export const QuestionPane = ({
 
   return (
     <div className="h-full flex flex-col p-6 border border-primary rounded-lg bg-white dark:bg-neutral-900">
-      <div className="flex flex-row justify-between items-center mb-4 pb-4 border-b border-primary">
+      <div className="flex flex-row justify-between items-center mb-4 pb-4 space-x-2 border-b border-primary">
         <div className="flex flex-row items-center">
           <ChevronLeftIcon
             className="w-7 h-7 mr-1 p-1 text-black dark:text-white hover:text-neutral-400 dark:hover:text-neutral-400 hover:cursor-pointer"

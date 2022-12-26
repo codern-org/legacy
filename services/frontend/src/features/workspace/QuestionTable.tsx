@@ -30,14 +30,14 @@ export const QuestionTable = ({
       <table className="table-auto text-left">
         <thead className="bg-neutral-100 dark:bg-neutral-900 outline outline-1 outline-neutral-300 dark:outline-neutral-700 rounded-md transition-all ease-in duration-200">
           <tr>
-            <th className="flex flex-row items-center space-x-2 px-4 py-2 font-normal text-neutral-400">
+            <th className="flex flex-row items-center space-x-2 px-2 md:px-4 py-2 font-normal text-neutral-400">
               <span>#</span>
               <ArrowSmallDownIcon className="w-4 h-4" />
             </th>
-            <th className="w-5/12 px-4 py-2 font-normal text-neutral-400">Question</th>
+            <th className="w-5/12 px-2 md:px-4 py-2 font-normal text-neutral-400">Question</th>
             <th className="hidden md:table-cell px-4 py-2 font-normal text-neutral-400">Level</th>
-            <th className="px-4 py-2 font-normal text-neutral-400">Status</th>
-            <th className="hidden md:table-cell px-4 py-2 font-normal text-neutral-400">Last submitted</th>
+            <th className="px-2 md:px-4 py-2 font-normal text-neutral-400">Status</th>
+            <th className="hidden sm:table-cell px-2 md:px-4 py-2 font-normal text-neutral-400">Last submitted</th>
           </tr>
         </thead>
         <tbody>

@@ -45,7 +45,7 @@ export const QuestionTableList = ({
         <QuestionStatusBadge status={status} />
       </td>
 
-      <td className="hidden md:table-cell px-2 md:px-4 py-4">
+      <td className="hidden sm:table-cell px-2 md:px-4 py-4">
         {(lastSubmitted === 0)
           ? (
             <Text color="secondary">-</Text>
