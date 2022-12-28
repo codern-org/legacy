@@ -169,6 +169,8 @@ importers:
       '@heroicons/react': ^2.0.12
       '@monaco-editor/react': ^4.4.6
       '@preact/preset-vite': ^2.4.0
+      '@tanstack/match-sorter-utils': ^8.7.2
+      '@tanstack/react-table': ^8.7.4
       '@types/dompurify': ^2.3.4
       '@types/marked': ^4.0.7
       axios: ^1.1.3
@@ -192,6 +194,8 @@ importers:
       '@headlessui/react': 1.7.3_ive3jjn476xyi3ikfsqwmh5x74
       '@heroicons/react': 2.0.12_@preact+compat@17.1.2
       '@monaco-editor/react': 4.4.6_wraufuwhvcax7nr37vxnuxhpbm
+      '@tanstack/match-sorter-utils': 8.7.2
+      '@tanstack/react-table': 8.7.4_ive3jjn476xyi3ikfsqwmh5x74
       axios: 1.1.3
       dompurify: 2.4.0
       jotai: 1.9.0_z7hw6gxg26aog2oz4ajrhgrmhu
@@ -1437,6 +1441,30 @@ packages:
       postcss-selector-parser: 6.0.10
       tailwindcss: 3.2.1_postcss@8.4.18
     dev: true
+
+  /@tanstack/match-sorter-utils/8.7.2:
+    resolution: {integrity: sha512-bptNeoexeDB947fWoCPwUchPSx5FA9gwzU0bkXz0du5pT8Ud2+1ob+xOgHj6EF3VN0kdXtLhwjPyhY7/dJglkg==}
+    engines: {node: '>=12'}
+    dependencies:
+      remove-accents: 0.4.2
+    dev: false
+
+  /@tanstack/react-table/8.7.4_ive3jjn476xyi3ikfsqwmh5x74:
+    resolution: {integrity: sha512-4Q1OV3kUSxbtekclS3sqjCyCDowqCPruUCfHm1nGoPSmVLRCHoQ1E2rmzTVGeocEKgV9TDnj39tOgGwcADPuPA==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      '@tanstack/table-core': 8.7.4
+      react: /@preact/compat/17.1.2_preact@10.11.2
+      react-dom: /@preact/compat/17.1.2_preact@10.11.2
+    dev: false
+
+  /@tanstack/table-core/8.7.4:
+    resolution: {integrity: sha512-OPhzca7e83KGukxLpZ+4F9OBp9CZXi9b/OGJBH8dlC3wpffcSSDczYGUGJKG7wirXQ6cUVYL+9G6UrrdnblKNQ==}
+    engines: {node: '>=12'}
+    dev: false
 
   /@tsconfig/node10/1.0.9:
     resolution: {integrity: sha512-jNsYVVxU8v5g43Erja32laIDHXeoNvFEpX33OK4d6hljo3jDhCBDhx5dhCCTMWUojscpAagGiRkBKxpdl9fxqA==}
@@ -4159,6 +4187,10 @@ packages:
     resolution: {integrity: sha512-pq2bWo9mVD43nbts2wGv17XLiNLya+GklZ8kaDLV2Z08gDCsGpnKn9BFMepvWuHCbyVvY7J5o5+BVvoQbmlJLg==}
     engines: {node: '>=8'}
     dev: true
+
+  /remove-accents/0.4.2:
+    resolution: {integrity: sha512-7pXIJqJOq5tFgG1A2Zxti3Ht8jJF337m4sowbuHsW30ZnkQFnDzy9qBNhgzX8ZLW4+UBcXiiR7SwR6pokHsxiA==}
+    dev: false
 
   /require-directory/2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}

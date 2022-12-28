@@ -18,7 +18,6 @@ export const QuestionTableSkeleton = () => {
           <tr>
             <th className="flex flex-row items-center space-x-2 px-4 py-2 font-normal text-neutral-400">
               <span>#</span>
-              <ArrowSmallDownIcon className="w-4 h-4" />
             </th>
             <th className="w-5/12 px-4 py-2 font-normal text-neutral-400">Question</th>
             <th className="hidden md:table-cell px-4 py-2 font-normal text-neutral-400">Level</th>
