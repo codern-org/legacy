@@ -25,14 +25,14 @@ export const SubmissionSection = ({
   useEffect(() => {
     let timer: number;
 
-    socket.on('submission', (submission: PublicSubmission) => {
+    socket.on('submission', (newSubmission: PublicSubmission) => {
       setSubmissions((submissions) => {
         if (!submissions) return null;
         // Update specific submission with mutation
-        const updatedSubmission = submissions
-          .filter((submission) => submission.id === submission.id)[0];
-        updatedSubmission.status = submission.status;
-        updatedSubmission.result = submission.result;
+        const updatedSubmission = submissions.find((submission) => submission.id === newSubmission.id);
+        if (!updatedSubmission) return null;
+        updatedSubmission.status = newSubmission.status;
+        updatedSubmission.result = newSubmission.result;
         return submissions.slice();
       });
     });
