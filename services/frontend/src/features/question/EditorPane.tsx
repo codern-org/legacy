@@ -105,15 +105,13 @@ const EditorPane = ({
         </div>
 
         <Button
-          className="px-8"
+          className="sm:px-8"
           onClick={handleSubmitCode}
           loading={isSubmitting}
           disabled={isSubmitting}
         >
-          <span>
-            <span className="hidden lg:block">Submit</span>
-            <PaperAirplaneIcon className="w-4 h-4 lg:hidden" />
-          </span>
+          <span className="hidden sm:block">Submit</span>
+          <PaperAirplaneIcon className="w-4 h-4 sm:hidden" />
         </Button>
       </div>
     </div>

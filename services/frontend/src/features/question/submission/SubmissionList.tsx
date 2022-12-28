@@ -31,9 +31,9 @@ export const SubmissionList = ({
       <Disclosure defaultOpen={open}>
         {({ open }: { open: boolean }) => (
           <>
-            <Disclosure.Button className="w-full flex flex-row justify-between items-center px-4 py-2 bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 rounded-lg">
-              <div className="flex flex-row items-center space-x-4">
-                <Text color="secondary">{index}</Text>
+            <Disclosure.Button className="w-full flex flex-row justify-between items-center px-4 py-2 space-x-2 bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 rounded-lg">
+              <div className="flex flex-row items-center space-x-2 lg:space-x-4">
+                <Text color="secondary" className="text-sm md:text-base">{index}</Text>
                 <div className="flex flex-col text-left">
                   <Text color="primary" className="text-sm">
                     Language: {language}

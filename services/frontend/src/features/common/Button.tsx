@@ -1,7 +1,6 @@
 import { Spinner } from '@/features/common/Spinner';
 import { classNames } from '@/utils/Classes';
 import { ComponentChildren } from 'preact';
-import { route } from 'preact-router';
 
 type ButtonProps = {
   children: ComponentChildren,

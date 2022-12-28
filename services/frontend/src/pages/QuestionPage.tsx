@@ -34,11 +34,11 @@ export const QuestionPage = ({
   }, []);
 
   return (
-    <div className="min-h-screen md:h-screen flex flex-col bg-neutral-100 dark:bg-neutral-900 transition-theme">
+    <div className="min-h-screen lg:h-screen flex flex-col bg-neutral-100 dark:bg-neutral-900 transition-theme">
       <Navbar />
 
-      <main className="container w-full h-full flex flex-col md:flex-row md:space-x-6 space-y-6 md:space-y-0 p-6 overflow-hidden">
-        <section className="w-full md:w-6/12 h-[75vh] md:h-full">
+      <main className="container w-full h-full flex flex-col lg:flex-row lg:space-x-6 space-y-6 lg:space-y-0 p-6 overflow-hidden">
+        <section className="w-full lg:w-6/12 h-[75vh] lg:h-full">
           {question
             ? (<QuestionPane
               workspaceId={workspaceId}
@@ -47,7 +47,7 @@ export const QuestionPage = ({
             : (<QuestionPaneSkeleton />)
           }
         </section>
-        <section className="w-full md:w-6/12 h-[75vh] md:h-full">
+        <section className="w-full lg:w-6/12 h-[75vh] lg:h-full">
           <Suspense fallback={<EditorPaneSkeleton />}>
             <EditorPane
               workspaceId={workspaceId}
