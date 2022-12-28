@@ -12,7 +12,7 @@
 
 ## The Repository
 
-This repository is where we (Vectier) develop the [Codern](https://codern.vectier.co/) with the community to improve the product together. This repository contains only the frontend-backend developed with Microservice architecture. For grading core (code compiler), we separately develop & maintain it in [other repository](https://github.com/vectier/codern-grading).
+This repository is where we (Vectier) develop the [Codern](https://codern.vectier.co/) with the community to improve the product together. This repository contains only the frontend-backend developed with Microservice architecture. For grading core (code compiler), we separately develop & maintain it in [other repository](https://github.com/Porama6400/GradingCore).
 
 ## What is Codern?
 
