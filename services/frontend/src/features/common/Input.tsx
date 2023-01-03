@@ -4,19 +4,21 @@ import { ComponentChildren } from 'preact';
 import { UseFormRegister } from 'react-hook-form';
 
 type InputProps = {
-  type: 'text' | 'email' | 'password' | 'checkbox',
+  type: 'text' | 'number' | 'email' | 'password' | 'checkbox',
   name?: string,
   label?: string,
   placeholder?: string,
   icon?: ComponentChildren,
   className?: string,
   onInput?: (event: Event) => void,
-  value?: string,
+  value?: string | number,
   autoComplete?: string,
   error?: string,
   register?: UseFormRegister<any>,
   pattern?: { value: RegExp, message: string },
   required?: boolean,
+  min?: number,
+  max?: number,
 };
 
 export const Input = ({
@@ -33,6 +35,8 @@ export const Input = ({
   register,
   pattern,
   required = false,
+  min,
+  max,
 }: InputProps) => {
   if (type === 'checkbox') {
     return (
@@ -70,6 +74,8 @@ export const Input = ({
           onInput={onInput}
           value={value}
           autoComplete={autoComplete}
+          min={min}
+          max={max}
           {...((register && name) && register(name, { required, pattern }))}
         />
       </div>

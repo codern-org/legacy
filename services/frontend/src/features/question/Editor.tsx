@@ -95,7 +95,6 @@ export const Editor = ({
   const handleEditorDidMount = (editor: MonacoEditor, monaco: Monaco) => {
     setEditorRef({ monacoEditor: editor, monaco: monaco });
 
-
     // TODO: refactor initial load code from props
     const defaultLanguage = settings.language;
     let defaultCode = localStorage.getItem(`code-${defaultLanguage}-${questionId}`);

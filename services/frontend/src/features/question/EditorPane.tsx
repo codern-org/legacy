@@ -1,11 +1,12 @@
 import { Button } from '@/features/common/Button';
 import { Editor } from '@/features/question/Editor';
+import { EditorSettingsButton } from '@/features/question/EditorSettingsButton';
 import { useEditor } from '@/hooks/useEditor';
 import { isSupportedEditorLanguage } from '@/stores/EditorStore';
 import { lastSubmissionIdAtom, questionPaneAtom, submissionsAtom } from '@/stores/PaneStore';
 import { fetch } from '@/utils/Fetch';
 import { PublicGradeResponse, PublicSubmissionStatus } from '@codern/external';
-import { ArrowPathIcon, Cog6ToothIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
+import { ArrowPathIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { useAtom } from 'jotai';
 import { useState } from 'preact/hooks';
 import { toast } from 'react-toastify';
@@ -74,13 +75,7 @@ const EditorPane = ({
 
       <div className="flex flex-row justify-between space-x-2 mt-6">
         <div className="flex flex-row space-x-2">
-          {/* TODO: setting */}
-          <Button
-            color="secondary"
-            className="h-full"
-          >
-            <Cog6ToothIcon className="w-5 h-5" />
-          </Button>
+          <EditorSettingsButton />
 
           <div className="relative group">
             <span className="hidden group-hover:block absolute left-1/2 bottom-0 w-fit px-2 py-1 text-sm text-neutral-300 whitespace-nowrap rounded-lg bg-neutral-700 transform -translate-y-12 -translate-x-1/2">

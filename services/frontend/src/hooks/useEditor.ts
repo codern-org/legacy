@@ -40,10 +40,27 @@ export const useEditor = () => {
     return model.getValue();
   };
 
+  const setFontSize = (fontSize: number) => {
+    if (!editorRef.monacoEditor) return null;
+    const editor = editorRef.monacoEditor;
+    editor.updateOptions({ fontSize });
+    editor.trigger('keyboard', 'editor.action.fontZoomReset', {});
+  };
+
+  const getFontSize = () => {
+    if (!editorRef.monacoEditor) return null;
+    const editor = editorRef.monacoEditor;
+    const EditorOptions = monaco.editor.EditorOption;
+    const { fontSize } = editor.getOption(EditorOptions.fontInfo);
+    return fontSize;
+  }
+
   return {
     resetCode,
     changeLanguage,
     settings,
     getCode,
+    setFontSize,
+    getFontSize,
   };
 };
