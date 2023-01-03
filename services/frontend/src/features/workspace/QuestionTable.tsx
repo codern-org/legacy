@@ -15,7 +15,7 @@ const hiddenColumnOnSm = ['lastSubmitted'];
 
 const columns = [
   columnHelper.accessor((row, number) => number + 1, {
-    id: 'id',
+    id: 'number',
     header: '#',
     cell: (info) => (<Text color="secondary">{info.getValue()}</Text>),
   }),
@@ -68,7 +68,7 @@ type QuestionTableProps = {
 export const QuestionTable = ({
   questions,
 }: QuestionTableProps) => {
-  const [sorting, setSorting] = useState<SortingState>([]);
+  const [sorting, setSorting] = useState<SortingState>([{ id: 'number', desc: false }]);
   const [globalFilter, setGlobalFilter] = useState<string>('');
 
   const table = useReactTable({
@@ -139,7 +139,7 @@ export const QuestionTable = ({
           {table.getRowModel().rows.map((row) => (
             <tr
               key={row.id}
-              onClick={() => route(getCurrentUrl() + '/' + row.getValue('id'))}
+              onClick={() => route(getCurrentUrl() + '/' + row.original.id)}
               className="border-b border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-900 hover:cursor-pointer"
             >
               {row.getVisibleCells().map((cell) => (
