@@ -7,8 +7,8 @@ export const mockSubmissions: PublicSubmission[] = [
     language: PublicLanguage.C,
     filePath: '',
     results: [
-      { id: 1, status: PublicResultStatus.PASS },
-      { id: 2, status: PublicResultStatus.PASS },
+      { id: 1, status: PublicResultStatus.PASSED },
+      { id: 2, status: PublicResultStatus.PASSED },
     ],
     uploadedAt: Timestamp.now(),
   },
@@ -18,7 +18,7 @@ export const mockSubmissions: PublicSubmission[] = [
     filePath: '',
     results: [
       { id: 1, status: PublicResultStatus.GRADING },
-      { id: 2, status: PublicResultStatus.PASS },
+      { id: 2, status: PublicResultStatus.PASSED },
     ],
     uploadedAt: Timestamp.now(),
   },
@@ -28,7 +28,7 @@ export const mockSubmissions: PublicSubmission[] = [
     filePath: '',
     results: [
       { id: 1, status: PublicResultStatus.FAILED_COMPILATION },
-      { id: 2, status: PublicResultStatus.PASS },
+      { id: 2, status: PublicResultStatus.PASSED },
     ],
     uploadedAt: Timestamp.now(),
   },

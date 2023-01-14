@@ -186,9 +186,9 @@ export class GradingService {
     // Summarize result statuses to question status
     const submissionsWithQuestionStatus = submissions.map((submission) => {
       let questionStatus = QuestionStatus.TODO;
-      const isPass = submission.results.every((result) => result.status === ResultStatus.PASS);
+      const isPassed = submission.results.every((result) => result.status === ResultStatus.PASSED);
       const isGrading = submission.results.some((result) => result.status === ResultStatus.GRADING);
-      if (!isGrading) questionStatus = (isPass ? QuestionStatus.DONE : QuestionStatus.ERROR);
+      if (!isGrading) questionStatus = (isPassed ? QuestionStatus.DONE : QuestionStatus.ERROR);
       return { ...submission, questionStatus };
     });
 

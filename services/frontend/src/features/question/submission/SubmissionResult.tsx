@@ -5,7 +5,7 @@ import { PublicResult, PublicResultStatus } from '@codern/external';
 
 const RESULT_TEXT_MAP = {
   [PublicResultStatus.GRADING]: 'Grading',
-  [PublicResultStatus.PASS]: 'PASS',
+  [PublicResultStatus.PASSED]: 'PASSED',
   [PublicResultStatus.FAILED_COMPILATION]: 'Compilation Error',
   [PublicResultStatus.FAILED_MISSING_RESULT]: 'Missing Result',
   [PublicResultStatus.TIMEOUT_EXECUTION]: 'Execution Timeout',
@@ -37,10 +37,10 @@ export const SubmissionResult = ({
         <span className="flex flex-row space-x-2 font-mono text-xs">
           <Text color="secondary">Case {index + 1}</Text>
           <span className={classNames(
-            (result.status === PublicResultStatus.PASS) ? 'text-green-500' : 'text-red-500',
+            (result.status === PublicResultStatus.PASSED) ? 'text-green-500' : 'text-red-500',
           )}>
-            {(result.status === PublicResultStatus.PASS) ? 'Pass' : 'Error'}&nbsp;
-            {(result.status !== PublicResultStatus.PASS) && <>({RESULT_TEXT_MAP[result.status]})</>}
+            {(result.status === PublicResultStatus.PASSED) ? 'Pass' : 'Error'}&nbsp;
+            {(result.status !== PublicResultStatus.PASSED) && <>({RESULT_TEXT_MAP[result.status]})</>}
           </span>
         </span>
       ))}

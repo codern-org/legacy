@@ -10,7 +10,7 @@ export const SubmissionStatusBadge = ({
   results,
 }: SubmissionStatusBadgeProps) => {
   const isGrading = results.some((result) => result.status === PublicResultStatus.GRADING);
-  const isError = results.some((result) => result.status !== PublicResultStatus.PASS);
+  const isError = results.some((result) => result.status !== PublicResultStatus.PASSED);
   const isCompleteWithoutError = (!isGrading && !isError);
 
   return (
