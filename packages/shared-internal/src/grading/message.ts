@@ -1,6 +1,6 @@
 import {
-  Submission, QuestionSummary, Language,
-  SubmissionStatus,
+  QuestionSummary, Language, ResultStatus,
+  SubmissionWithResults,
 } from './entity';
 
 export type GetSubmissionsByQuestionIdRequest = {
@@ -9,7 +9,7 @@ export type GetSubmissionsByQuestionIdRequest = {
 };
 
 export type GetSubmissionsByQuestionIdResponse = {
-  submissions: Submission[],
+  submissions: SubmissionWithResults[],
 };
 
 export type SaveCodeRequest = {
@@ -33,18 +33,11 @@ export type GradeRequest = {
   submissionId: number,
 };
 
-export type GradeResponse = {
-  id: number,
-  questionId: number,
-  language: Language,
-  filePath: string,
-  uploadedAt: number,
-};
+export type GradeResponse = SubmissionWithResults;
 
 export type ResultRequest = {
-  submissionId: number,
-  status: SubmissionStatus,
-  result: string,
+  id: number,
+  status: ResultStatus,
 };
 
 export type GetQuestionSummaryByIdsRequest = {

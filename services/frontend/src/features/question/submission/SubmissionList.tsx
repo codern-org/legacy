@@ -2,7 +2,7 @@ import { Text } from '@/features/common/Text';
 import { SubmissionResult } from '@/features/question/submission/SubmissionResult';
 import { SubmissionStatusBadge } from '@/features/question/submission/SubmissionStatusBadge';
 import { classNames } from '@/utils/Classes';
-import { PublicLanguage, PublicSubmissionStatus } from '@codern/external';
+import { PublicLanguage, PublicResult } from '@codern/external';
 import { Timestamp } from '@codern/shared';
 import { Disclosure, Transition } from '@headlessui/react';
 import { ChevronUpIcon } from '@heroicons/react/24/outline';
@@ -12,8 +12,7 @@ type SubmissionListProps = {
   id: number,
   open?: boolean,
   language: PublicLanguage,
-  status: PublicSubmissionStatus,
-  result?: string,
+  results: PublicResult[],
   uploadedAt: number,
 };
 
@@ -22,8 +21,7 @@ export const SubmissionList = ({
   id,
   open = false,
   language,
-  status,
-  result,
+  results,
   uploadedAt,
 }: SubmissionListProps) => {
   return (
@@ -46,10 +44,7 @@ export const SubmissionList = ({
               </div>
 
               <div className="flex flex-row items-center space-x-2 lg:space-x-4">
-                <SubmissionStatusBadge
-                  status={status}
-                  result={result}
-                />
+                <SubmissionStatusBadge results={results} />
                 <Text color="secondary">
                   <ChevronUpIcon className={classNames('w-5 h-5', !open && 'transform rotate-180')} />
                 </Text>
@@ -66,11 +61,7 @@ export const SubmissionList = ({
               leaveTo="transform opacity-0 -translate-y-4"
             >
               <Disclosure.Panel className="px-4 py-2 rounded-lg">
-                <SubmissionResult
-                  status={status}
-                  result={result}
-                />
-
+                <SubmissionResult results={results} />
                 <span className="text-neutral-300 dark:text-neutral-500 text-xs mt-2">Submission id: {id}</span>
               </Disclosure.Panel>
             </Transition>

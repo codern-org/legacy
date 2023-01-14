@@ -7,9 +7,15 @@ message Submission {
   string userId = 3;
   string language = 4;
   string filePath = 5;
-  string status = 6;
-  string result = 7;
+  repeated Result results = 7;
   uint64 uploadedAt = 8;
+}
+
+message Result {
+  int32 id = 1;
+  int32 submissionId = 2;
+  int32 testcaseId = 3;
+  string status = 4;
 }
 
 message QuestionSummary {

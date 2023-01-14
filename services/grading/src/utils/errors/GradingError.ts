@@ -14,4 +14,14 @@ export const GradingError = {
     error: 'Invalid question',
     message: 'Cannot find question of this question id',
   },
+  InvalidSubmission: {
+    code: 'G-002-001',
+    error: 'Invalid submission',
+    message: 'Submission data is invalid',
+  },
+  InvalidResult: {
+    code: 'G-003-001',
+    error: 'Invalid result',
+    message: 'Result data is invalid',
+  },
 };

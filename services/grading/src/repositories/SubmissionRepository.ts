@@ -1,6 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, Submission } from '@prisma/client';
+import {
+  Prisma, Submission, Question,
+  Result,
+} from '@prisma/client';
 import { PrismaService } from '@/services/PrismaService';
+
+type SubmissionWithResults = Submission & { results: Result[] };
+type SubmissionWithQuestion = Submission & { question: Question };
 
 @Injectable()
 export class SubmissionRepository {
@@ -15,18 +21,40 @@ export class SubmissionRepository {
     return this.prismaService.submission.create({ data: submission });
   }
 
-  public getSubmissionByQuestionIds(ids: number[], userId?: string): Promise<Submission[]> {
+  public getSubmissionWithQuestionById(id: number): Promise<SubmissionWithQuestion | null> {
+    return this.prismaService.submission.findUnique({
+      where: { id },
+      include: { question: true },
+    });
+  }
+
+  public getSubmissionWithRessultsById(id: number): Promise<SubmissionWithResults | null> {
+    return this.prismaService.submission.findUnique({
+      where: { id },
+      include: { results: true },
+    });
+  }
+
+  public getSubmissionWithResultsByQuestionIds(
+    ids: number[],
+    userId?: string,
+  ): Promise<SubmissionWithResults[]> {
     return this.prismaService.submission.findMany({
       where: {
         userId,
         questionId: { in: ids },
       },
+      include: { results: true },
     });
   }
 
-  public getSubmissionsByQuestionId(questionId: number, userId?: string): Promise<Submission[]> {
+  public getSubmissionsWithResultsByQuestionId(
+    questionId: number,
+    userId?: string,
+  ): Promise<SubmissionWithResults[]> {
     return this.prismaService.submission.findMany({
       where: { questionId, userId },
+      include: { results: true },
       orderBy: { uploadedAt: 'desc' },
     });
   }

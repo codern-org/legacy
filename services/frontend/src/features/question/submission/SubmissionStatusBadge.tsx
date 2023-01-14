@@ -1,41 +1,28 @@
 import { Text } from '@/features/common/Text';
 import { classNames } from '@/utils/Classes';
-import { PublicSubmissionStatus } from '@codern/external';
-
-const COLOR_AND_TEXT_MAP = {
-  [PublicSubmissionStatus.UPLOADING]: { color: 'bg-yellow-500', text: 'Uploading' },
-  [PublicSubmissionStatus.GRADING]: { color: 'bg-yellow-500', text: 'Grading' },
-  [PublicSubmissionStatus.COMPLETED]: { color: 'bg-green-500', text: 'Pass' },
-  [PublicSubmissionStatus.FAILED_COMPILATION]: { color: 'bg-red-500', text: 'Error' },
-  [PublicSubmissionStatus.FAILED_MISSING_RESULT]: { color: 'bg-red-500', text: 'Error' },
-  [PublicSubmissionStatus.TIMEOUT_EXECUTION]: { color: 'bg-red-500', text: 'Error' },
-  [PublicSubmissionStatus.TIMEOUT_CONTAINER]: { color: 'bg-red-500', text: 'Error' },
-  [PublicSubmissionStatus.REQUEUE_LIMIT_EXCEEDED]: { color: 'bg-red-500', text: 'Error' },
-};
+import { PublicResult, PublicResultStatus } from '@codern/external';
 
 type SubmissionStatusBadgeProps = {
-  status: PublicSubmissionStatus,
-  result?: string,
+  results: PublicResult[],
 };
 
 export const SubmissionStatusBadge = ({
-  status,
-  result,
+  results,
 }: SubmissionStatusBadgeProps) => {
-  const isCompleteWithError = (
-    (status === PublicSubmissionStatus.COMPLETED) && (Number.parseInt(result || '1') !== 0)
-  );
+  const isGrading = results.some((result) => result.status === PublicResultStatus.GRADING);
+  const isError = results.some((result) => result.status !== PublicResultStatus.PASS);
+  const isCompleteWithoutError = (!isGrading && !isError);
 
   return (
     <div className="w-fit flex flex-row items-center space-x-2 px-2 border border-primary rounded-lg">
       <span className={classNames(
-        'w-2 h-2 rounded-full capitalize',
-        isCompleteWithError
-          ? 'bg-red-500'
-          : COLOR_AND_TEXT_MAP[status].color,
+        'w-2 h-2 rounded-full',
+        isGrading && 'bg-yellow-500',
+        isError && 'bg-red-500',
+        isCompleteWithoutError && 'bg-green-500',
       )} />
       <Text color="secondary" className="text-sm md:text-base capitalize">
-        {isCompleteWithError ? 'Error' : COLOR_AND_TEXT_MAP[status].text}
+        {isCompleteWithoutError ? 'Done' : (isGrading ? 'Grading' : 'Error')}
       </Text>
     </div>
   );

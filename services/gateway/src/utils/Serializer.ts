@@ -1,10 +1,9 @@
-import { PublicQuestion, PublicWorkspaceWithParticipants } from '@codern/external';
+import { PublicQuestion, PublicSubmission, PublicWorkspaceWithParticipants } from '@codern/external';
 import {
-  GetSubmissionsByQuestionIdResponse, Owner, Question,
-  QuestionStatus, QuestionSummary, User,
+  Owner, Question, QuestionStatus,
+  QuestionSummary, SubmissionWithResults, User,
   WorkspaceWithParticipants,
 } from '@codern/internal';
-import { map } from 'rxjs';
 
 export const getParticipantsFromWorkspaces = (
   workspaces: WorkspaceWithParticipants[],
@@ -50,12 +49,16 @@ export const publicQuestions = (
   };
 });
 
-export const publishSubmissions = map(
-  (response: GetSubmissionsByQuestionIdResponse) => response
-    .submissions.map((submission) => ({
-      ...submission,
-      result: submission.result || undefined,
-      questionId: undefined,
-      userId: undefined,
+export const publishSubmissions = (
+  submissions: SubmissionWithResults[],
+): PublicSubmission[] => submissions
+  .map((submission) => ({
+    ...submission,
+    results: submission.results.map((result) => ({
+      ...result,
+      submissionId: undefined,
+      testcaseId: undefined,
     })),
-);
+    questionId: undefined,
+    userId: undefined,
+  }));

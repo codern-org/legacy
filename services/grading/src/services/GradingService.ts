@@ -1,20 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import {
-  ExpectedNotFoundError, GradeResponse, SubmitResponse,
-  Language, QuestionSummary, QuestionStatus,
-  TestcaseStatus, SubmissionStatus,
+  ExpectedNotFoundError, SubmitResponse, Language,
+  QuestionSummary, QuestionStatus, ExpectedInvalidError,
+  ResultStatus, SubmissionWithResults, Result,
 } from '@codern/internal';
 import { Timestamp } from '@codern/shared';
 import { Submission } from '@prisma/client';
 import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import { SubmissionRepository } from '@/repositories/SubmissionRepository';
-import { FileSource, QueueSerivce } from '@/services/QueueService';
+import { GradingFile, QueueSerivce } from '@/services/QueueService';
 import { TestcaseRepository } from '@/repositories/TestcaseRepository';
 import { GradingError } from '@/utils/errors/GradingError';
-import { QuestionRepository } from '@/repositories/QuestionRepository';
+import { ResultRepository } from '@/repositories/ResultRepository';
 
-type QuestionIdWithStatus = Pick<Submission, 'questionId'> & { status: QuestionStatus };
+type SubmissionWithQuestionStatus = Submission & { questionStatus: QuestionStatus };
+type QuestionStatusWeightMap = { [status in QuestionStatus]: number };
 
 @Injectable()
 export class GradingService {
@@ -24,7 +25,7 @@ export class GradingService {
   private readonly queueService: QueueSerivce;
   private readonly submissionRepository: SubmissionRepository;
   private readonly testcaseRepository: TestcaseRepository;
-  private readonly questionRepository: QuestionRepository;
+  private readonly resultRepository: ResultRepository;
 
   public constructor(
     configService: ConfigService,
@@ -32,14 +33,14 @@ export class GradingService {
     queueService: QueueSerivce,
     submissionRepository: SubmissionRepository,
     testcaseRepository: TestcaseRepository,
-    questionRepository: QuestionRepository,
+    resultRepository: ResultRepository,
   ) {
     this.configService = configService;
     this.httpService = httpService;
     this.queueService = queueService;
     this.submissionRepository = submissionRepository;
     this.testcaseRepository = testcaseRepository;
-    this.questionRepository = questionRepository;
+    this.resultRepository = resultRepository;
   }
 
   public async submit(
@@ -47,78 +48,93 @@ export class GradingService {
     questionId: number,
     language: Language,
   ): Promise<SubmitResponse> {
-    const testcase = await this.testcaseRepository.getTestcaseByQuestionId(questionId);
-    if (!testcase) throw new ExpectedNotFoundError(GradingError.TestcaseNotFound);
+    const testcases = await this.testcaseRepository.getTestcasesByQuestionId(questionId);
+    if (testcases.length === 0) throw new ExpectedNotFoundError(GradingError.TestcaseNotFound);
 
     const uploadedAt = Timestamp.now();
     const filePath = `/${userId}/${questionId}/${language}/${uploadedAt}`;
 
-    const submission = await this.submissionRepository.createSubmission({
+    const { id: submissionId } = await this.submissionRepository.createSubmission({
       userId,
-      questionId,
+      question: { connect: { id: questionId } },
       language,
-      status: SubmissionStatus.UPLOADING,
       filePath,
       uploadedAt,
     });
 
-    return {
-      submissionId: submission.id,
-      filePath,
-    };
+    return { submissionId, filePath };
   }
 
-  public async grade(submissionId: number): Promise<GradeResponse> {
-    const submission = await this.submissionRepository.updateSubmission(submissionId, {
-      status: SubmissionStatus.GRADING,
-    });
+  public async grade(submissionId: number): Promise<SubmissionWithResults> {
+    const submission = await this.submissionRepository.getSubmissionWithQuestionById(submissionId);
+    if (!submission) throw new ExpectedInvalidError(GradingError.InvalidSubmission);
 
-    const testcase = await this.testcaseRepository.getTestcaseByQuestionId(submission.questionId);
-    if (!testcase) throw new ExpectedNotFoundError(GradingError.TestcaseNotFound);
-
-    const question = await this.questionRepository.getQuestionByQuestionId(submission.questionId);
-    if (!question) throw new ExpectedNotFoundError(GradingError.QuestionNotFound);
+    const testcases = await this.testcaseRepository.getTestcasesByQuestionId(submission.questionId);
+    if (testcases.length === 0) throw new ExpectedNotFoundError(GradingError.TestcaseNotFound);
 
     const filerUrl = this.configService.get('publicFilerUrl');
+    const { question } = submission;
+    const testcaseIds = testcases.map((testcase) => testcase.id);
 
-    const submissionFileSource: FileSource = {
-      name: 'source',
-      sourceType: 'URL',
-      source: `${filerUrl}${submission.filePath}`,
-    };
-    const testcaseFileSource: FileSource = {
-      name: 'testcase.zip',
-      sourceType: 'URL',
-      source: `${filerUrl}${testcase.filePath}`,
-    };
-    const filesSource: FileSource[] = [submissionFileSource, testcaseFileSource];
+    const resultsWithTestcase = await this.resultRepository
+      .createResultsAndReturnWithTestcase(submissionId, testcaseIds);
 
-    this.queueService.grade(
-      submission.id,
-      submission.language as Language,
-      question.memoryLimit,
-      question.timeLimit,
-      filesSource,
-    );
+    const results = resultsWithTestcase.map((result) => {
+      const submissionFile: GradingFile = {
+        name: 'source',
+        sourceType: 'URL',
+        source: `${filerUrl}${submission.filePath}`,
+      };
+      const testcaseFile: GradingFile = {
+        name: 'testcase.zip',
+        sourceType: 'URL',
+        source: `${filerUrl}${result.testcase.filePath}`,
+      };
+      const files: GradingFile[] = [submissionFile, testcaseFile];
+
+      this.queueService.grade(
+        result.id,
+        submission.language as Language,
+        question.memoryLimit,
+        question.timeLimit,
+        files,
+      );
+
+      return {
+        id: result.id,
+        submissionId: result.submissionId,
+        testcaseId: result.testcaseId,
+        status: result.status,
+      };
+    });
 
     return {
       id: submissionId,
+      userId: submission.userId,
       questionId: submission.questionId,
       language: submission.language as Language,
       filePath: submission.filePath,
+      results: results as Result[],
       uploadedAt: submission.uploadedAt,
     };
   }
 
   public async result(
-    submissionId: number,
-    status: SubmissionStatus,
-    result: string | null,
+    resultId: number,
+    status: ResultStatus,
   ): Promise<void> {
-    const submission = await this.submissionRepository.updateSubmission(submissionId, {
-      status,
-      result,
-    });
+    const targetResult = await this.resultRepository.getResultById(resultId);
+    if (!targetResult) throw new ExpectedInvalidError(GradingError.InvalidResult);
+    const { submissionId } = targetResult;
+
+    await this.resultRepository.updateResult(resultId, { status });
+
+    const submission = await this.submissionRepository.getSubmissionWithRessultsById(submissionId);
+    if (!submission) throw new ExpectedInvalidError(GradingError.InvalidSubmission);
+    const { results } = submission;
+
+    const isGrading = results.some((result) => result.status === ResultStatus.GRADING);
+    if (isGrading) return;
 
     // TODO: Investigate why localhost not working instead of 127.0.0.1
     // TODO: add type
@@ -128,33 +144,34 @@ export class GradingService {
       method: 'POST',
       data: {
         userId: submission.userId,
+        submissionId: submission.id,
         filePath: submission.filePath,
-        id: submission.id,
         language: submission.language,
-        status: submission.status,
-        result: submission.result,
+        results: submission.results,
         uploadedAt: submission.uploadedAt,
       },
     });
   }
 
   public async getQuestionSummaryByIds(ids: number[], userId?: string): Promise<QuestionSummary[]> {
-    const submissions = await this.submissionRepository.getSubmissionByQuestionIds(ids, userId);
-    const lastSubmissions = this.filterLastSubmission(submissions);
-    const questionsStatus = this.getQuestionStatus(submissions);
+    const submissions = await this.submissionRepository
+      .getSubmissionWithResultsByQuestionIds(ids, userId);
 
-    return lastSubmissions.map((submission) => {
-      const questionStatus = questionsStatus
-        .find((data) => data.questionId === submission.questionId);
+    const lastSubmissions = this.filterLastSubmissions(submissions);
+    const analyzedSubmissions = this.analyzeSubmissions(submissions as SubmissionWithResults[]);
+
+    return lastSubmissions.map((lastSubmission) => {
+      const submission = analyzedSubmissions
+        .find((data) => data.questionId === lastSubmission.questionId);
       return {
-        questionId: submission.questionId,
-        uploadedAt: submission.uploadedAt,
-        status: questionStatus ? questionStatus.status : QuestionStatus.TODO,
+        questionId: lastSubmission.questionId,
+        uploadedAt: lastSubmission.uploadedAt,
+        status: submission ? submission.questionStatus : QuestionStatus.TODO,
       };
     });
   }
 
-  public filterLastSubmission(submissions: Submission[]): Submission[] {
+  public filterLastSubmissions(submissions: Submission[]): Submission[] {
     return submissions
       .sort((x, y) => y.uploadedAt - x.uploadedAt)
       .reduce((selecteds, submission) => {
@@ -165,40 +182,60 @@ export class GradingService {
       }, [] as Submission[]);
   }
 
-  public getQuestionStatus(submissions: Submission[]): QuestionIdWithStatus[] {
-    const submissionsGroupByQuestionId = submissions.reduce((acc, value) => {
-      const { questionId, result } = value;
-      const group = acc.find((submission) => submission.questionId === value.questionId);
-      if (group && result) {
-        group.results.push(result);
-      } else if (!group) {
-        acc.push({ questionId, results: (result ? [result] : []) });
-      }
-      return acc;
-    }, [] as Pick<Submission & { results: string[] }, 'questionId' | 'results'>[]);
-
-    const submissionsStatus = submissionsGroupByQuestionId.map((submission) => {
-      const { results, questionId } = submission;
-      const isContainsPassResult = results.some((result) => (Number.parseInt(result, 10) === 0));
-      let status = QuestionStatus.ERROR;
-      if (results.length === 0) {
-        status = QuestionStatus.TODO;
-      } else if (isContainsPassResult) {
-        status = QuestionStatus.DONE;
-      }
-      return { questionId, status };
+  public analyzeSubmissions(submissions: SubmissionWithResults[]): SubmissionWithQuestionStatus[] {
+    // Summarize result statuses to question status
+    const submissionsWithQuestionStatus = submissions.map((submission) => {
+      let questionStatus = QuestionStatus.TODO;
+      const isPass = submission.results.every((result) => result.status === ResultStatus.PASS);
+      const isGrading = submission.results.some((result) => result.status === ResultStatus.GRADING);
+      if (!isGrading) questionStatus = (isPass ? QuestionStatus.DONE : QuestionStatus.ERROR);
+      return { ...submission, questionStatus };
     });
 
-    return submissionsStatus;
+    // Filter the best submission of question id, prioritize by `uploadedAt` and `status`
+
+    const groupedSubmissionByQuestionId = submissionsWithQuestionStatus
+      .reduce((acc, submission) => {
+        const { questionId } = submission;
+        acc[questionId] = acc[questionId] ?? [];
+        acc[questionId].push(submission);
+        return acc;
+      }, [] as SubmissionWithQuestionStatus[][]);
+
+    const statusToWeight: QuestionStatusWeightMap = {
+      [QuestionStatus.DONE]: 2,
+      [QuestionStatus.ERROR]: 1,
+      [QuestionStatus.TODO]: 0,
+    };
+    // Pre reverse weight map for O(n) -> O(1)
+    const weightToStatus: { [weight: number]: string } = {};
+    Object.keys(statusToWeight).forEach((key) => {
+      weightToStatus[statusToWeight[key as keyof QuestionStatusWeightMap]] = key;
+    });
+
+    const prioritizedSubmissions = groupedSubmissionByQuestionId
+      .map((groupedSubmission) => groupedSubmission.map((submission) => {
+        const questionStatus = statusToWeight[submission.questionStatus];
+        return { ...submission, questionStatus };
+      }))
+      .map((groupedSubmission) => groupedSubmission.sort((x, y) => {
+        const uploadedAtComparator = (x.uploadedAt - y.uploadedAt);
+        const statusComparator = (y.questionStatus - x.questionStatus);
+        return (statusComparator || uploadedAtComparator);
+      }))
+      .map((groupedSubmission) => groupedSubmission[0])
+      .map((submission) => ({
+        ...submission,
+        questionStatus: weightToStatus[submission.questionStatus] as QuestionStatus,
+      }))
+      .filter(Boolean); // Clear empty element from submission grouping by question id
+
+    return prioritizedSubmissions;
   }
 
-  public getTestcaseStatus(submissionResult: string): TestcaseStatus[] {
-    return [...submissionResult]
-      .map((result) => Object.values(TestcaseStatus)[Number.parseInt(result, 10)]);
-  }
-
-  public getSubmissionsByQuestionId(id: number, userId?: string): Promise<Submission[]> {
-    return this.submissionRepository.getSubmissionsByQuestionId(id, userId);
+  public getSubmissionsByQuestionId(id: number, userId?: string): Promise<SubmissionWithResults[]> {
+    return this.submissionRepository
+      .getSubmissionsWithResultsByQuestionId(id, userId) as Promise<SubmissionWithResults[]>;
   }
 
 }

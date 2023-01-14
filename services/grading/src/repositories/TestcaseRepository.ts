@@ -11,8 +11,8 @@ export class TestcaseRepository {
     this.prismaService = prismaService;
   }
 
-  public getTestcaseByQuestionId(questionId: number): Promise<Testcase | null> {
-    return this.prismaService.testcase.findUnique({ where: { questionId } });
+  public getTestcasesByQuestionId(questionId: number): Promise<Testcase[]> {
+    return this.prismaService.testcase.findMany({ where: { questionId } });
   }
 
 }

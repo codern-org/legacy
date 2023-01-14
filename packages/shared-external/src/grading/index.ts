@@ -1,21 +1,22 @@
 import {
-  GradeResponse, Language, QuestionLevel,
-  QuestionStatus, QuestionSummary, Submission,
-  SubmissionStatus,
+  Language, QuestionLevel,
+  QuestionStatus, QuestionSummary, SubmissionWithResults,
+  ResultStatus,
+  Result,
 } from '@codern/internal';
 
 export { Language as PublicLanguage };
 
-export type PublicSubmission = Omit<Submission, 'questionId' | 'userId' | 'result'> & {
-  result?: string,
+export type PublicSubmission = Omit<SubmissionWithResults, 'questionId' | 'userId' | 'results'> & {
+  results: PublicResult[]
 };
 
-export type PublicGradeResponse = GradeResponse;
+export type PublicResult = Omit<Result, 'submissionId' | 'testcaseId'>;
 
 export type PublicQuestionSummary = QuestionSummary;
-
-export { SubmissionStatus as PublicSubmissionStatus };
 
 export { QuestionStatus as PublicQuestionStatus };
 
 export { QuestionLevel as PublicQuestionLevel };
+
+export { ResultStatus as PublicResultStatus };

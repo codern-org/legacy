@@ -1,4 +1,4 @@
-import { PublicLanguage, PublicSubmission, PublicSubmissionStatus } from '@codern/external';
+import { PublicLanguage, PublicSubmission, PublicResultStatus } from '@codern/external';
 import { Timestamp } from '@codern/shared';
 
 export const mockSubmissions: PublicSubmission[] = [
@@ -6,23 +6,30 @@ export const mockSubmissions: PublicSubmission[] = [
     id: 1,
     language: PublicLanguage.C,
     filePath: '',
-    status: PublicSubmissionStatus.COMPLETED,
-    result: '000112',
+    results: [
+      { id: 1, status: PublicResultStatus.PASS },
+      { id: 2, status: PublicResultStatus.PASS },
+    ],
     uploadedAt: Timestamp.now(),
   },
   {
     id: 2,
     language: PublicLanguage.C,
     filePath: '',
-    status: PublicSubmissionStatus.TIMEOUT_EXECUTION,
+    results: [
+      { id: 1, status: PublicResultStatus.GRADING },
+      { id: 2, status: PublicResultStatus.PASS },
+    ],
     uploadedAt: Timestamp.now(),
   },
   {
     id: 2,
     language: PublicLanguage.C,
     filePath: '',
-    status: PublicSubmissionStatus.COMPLETED,
-    result: '000000',
+    results: [
+      { id: 1, status: PublicResultStatus.FAILED_COMPILATION },
+      { id: 2, status: PublicResultStatus.PASS },
+    ],
     uploadedAt: Timestamp.now(),
   },
 ]

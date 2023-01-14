@@ -9,19 +9,13 @@ datasource db {
 }
 
 model Testcase {
-  questionId Int    @id
+  id         Int      @id @default(autoincrement())
+  question   Question @relation(fields: [questionId], references: [id])
+  questionId Int
   filePath   String
-}
+  results    Result[]
 
-enum SubmissionStatus {
-  UPLOADING
-  GRADING
-  COMPLETED
-  FAILED_COMPILATION
-  FAILED_MISSING_RESULT
-  TIMEOUT_EXECUTION
-  TIMEOUT_CONTAINER
-  REQUEUE_LIMIT_EXCEEDED
+  @@index([questionId])
 }
 
 enum Language {
@@ -30,14 +24,33 @@ enum Language {
 }
 
 model Submission {
-  id         Int           @id @default(autoincrement())
+  id         Int      @id @default(autoincrement())
+  question   Question @relation(fields: [questionId], references: [id])
   questionId Int
   userId     String
   language   Language
-  status     SubmissionStatus
-  result     String?
   filePath   String
-  uploadedAt Int           @db.UnsignedInt
+  uploadedAt Int      @db.UnsignedInt
+  results    Result[]
+}
+
+enum ResultStatus {
+  GRADING
+  PASS
+  FAILED_COMPILATION
+  FAILED_MISSING_RESULT
+  TIMEOUT_EXECUTION
+  TIMEOUT_CONTAINER
+  REQUEUE_LIMIT_EXCEEDED
+}
+
+model Result {
+  id           Int          @id @default(autoincrement())
+  submission   Submission   @relation(fields: [submissionId], references: [id])
+  submissionId Int
+  testcase     Testcase     @relation(fields: [testcaseId], references: [id])
+  testcaseId   Int
+  status       ResultStatus
 }
 
 model Editor {
@@ -51,7 +64,13 @@ model Editor {
 }
 
 model Question {
-  questionId  Int @id
+  id          Int          @id
+  workspaceId Int
+  score       Int
   memoryLimit Int
   timeLimit   Int
+  testcase    Testcase[]
+  submission  Submission[]
+
+  @@index([workspaceId])
 }

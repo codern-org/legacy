@@ -8,7 +8,7 @@ import { SubmissionRepository } from '@/repositories/SubmissionRepository';
 import { GradingService } from '@/services/GradingService';
 import { QueueSerivce } from '@/services/QueueService';
 import { TestcaseRepository } from '@/repositories/TestcaseRepository';
-import { QuestionRepository } from '@/repositories/QuestionRepository';
+import { ResultRepository } from '@/repositories/ResultRepository';
 
 @Module({
   imports: [
@@ -41,7 +41,7 @@ import { QuestionRepository } from '@/repositories/QuestionRepository';
   ],
   controllers: [GradingController],
   providers: [
-    QuestionRepository,
+    ResultRepository,
     SubmissionRepository,
     TestcaseRepository,
 

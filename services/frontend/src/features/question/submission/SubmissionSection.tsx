@@ -31,8 +31,7 @@ export const SubmissionSection = ({
         // Update specific submission with mutation
         const updatedSubmission = submissions.find((submission) => submission.id === newSubmission.id);
         if (!updatedSubmission) return null;
-        updatedSubmission.status = newSubmission.status;
-        updatedSubmission.result = newSubmission.result;
+        updatedSubmission.results = newSubmission.results;
         return submissions.slice();
       });
     });
@@ -64,8 +63,7 @@ export const SubmissionSection = ({
             open={lastSubmissionId === submission.id}
             index={submissions.length - index}
             language={submission.language}
-            status={submission.status}
-            result={submission.result}
+            results={submission.results}
             uploadedAt={submission.uploadedAt}
           />
         )

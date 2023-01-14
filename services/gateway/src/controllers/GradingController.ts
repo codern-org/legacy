@@ -4,8 +4,8 @@ import {
 } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { MultipartFile } from '@fastify/multipart';
-import { firstValueFrom, Observable } from 'rxjs';
-import { PublicGradeResponse, PublicSubmission, PublicUser } from '@codern/external';
+import { firstValueFrom, map, Observable } from 'rxjs';
+import { PublicSubmission, PublicUser } from '@codern/external';
 import { FileService } from '@/services/FileService';
 import { GradingService } from '@/services/GradingService';
 import { AuthGuard } from '@/utils/guards/AuthGuard';
@@ -36,16 +36,18 @@ export class GradingController {
     @File() file: MultipartFile,
     @User() user: PublicUser,
     @Param() params: GradeParams,
-  ): Promise<PublicGradeResponse> {
+  ): Promise<PublicSubmission> {
     const { questionId, language } = params;
-
-    const { submissionId, filePath } = await firstValueFrom(this.gradingService.submit({
-      userId: user.id,
-      questionId,
-      language,
-    }));
+    const { submissionId, filePath } = await firstValueFrom(
+      this.gradingService.submit({
+        userId: user.id,
+        questionId,
+        language,
+      }),
+    );
     await this.fileService.upload(file, filePath);
-    return firstValueFrom(this.gradingService.grade({ submissionId }));
+    const submission = await firstValueFrom(this.gradingService.grade({ submissionId }));
+    return publishSubmissions([submission])[0];
   }
 
   @Get('/:workspaceId/questions/:questionId/submissions')
@@ -57,7 +59,7 @@ export class GradingController {
     const userId = user.id;
     return this.gradingService
       .getSubmissionsByQuestionId({ userId, questionId })
-      .pipe(publishSubmissions);
+      .pipe(map((response) => publishSubmissions(response.submissions)));
   }
 
 }

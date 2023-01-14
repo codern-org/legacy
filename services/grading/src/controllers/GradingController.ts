@@ -5,8 +5,8 @@ import {
   GetQuestionSummaryByIdsResponse,
   GetSubmissionsByQuestionIdRequest,
   GetSubmissionsByQuestionIdResponse,
-  GradeRequest, GradeResponse, ResultRequest, Submission, SubmitRequest,
-  SubmitResponse,
+  GradeRequest, GradeResponse, ResultRequest,
+  SubmitRequest, SubmitResponse,
 } from '@codern/internal';
 import { GradingService } from '@/services/GradingService';
 
@@ -32,7 +32,8 @@ export class GradingController {
 
   @EventPattern('result')
   public async result(data: ResultRequest): Promise<void> {
-    this.gradingService.result(data.submissionId, data.status, data.result);
+    const { id, status } = data;
+    await this.gradingService.result(id, status);
   }
 
   @GrpcMethod('GradingService')
@@ -51,7 +52,7 @@ export class GradingController {
   ): Promise<GetSubmissionsByQuestionIdResponse> {
     const { userId, questionId } = data;
     const submissions = await this.gradingService.getSubmissionsByQuestionId(questionId, userId);
-    return { submissions: submissions as Submission[] };
+    return { submissions };
   }
 
 }

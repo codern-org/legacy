@@ -5,7 +5,7 @@ import { useEditor } from '@/hooks/useEditor';
 import { isSupportedEditorLanguage } from '@/stores/EditorStore';
 import { lastSubmissionIdAtom, questionPaneAtom, submissionsAtom } from '@/stores/PaneStore';
 import { fetch } from '@/utils/Fetch';
-import { PublicGradeResponse, PublicSubmissionStatus } from '@codern/external';
+import { PublicSubmission } from '@codern/external';
 import { ArrowPathIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { useAtom } from 'jotai';
 import { useState } from 'preact/hooks';
@@ -24,7 +24,7 @@ const EditorPane = ({
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [currentSection, setCurrentSection] = useAtom(questionPaneAtom);
   const [submissions, setSubmissions] = useAtom(submissionsAtom);
-  const [lastSubmissionId, setLastSubmissionId] = useAtom(lastSubmissionIdAtom);
+  const [lastSubmissionId, setLastSubmissionId] = useAtom(lastSubmissionIdAtom); // TODO: create new feature for this
 
   const handleLanguageChange = (event: Event) => {
     if (!(event.target instanceof HTMLSelectElement)) return;
@@ -48,15 +48,16 @@ const EditorPane = ({
     formData.append('file', new Blob([code]), 'src');
   
     fetch
-      .post<PublicGradeResponse>(
+      .post<PublicSubmission>(
         `/workspaces/${workspaceId}/questions/${questionId}/grade/${language}`,
         formData
       )
       .then((response) => {
         const submission = response.data;
+        console.log(submission);
         if (currentSection === 'submission') {
           setSubmissions([
-            { ...submission, status: PublicSubmissionStatus.GRADING },
+            { ...submission },
             ...(submissions || [])
           ]);
         } else {

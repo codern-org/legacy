@@ -9,9 +9,15 @@ export type Submission = {
   userId: string,
   language: Language,
   filePath: string,
-  status: SubmissionStatus,
-  result: string | null,
   uploadedAt: number,
+};
+
+export type SubmissionWithResults = Submission & { results: Result[] };
+
+export type QuestionSummary = {
+  questionId: number,
+  uploadedAt: number,
+  status: QuestionStatus,
 };
 
 export enum QuestionStatus {
@@ -19,25 +25,20 @@ export enum QuestionStatus {
   DONE = 'DONE',
   ERROR = 'ERROR',
 }
-export enum TestcaseStatus {
-  PASS = '0',
-  ERROR_TIMEOUT = '1',
-  ERROR_OUR_OF_MEMORY = '2',
-}
 
-export enum SubmissionStatus {
-  UPLOADING = 'UPLOADING',
+export type Result = {
+  id: number,
+  submissionId: number,
+  testcaseId: number,
+  status: ResultStatus,
+};
+
+export enum ResultStatus {
   GRADING = 'GRADING',
-  COMPLETED = 'COMPLETED',
+  PASS = 'PASS',
   FAILED_COMPILATION = 'FAILED_COMPILATION',
   FAILED_MISSING_RESULT = 'FAILED_MISSING_RESULT',
   TIMEOUT_EXECUTION = 'TIMEOUT_EXECUTION',
   TIMEOUT_CONTAINER = 'TIMEOUT_CONTAINER',
   REQUEUE_LIMIT_EXCEEDED = 'REQUEUE_LIMIT_EXCEEDED',
 }
-
-export type QuestionSummary = {
-  questionId: number,
-  uploadedAt: number,
-  status: QuestionStatus,
-};
