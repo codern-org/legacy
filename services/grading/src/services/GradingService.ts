@@ -52,7 +52,7 @@ export class GradingService {
     if (testcases.length === 0) throw new ExpectedNotFoundError(GradingError.TestcaseNotFound);
 
     const uploadedAt = Timestamp.now();
-    const filePath = `/${userId}/${questionId}/${language}/${uploadedAt}`;
+    const filePath = `/submissions/${userId}/${questionId}/${language}/${uploadedAt}`;
 
     const { id: submissionId } = await this.submissionRepository.createSubmission({
       userId,

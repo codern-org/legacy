@@ -1,7 +1,7 @@
 import {
-  Controller, Get, NotFoundException, Param, Request,
-  Response,
-  UseGuards,
+  Controller, ForbiddenException, Get,
+  NotFoundException, Param, Request,
+  Response, UseGuards,
 } from '@nestjs/common';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { Observable } from 'rxjs';
@@ -23,8 +23,10 @@ export class FileController {
   public getQuestionDetail(
     @Request() request: FastifyRequest,
     @Param('questionId') questionId: string,
+    @Param('file') file: string,
     @Response({ passthrough: true }) response: FastifyReply,
   ): Observable<void> {
+    if (file === 'testcases') throw new ForbiddenException();
     if (!questionId) throw new NotFoundException();
     return this.fileService.stream(request.url, response);
   }

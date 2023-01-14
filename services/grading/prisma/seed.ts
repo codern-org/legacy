@@ -23,7 +23,7 @@ const main = async (): Promise<void> => {
     create: {
       id: 1,
       questionId: 1,
-      filePath: '/testcase/1/1',
+      filePath: '/workspaces/1/questions/1/testcases/1',
     },
   });
 
@@ -35,7 +35,7 @@ const main = async (): Promise<void> => {
     create: {
       id: 2,
       questionId: 1,
-      filePath: '/testcase/1/2',
+      filePath: '/workspaces/1/questions/1/testcases/2',
     },
   });
 
