@@ -29,8 +29,10 @@ export class QueueSerivce {
       .emit('grade', {
         id,
         type,
-        softLimitMemory,
-        softLimitTime,
+        settings: {
+          softLimitMemory,
+          softLimitTime,
+        },
         files,
       })
       .pipe(catchError(throwError));
