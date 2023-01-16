@@ -42,8 +42,7 @@ export const SubmissionResult = ({
           <span className={classNames(
             (result.status === PublicResultStatus.PASSED) ? 'text-green-500' : 'text-red-500',
           )}>
-            {(result.status === PublicResultStatus.PASSED) ? 'Pass' : 'Error'}&nbsp;
-            {(result.status !== PublicResultStatus.PASSED) && <>({RESULT_TEXT_MAP[result.status]})</>}
+            {RESULT_TEXT_MAP[result.status]}
           </span>
         </span>
       ))}
