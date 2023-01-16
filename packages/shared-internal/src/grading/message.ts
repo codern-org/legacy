@@ -35,9 +35,16 @@ export type GradeRequest = {
 
 export type GradeResponse = SubmissionWithResults;
 
+export type ResultMetadata = {
+  memory: number,
+  containerTime: number,
+};
+
 export type ResultRequest = {
   id: number,
   status: ResultStatus,
+  compilationLog: string,
+  metadata: ResultMetadata,
 };
 
 export type GetQuestionSummaryByIdsRequest = {

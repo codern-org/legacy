@@ -10,13 +10,18 @@ const getColorByStatus = (status: PublicQuestion['status']) => ({
 
 type QuestionStatusBadgeProps = {
   status: PublicQuestion['status'],
+  className?: string,
 };
 
 export const QuestionStatusBadge = ({
   status,
+  className,
 }: QuestionStatusBadgeProps) => {
   return (
-    <div className="w-fit flex flex-row items-center space-x-2 px-2 border border-primary rounded-lg">
+    <div className={classNames(
+      'w-fit flex flex-row items-center space-x-2 px-2 border border-primary rounded-lg',
+      className,
+    )}>
       <span className={classNames(
         'w-2 h-2 rounded-full capitalize',
         getColorByStatus(status),

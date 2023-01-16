@@ -9,8 +9,9 @@ type SubmissionStatusBadgeProps = {
 export const SubmissionStatusBadge = ({
   results,
 }: SubmissionStatusBadgeProps) => {
+  const isMissingResult = (results.length === 0); // TODO: better ux
   const isGrading = results.some((result) => result.status === PublicResultStatus.GRADING);
-  const isError = results.some((result) => result.status !== PublicResultStatus.PASSED);
+  const isError = results.some((result) => result.status !== PublicResultStatus.PASSED) || isMissingResult;
   const isCompleteWithoutError = (!isGrading && !isError);
 
   return (

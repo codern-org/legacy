@@ -3,6 +3,7 @@ import {
   ExpectedNotFoundError, SubmitResponse, Language,
   QuestionSummary, QuestionStatus, ExpectedInvalidError,
   ResultStatus, SubmissionWithResults, Result,
+  ResultMetadata,
 } from '@codern/internal';
 import { Timestamp } from '@codern/shared';
 import { Submission } from '@prisma/client';
@@ -122,12 +123,19 @@ export class GradingService {
   public async result(
     resultId: number,
     status: ResultStatus,
+    compilationLog: string,
+    metadata: ResultMetadata,
   ): Promise<void> {
     const targetResult = await this.resultRepository.getResultById(resultId);
     if (!targetResult) throw new ExpectedInvalidError(GradingError.InvalidResult);
     const { submissionId } = targetResult;
 
-    await this.resultRepository.updateResult(resultId, { status });
+    await this.resultRepository.updateResult(resultId, {
+      status,
+      compilationLog,
+      memoryUsage: metadata.memory,
+      timeUsage: metadata.containerTime,
+    });
 
     const submission = await this.submissionRepository.getSubmissionWithRessultsById(submissionId);
     if (!submission) throw new ExpectedInvalidError(GradingError.InvalidSubmission);
@@ -185,10 +193,15 @@ export class GradingService {
   public analyzeSubmissions(submissions: SubmissionWithResults[]): SubmissionWithQuestionStatus[] {
     // Summarize result statuses to question status
     const submissionsWithQuestionStatus = submissions.map((submission) => {
+      const { results } = submission;
       let questionStatus = QuestionStatus.TODO;
-      const isPassed = submission.results.every((result) => result.status === ResultStatus.PASSED);
-      const isGrading = submission.results.some((result) => result.status === ResultStatus.GRADING);
-      if (!isGrading) questionStatus = (isPassed ? QuestionStatus.DONE : QuestionStatus.ERROR);
+      if (submission.results.length === 0) {
+        questionStatus = QuestionStatus.ERROR;
+      } else {
+        const isPassed = results.every((result) => result.status === ResultStatus.PASSED);
+        const isGrading = results.some((result) => result.status === ResultStatus.GRADING);
+        if (!isGrading) questionStatus = (isPassed ? QuestionStatus.DONE : QuestionStatus.ERROR);
+      }
       return { ...submission, questionStatus };
     });
 

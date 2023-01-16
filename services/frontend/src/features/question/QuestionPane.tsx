@@ -4,6 +4,7 @@ import { Text } from '@/features/common/Text';
 import { SubmissionSection } from '@/features/question/submission/SubmissionSection';
 import { QuestionStatusBadge } from '@/features/workspace/QuestionStatusBadge';
 import { questionPaneAtom } from '@/stores/PaneStore';
+import { numberWithCommas } from '@/utils/Classes';
 import { fetch } from '@/utils/Fetch';
 import { PublicQuestion } from '@codern/external';
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
@@ -40,20 +41,29 @@ export const QuestionPane = ({
 
   return (
     <div className="h-full flex flex-col p-6 border border-primary rounded-lg bg-white dark:bg-neutral-900">
-      <div className="flex flex-row justify-between items-center mb-4 pb-4 space-x-2 border-b border-primary">
+      <div className="flex flex-row justify-between items-center mb-3 pb-3 border-b border-primary">
         <div className="flex flex-row items-center">
           <ChevronLeftIcon
             className="w-7 h-7 mr-1 p-1 text-black dark:text-white hover:text-neutral-400 dark:hover:text-neutral-400 hover:cursor-pointer"
             onClick={() => route(`/workspace/${workspaceId}`)}
           />
-          <Text color="primary" className="mr-1">{question.name}</Text>
-          <Text color="secondary" className="text-sm capitalize">({question.level})</Text>
+
+          <div className="flex flex-col">
+            <div className="flex flex-row items-center">
+              <Text color="primary" className="mr-1">{question.name}</Text>
+              <Text color="secondary" className="text-sm capitalize">({question.level})</Text>
+            </div>
+            <div className="flex flex-row space-x-2">
+              <Text color="secondary" className="text-sm">Memory: {numberWithCommas(question.memoryLimit)} MB</Text>
+              <Text color="secondary" className="text-sm">Time: {numberWithCommas(question.timeLimit)} ms</Text>
+            </div>
+          </div>
         </div>
 
-        <QuestionStatusBadge status={question.status} />
+        <QuestionStatusBadge status={question.status} className="mb-2" />
       </div>
 
-      <div className="flex flex-row mb-4 space-x-2 pb-4 border-b border-primary">
+      <div className="flex flex-row mb-2 space-x-2 pb-3 border-b border-primary">
         {sections.map((section) => (
           <Button
             key={section}
@@ -67,6 +77,7 @@ export const QuestionPane = ({
           </Button>
         ))}
       </div>
+
       <div className="py-4 overflow-y-auto">
         {((currentSection === 'problem') && (questionMarkdown))
           && (<Markdown markdown={questionMarkdown} />)
