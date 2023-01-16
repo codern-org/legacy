@@ -5,12 +5,15 @@ import { PublicResult, PublicResultStatus } from '@codern/external';
 
 const RESULT_TEXT_MAP = {
   [PublicResultStatus.GRADING]: 'Grading',
-  [PublicResultStatus.PASSED]: 'PASSED',
+  [PublicResultStatus.PASSED]: 'Passed',
+  [PublicResultStatus.FAILED_RESULT]: 'Incorrect',
   [PublicResultStatus.FAILED_COMPILATION]: 'Compilation Error',
   [PublicResultStatus.FAILED_MISSING_RESULT]: 'Missing Result',
+  [PublicResultStatus.FAILED_MISSING_TEST]: 'Missing Testcase',
+  [PublicResultStatus.FAILED_CONTAINER]: 'Internal Error',
   [PublicResultStatus.TIMEOUT_EXECUTION]: 'Execution Timeout',
-  [PublicResultStatus.TIMEOUT_CONTAINER]: 'Container Timeout',
-  [PublicResultStatus.REQUEUE_LIMIT_EXCEEDED]: 'Requeue Limit Exceed',
+  [PublicResultStatus.TIMEOUT_CONTAINER]: 'Internal Timeout',
+  [PublicResultStatus.REQUEUE_LIMIT_EXCEEDED]: 'Internal Error',
 };
 
 type SubmissionResultProps = {
