@@ -37,7 +37,7 @@ export type GradeResponse = SubmissionWithResults;
 
 export type ResultMetadata = {
   memory?: number,
-  containerTime: number,
+  time: number,
   compilationLog: string,
 };
 

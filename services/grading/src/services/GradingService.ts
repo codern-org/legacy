@@ -132,7 +132,7 @@ export class GradingService {
     await this.resultRepository.updateResult(resultId, {
       status,
       memoryUsage: metadata.memory,
-      timeUsage: metadata.containerTime,
+      timeUsage: metadata.time,
       compilationLog: metadata.compilationLog,
     });
 
