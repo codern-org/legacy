@@ -138,10 +138,6 @@ export class GradingService {
 
     const submission = await this.submissionRepository.getSubmissionWithRessultsById(submissionId);
     if (!submission) throw new ExpectedInvalidError(GradingError.InvalidSubmission);
-    const { results } = submission;
-
-    const isGrading = results.some((result) => result.status === ResultStatus.GRADING);
-    if (isGrading) return;
 
     // TODO: Investigate why localhost not working instead of 127.0.0.1
     // TODO: add type

@@ -1,8 +1,9 @@
 import {
   Body, Controller, Post,
 } from '@nestjs/common';
-import { Language, Result } from '@codern/internal';
+import { Language, Result, SubmissionWithResults } from '@codern/internal';
 import { SocketGateway } from '@/sockets/SocketGateway';
+import { publishSubmissions } from '@/utils/Serializer';
 
 @Controller('/socket')
 export class SocketController {
@@ -26,14 +27,17 @@ export class SocketController {
     const socket = this.socketGateway.getSocketByUserId(userId);
     if (!socket) return;
 
-    // Similar to `Submission` type
-    socket.emit('submission', {
+    const submission: SubmissionWithResults = {
       id: submissionId,
+      questionId: 0, // TODO: remove mock
+      userId,
       language,
       filePath,
       results,
       uploadedAt,
-    });
+    };
+
+    socket.emit('submission', publishSubmissions([submission])[0]);
   }
 
 }

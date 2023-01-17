@@ -29,10 +29,11 @@ export const SubmissionResult = ({
   const hasErrorCompilationLog = results.some((result) => result.status === PublicResultStatus.FAILED_COMPILATION);
 
   if (isGrading) {
+    const completedCount = results.filter((result) => result.status !== PublicResultStatus.GRADING).length;
     return (
       <div className="flex flex-row justify-center items-center space-x-2 py-2">
         <Spinner className="animate-spin w-5 h-5 text-neutral-400" />
-        <Text color="secondary" className="animate-pulse">Grading...</Text>
+        <Text color="secondary" className="animate-pulse">Grading... {completedCount}/{results.length}</Text>
       </div>
     );
   }

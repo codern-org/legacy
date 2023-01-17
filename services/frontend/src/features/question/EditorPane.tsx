@@ -54,7 +54,6 @@ const EditorPane = ({
       )
       .then((response) => {
         const submission = response.data;
-        console.log(submission);
         if (currentSection === 'submission') {
           setSubmissions([
             { ...submission },
