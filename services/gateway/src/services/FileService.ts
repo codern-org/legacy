@@ -1,18 +1,28 @@
 import { MultipartFile } from '@fastify/multipart';
 import { HttpService } from '@nestjs/axios';
-import { HttpException, Injectable } from '@nestjs/common';
+import {
+  HttpException, Inject, Injectable,
+  Logger,
+} from '@nestjs/common';
 import FormData from 'form-data';
 import { catchError, map, Observable } from 'rxjs';
 import { ConfigService } from '@nestjs/config';
 import { FastifyReply } from 'fastify';
+import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 
 @Injectable()
 export class FileService {
 
+  private readonly logger: Logger;
   private readonly configService: ConfigService;
   private readonly httpService: HttpService;
 
-  public constructor(configService: ConfigService, httpService: HttpService) {
+  public constructor(
+    configService: ConfigService,
+    httpService: HttpService,
+    @Inject(WINSTON_MODULE_PROVIDER) logger: Logger,
+  ) {
+    this.logger = logger;
     this.configService = configService;
     this.httpService = httpService;
   }
@@ -32,6 +42,7 @@ export class FileService {
         if (error.response) {
           throw new HttpException(error.response.statusText, error.response.status);
         } else {
+          this.logger.error(error, error, 'FileStreamingError');
           throw new HttpException('Something went wrong on streaming from file system', 500);
         }
       }));
