@@ -36,14 +36,14 @@ export type GradeRequest = {
 export type GradeResponse = SubmissionWithResults;
 
 export type ResultMetadata = {
-  memory: number,
+  memory?: number,
   containerTime: number,
+  compilationLog: string,
 };
 
 export type ResultRequest = {
   id: number,
   status: ResultStatus,
-  compilationLog: string,
   metadata: ResultMetadata,
 };
 

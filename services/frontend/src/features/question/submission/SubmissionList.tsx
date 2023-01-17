@@ -62,7 +62,7 @@ export const SubmissionList = ({
             >
               <Disclosure.Panel className="px-4 py-2 rounded-lg">
                 <SubmissionResult results={results} />
-                <span className="text-neutral-300 dark:text-neutral-500 text-xs mt-2">Submission id: {id}</span>
+                <span className="text-neutral-300 dark:text-neutral-600 text-xs mt-2">Submission id: {id}</span>
               </Disclosure.Panel>
             </Transition>
           </>

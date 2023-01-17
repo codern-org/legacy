@@ -32,10 +32,8 @@ export class GradingController {
 
   @EventPattern('result')
   public async result(data: ResultRequest): Promise<void> {
-    const {
-      id, status, compilationLog, metadata,
-    } = data;
-    await this.gradingService.result(id, status, compilationLog, metadata);
+    const { id, status, metadata } = data;
+    await this.gradingService.result(id, status, metadata);
   }
 
   @GrpcMethod('GradingService')

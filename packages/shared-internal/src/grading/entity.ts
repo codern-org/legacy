@@ -31,6 +31,9 @@ export type Result = {
   submissionId: number,
   testcaseId: number,
   status: ResultStatus,
+  memoryUsage?: number,
+  timeUsage?: number,
+  compilationLog?: string,
 };
 
 export enum ResultStatus {

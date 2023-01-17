@@ -123,7 +123,6 @@ export class GradingService {
   public async result(
     resultId: number,
     status: ResultStatus,
-    compilationLog: string,
     metadata: ResultMetadata,
   ): Promise<void> {
     const targetResult = await this.resultRepository.getResultById(resultId);
@@ -132,9 +131,9 @@ export class GradingService {
 
     await this.resultRepository.updateResult(resultId, {
       status,
-      compilationLog,
       memoryUsage: metadata.memory,
       timeUsage: metadata.containerTime,
+      compilationLog: metadata.compilationLog,
     });
 
     const submission = await this.submissionRepository.getSubmissionWithRessultsById(submissionId);
