@@ -55,8 +55,8 @@ model Result {
   testcase       Testcase     @relation(fields: [testcaseId], references: [id])
   testcaseId     Int
   status         ResultStatus
-  memoryUsage    Int?
-  timeUsage      Int?
+  memoryUsage    Float?       @db.Double
+  timeUsage      Float?       @db.Double
   compilationLog String?
 }
 
@@ -74,8 +74,8 @@ model Question {
   id          Int          @id
   workspaceId Int
   score       Int
-  memoryLimit Int
-  timeLimit   Int
+  memoryLimit Float        @db.Double
+  timeLimit   Float        @db.Double
   testcase    Testcase[]
   submission  Submission[]
 

@@ -39,8 +39,8 @@ model Question {
   name        String
   description String
   detailPath  String
-  memoryLimit Int
-  timeLimit   Int
+  memoryLimit Float         @db.Double
+  timeLimit   Float         @db.Double
   level       QuestionLevel
   workspace   Workspace     @relation(fields: [workspaceId], references: [id])
   workspaceId Int

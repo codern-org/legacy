@@ -16,8 +16,8 @@ message Result {
   int32 submissionId = 2;
   int32 testcaseId = 3;
   string status = 4;
-  optional int32 memoryUsage = 5;
-  optional int32 timeUsage = 6;
+  optional double memoryUsage = 5;
+  optional double timeUsage = 6;
   optional string compilationLog = 7;
 }
 
