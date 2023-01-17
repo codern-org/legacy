@@ -44,7 +44,7 @@ export const QuestionPage = ({
               workspaceId={workspaceId}
               question={question}
             />)
-            : (<QuestionPaneSkeleton />)
+            : (<QuestionPaneSkeleton workspaceId={workspaceId} />)
           }
         </section>
         <section className="w-full lg:w-6/12 h-[75vh] lg:h-full">
