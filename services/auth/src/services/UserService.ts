@@ -43,20 +43,34 @@ export class UserService {
       .digest('hex');
   }
 
+  public toPublicUserProfileUrl<T extends User>(user: T): T {
+    const convertedUser = user;
+    const publicFileUrl = this.configService.get<string>('publicFileUrl');
+    convertedUser.profileUrl = publicFileUrl + user.profileUrl;
+    return convertedUser;
+  }
+
+  public async getUserOrThrow(id: string): Promise<User> {
+    const user = await this.userRepository.getUserById(id);
+    if (!user) throw new ExpectedNotFoundError(UserError.NotFoundById);
+    return this.toPublicUserProfileUrl(user);
+  }
+
   public async getUserFromSessionIdOrThrow(id: string): Promise<User> {
     const user = await this.userRepository.getUserBySessionId(id);
     if (!user) throw new ExpectedNotFoundError(AuthError.NotFoundFromSession);
-    return user;
+    return this.toPublicUserProfileUrl(user);
   }
 
   public async getUserWithSelfProvider(email: string): Promise<SelfProviderUser | null> {
     const user = await this.userRepository
-      .getFirstUserWhere({ email, provider: AuthProvider.SELF }) as SelfProviderUser;
-    return user;
+      .getFirstUserWhere({ email, provider: AuthProvider.SELF }) as SelfProviderUser | null;
+    return user ? this.toPublicUserProfileUrl(user) : null;
   }
 
   public async getUserByIds(ids: string[]): Promise<User[]> {
-    return this.userRepository.getUsersWhere({ id: { in: ids } });
+    const users = await this.userRepository.getUsersWhere({ id: { in: ids } });
+    return users.map((user) => this.toPublicUserProfileUrl(user));
   }
 
   public async registerUserOrThrow(email: string, password: string): Promise<void> {
@@ -82,12 +96,6 @@ export class UserService {
     });
   }
 
-  public async getUserOrThrow(id: string): Promise<User> {
-    const user = await this.userRepository.getUserById(id);
-    if (!user) throw new ExpectedNotFoundError(UserError.NotFoundById);
-    return user;
-  }
-
   public createUser(user: User): Promise<User> {
     return this.userRepository.createUser(user);
   }
@@ -109,12 +117,12 @@ export class UserService {
     formData.append('file', svgBuffer, { filename: 'avatar.svg' });
 
     try {
-      const filerUrl = this.configService.get('filerUrl');
-      const gatewayUrl = this.configService.get('gatewayUrl');
+      const filerUrl = this.configService.get<string>('filerUrl');
       const filePath = `profile/${id}`;
-      const publicFileUrl = `${gatewayUrl}/file/${filePath}`;
       await firstValueFrom(this.httpService.post(`${filerUrl}/${filePath}`, formData));
-      return publicFileUrl;
+
+      const publicFilePath = `/file/${filePath}`;
+      return publicFilePath;
     } catch (error) {
       throw new Error('Cannot connect to file service');
     }

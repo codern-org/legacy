@@ -31,6 +31,14 @@ export class FileController {
     return this.fileService.stream(request.url, response);
   }
 
+  @Get('/workspaces/:workspaceId/profile')
+  public getWorkspaceProfileImage(
+    @Request() request: FastifyRequest,
+    @Response({ passthrough: true }) response: FastifyReply,
+  ): Observable<void> {
+    return this.fileService.stream(request.url, response);
+  }
+
   @Get('/profile/:userId')
   public getUserProfileImage(
     @Request() request: FastifyRequest,
