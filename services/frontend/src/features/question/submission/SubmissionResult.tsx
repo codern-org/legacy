@@ -70,17 +70,9 @@ export const SubmissionResult = ({
             {RESULT_TEXT_MAP[result.status]}
           </span>
 
-          {result.status === PublicResultStatus.FAILED_MEMORY_LIMIT && (
-            <span className="text-neutral-500">
-              ({numberWithCommas(result.memoryUsage || 0)} MB)
-            </span>
-          )}
-
-          {result.status === PublicResultStatus.TIMEOUT_EXECUTION && (
-            <span className="text-neutral-500">
-              ({numberWithCommas(result.timeUsage || 0)} ms)
-            </span>
-          )}
+          <span className="text-neutral-500">
+            ({numberWithCommas(result.memoryUsage || 0)} MB, {numberWithCommas(result.timeUsage || 0)} ms)
+          </span>
         </span>
       ))}
     </>
