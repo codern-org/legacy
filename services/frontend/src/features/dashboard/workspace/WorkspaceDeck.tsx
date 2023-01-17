@@ -54,7 +54,7 @@ export const WorkspaceDeck = ({
               name={workspace.name}
               ownerName={workspace.ownerName}
               profilePath={workspace.profilePath}
-              participantsProfile={workspace.participants.map((participant) => participant.profileUrl)}
+              participantsProfile={workspace.participants.map((participant) => participant.profilePath)}
               // progress={10} // TODO: real progress
             />
           ))}

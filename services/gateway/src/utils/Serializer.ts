@@ -29,7 +29,7 @@ export const workspaceWithParticipants = async (
         const userData = users.find((user) => user.id === participant.userId);
         return {
           ...participant,
-          profileUrl: userData ? userData.profileUrl : '',
+          profilePath: userData ? userData.profilePath : '',
           workspaceId: undefined,
         };
       }),

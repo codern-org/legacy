@@ -67,13 +67,13 @@ export class AuthService {
       user = await this.userService.getUserOrThrow(userId);
     } catch (error) {
       if (!(error instanceof ExpectedNotFoundError)) throw error;
-      const profileUrl = await this.userService.generateAvatarOrThrow(userId);
+      const profilePath = await this.userService.generateAvatarOrThrow(userId);
       user = await this.userService.createUser({
         id: userId,
         email: googleUser.email,
         password: null,
         displayName: googleUser.name,
-        profileUrl,
+        profilePath,
         provider: AuthProvider.GOOGLE,
         createdAt: Timestamp.now(),
       });

@@ -13,7 +13,7 @@ export const ProfileDropdown = () => {
       {({ open }: { open: boolean }) => (
         <>
           <Popover.Button className="focus:outline-none">
-            <img src={user.profileUrl} alt="" className="w-8 h-8 rounded-md hover:border-2 border-black dark:border-neutral-300" />
+            <img src={user.profilePath} alt="" className="w-8 h-8 rounded-md hover:border-2 border-black dark:border-neutral-300" />
           </Popover.Button>
 
           <Transition

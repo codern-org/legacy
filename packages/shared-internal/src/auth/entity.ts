@@ -2,7 +2,7 @@ export type User = {
   id: string,
   email: string,
   displayName: string,
-  profileUrl: string,
+  profilePath: string,
 };
 
 export enum AuthProvider {

@@ -18,12 +18,12 @@ export const mockWorkspaces: PublicWorkspaceWithParticipants[] = [
     participants: [
       {
         userId: '1',
-        profileUrl: randomProfile(),
+        profilePath: randomProfile(),
         joinedAt: Timestamp.now(),
       },
       {
         userId: '2',
-        profileUrl: randomProfile(),
+        profilePath: randomProfile(),
         joinedAt: Timestamp.now(),
       }
     ],

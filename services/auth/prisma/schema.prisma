@@ -13,7 +13,7 @@ model User {
   email          String
   password       String?
   displayName    String
-  profileUrl     String
+  profilePath    String
   provider       AuthProvider
   createdAt      Int              @db.UnsignedInt
   session        Session[]

@@ -46,7 +46,7 @@ export class UserService {
   public toPublicUserProfileUrl<T extends User>(user: T): T {
     const convertedUser = user;
     const publicFileUrl = this.configService.get<string>('publicFileUrl');
-    convertedUser.profileUrl = publicFileUrl + user.profileUrl;
+    convertedUser.profilePath = publicFileUrl + user.profilePath;
     return convertedUser;
   }
 
@@ -83,14 +83,14 @@ export class UserService {
 
     const userId = this.hashUserId(email, AuthProvider.SELF);
     const hashedPassword = await bcrypt.hash(password, 10);
-    const avatarUrl = await this.generateAvatarOrThrow(userId);
+    const profilePath = await this.generateAvatarOrThrow(userId);
 
     await this.userRepository.createUser({
       id: userId,
       email,
       password: hashedPassword,
       displayName: '',
-      profileUrl: avatarUrl,
+      profilePath,
       provider: AuthProvider.SELF,
       createdAt: Timestamp.now(),
     });
@@ -118,11 +118,9 @@ export class UserService {
 
     try {
       const filerUrl = this.configService.get<string>('filerUrl');
-      const filePath = `profile/${id}`;
-      await firstValueFrom(this.httpService.post(`${filerUrl}/${filePath}`, formData));
-
-      const publicFilePath = `/file/${filePath}`;
-      return publicFilePath;
+      const filePath = `/profile/${id}`;
+      await firstValueFrom(this.httpService.post(`${filerUrl}${filePath}`, formData));
+      return filePath;
     } catch (error) {
       throw new Error('Cannot connect to file service');
     }
