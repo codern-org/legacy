@@ -57,7 +57,7 @@ model Result {
   status         ResultStatus
   memoryUsage    Float?       @db.Double
   timeUsage      Float?       @db.Double
-  compilationLog String?
+  compilationLog String?      @db.LongText
 }
 
 model Editor {
