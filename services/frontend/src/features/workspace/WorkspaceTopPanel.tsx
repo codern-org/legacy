@@ -31,13 +31,13 @@ export const WorkspaceTopPanel = ({
         </div>
       </div>
 
-      <Button
+      {/* <Button
         color="secondary"
         size="sm"
       >
         <ChartBarIcon className="w-4 h-4" />
         <span>Ranking</span>
-      </Button>
+      </Button> */}
     </div>
   );
 };
