@@ -49,3 +49,11 @@ export enum ResultStatus {
   TIMEOUT_CONTAINER = 'TIMEOUT_CONTAINER',
   REQUEUE_LIMIT_EXCEEDED = 'REQUEUE_LIMIT_EXCEEDED',
 }
+
+// TODO: hardcoded for BMH2023
+export type Rank = {
+  userId: string,
+  totalScore: number,
+  submissionCount: number,
+  lastUploadedAt: number,
+};

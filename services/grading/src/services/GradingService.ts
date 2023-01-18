@@ -3,7 +3,7 @@ import {
   ExpectedNotFoundError, SubmitResponse, Language,
   QuestionSummary, QuestionStatus, ExpectedInvalidError,
   ResultStatus, SubmissionWithResults, Result,
-  ResultMetadata,
+  ResultMetadata, Rank,
 } from '@codern/internal';
 import { Timestamp } from '@codern/shared';
 import { Submission } from '@prisma/client';
@@ -244,6 +244,11 @@ export class GradingService {
   public getSubmissionsByQuestionId(id: number, userId?: string): Promise<SubmissionWithResults[]> {
     return this.submissionRepository
       .getSubmissionsWithResultsByQuestionId(id, userId) as Promise<SubmissionWithResults[]>;
+  }
+
+  // TODO: hardcoded for BMH2023
+  public getRanking(): Promise<Rank[]> {
+    return this.submissionRepository.getRanking();
   }
 
 }

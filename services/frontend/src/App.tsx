@@ -11,6 +11,7 @@ import { AuthProvider } from '@/contexts/AuthContext';
 import { NotFoundPage } from '@/pages/error/NotFoundPage';
 import { Toast } from '@/features/common/Toast';
 import { SocketProvider } from '@/contexts/SocketContext';
+import { RankingPage } from '@/pages/RankingPage';
 
 export const App = () => {
   return (
@@ -22,6 +23,11 @@ export const App = () => {
           <Route
             path="/"
             component={IndexPage}
+          />
+
+          <Route
+            path="/ranking"
+            component={RankingPage}
           />
 
           <AuthenticatedRoute

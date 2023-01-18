@@ -26,3 +26,11 @@ message QuestionSummary {
   uint64 uploadedAt = 2;
   string status = 3;
 }
+
+// TODO: hardcoded for BMH2023
+message Rank {
+  string userId = 1;
+  double totalScore = 2;
+  int32 submissionCount = 3;
+  uint64 lastUploadedAt = 4;
+}

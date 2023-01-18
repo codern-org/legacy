@@ -10,4 +10,6 @@ service GradingService {
   rpc Submit(SubmitRequest) returns (SubmitResponse);
   rpc Grade(GradeRequest) returns (GradeResponse);
   rpc GetQuestionSummaryByIds(GetQuestionSummaryByIdsRequest) returns (GetQuestionSummaryByIdsResponse);
+  // TODO: hardcoded for BMH2023
+  rpc GetRanking(Empty) returns (GetRankingResponse);
 }

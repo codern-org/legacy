@@ -3,6 +3,7 @@ import { EventPattern, GrpcMethod } from '@nestjs/microservices';
 import {
   GetQuestionSummaryByIdsRequest,
   GetQuestionSummaryByIdsResponse,
+  GetRankingResponse,
   GetSubmissionsByQuestionIdRequest,
   GetSubmissionsByQuestionIdResponse,
   GradeRequest, GradeResponse, ResultRequest,
@@ -53,6 +54,13 @@ export class GradingController {
     const { userId, questionId } = data;
     const submissions = await this.gradingService.getSubmissionsByQuestionId(questionId, userId);
     return { submissions };
+  }
+
+  // TODO: hardcoded for BMH2023
+  @GrpcMethod('GradingService')
+  public async getRanking(): Promise<GetRankingResponse> {
+    const ranks = await this.gradingService.getRanking();
+    return { ranks };
   }
 
 }

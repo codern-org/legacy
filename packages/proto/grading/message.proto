@@ -48,3 +48,8 @@ message GetQuestionSummaryByIdsRequest {
 message GetQuestionSummaryByIdsResponse {
   repeated QuestionSummary questionSummaries = 1;
 }
+
+// TODO: hardcoded for BMH2023
+message GetRankingResponse {
+  repeated Rank ranks = 1;
+}

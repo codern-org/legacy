@@ -1,6 +1,6 @@
 import {
   QuestionSummary, Language, ResultStatus,
-  SubmissionWithResults,
+  SubmissionWithResults, Rank,
 } from './entity';
 
 export type GetSubmissionsByQuestionIdRequest = {
@@ -54,4 +54,9 @@ export type GetQuestionSummaryByIdsRequest = {
 
 export type GetQuestionSummaryByIdsResponse = {
   questionSummaries: QuestionSummary[],
+};
+
+// TODO: hardcoded for BMH2023
+export type GetRankingResponse = {
+  ranks: Rank[],
 };

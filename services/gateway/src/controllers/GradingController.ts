@@ -5,7 +5,7 @@ import {
 import { ClientGrpc } from '@nestjs/microservices';
 import { MultipartFile } from '@fastify/multipart';
 import { firstValueFrom, map, Observable } from 'rxjs';
-import { PublicSubmission, PublicUser } from '@codern/external';
+import { PublicSubmission, PublicUser, PublicRank } from '@codern/external';
 import { FileService } from '@/services/FileService';
 import { GradingService } from '@/services/GradingService';
 import { AuthGuard } from '@/utils/guards/AuthGuard';
@@ -60,6 +60,14 @@ export class GradingController {
     return this.gradingService
       .getSubmissionsByQuestionId({ userId, questionId })
       .pipe(map((response) => publishSubmissions(response.submissions)));
+  }
+
+  // TODO: hardcoded for BMH2023
+  @Get('/ranking')
+  public getRanking(): Observable<PublicRank[]> {
+    return this.gradingService
+      .getRanking({})
+      .pipe(map((response) => response.ranks));
   }
 
 }
