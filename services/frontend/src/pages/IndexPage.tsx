@@ -18,8 +18,8 @@ export const IndexPage = () => {
         <section className="hidden lg:block w-1/2 h-full bg-gradient-to-tl from-neutral-400 dark:from-neutral-800 to-neutral-100 dark:to-neutral-500">
           <div className="h-full flex justify-center items-center text-4xl font-bold text-white">
             {/* TODO: more dynamic */}
-            <div className="w-full max-w-lg">
-              <img src="https://codern.vectier.co/file/profile/bmh-ads.jpg" alt="" />
+            <div className="w-full max-w-lg flex justify-center items-center">
+              <img src="https://codern.vectier.co/file/profile/bmh-ads" alt="" />
             </div>
           </div>
         </section>
