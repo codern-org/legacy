@@ -1,5 +1,5 @@
 import {
-  Controller, Get, Inject, Param,
+  Controller, ForbiddenException, Get, Inject, Param,
   Post, UseGuards,
 } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
@@ -64,7 +64,12 @@ export class GradingController {
 
   // TODO: hardcoded for BMH2023
   @Get('/ranking')
-  public getRanking(): Observable<PublicRank[]> {
+  @UseGuards(AuthGuard)
+  public getRanking(
+    @User() user: PublicUser,
+  ): Observable<PublicRank[]> {
+    const userId = user.id;
+    if (userId !== '1') throw new ForbiddenException();
     return this.gradingService
       .getRanking({})
       .pipe(map((response) => response.ranks));
