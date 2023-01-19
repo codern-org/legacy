@@ -7,7 +7,7 @@ import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '
 import { useEffect, useState } from 'preact/hooks';
 import { toast } from 'react-toastify';
 
-const columnHelper = createColumnHelper<PublicRank>();
+const columnHelper = createColumnHelper<any>();
 
 const columns = [
   columnHelper.accessor((row, number) => number + 1, {
@@ -15,7 +15,7 @@ const columns = [
     header: 'Rank',
     cell: (info) => (<div className="text-neutral-200">{info.getValue()}</div>),
   }),
-  columnHelper.accessor('userId', {
+  columnHelper.accessor('displayName', {
     header: 'Name',
     cell: (info) => (<div className="text-neutral-200 font-semibold">{info.getValue()}</div>),
   }),
@@ -29,15 +29,64 @@ const columns = [
   }),
 ];
 
+const nameMap = [
+  { id: '24', name: 'The universe sings for me' },
+  { id: '47', name: 'สามบาทห้าสิบ' },
+  { id: '71', name: 'Enuma Elish' },
+  { id: '80', name: 'ครัวซองต์สลัด' },
+  { id: '85', name: 'หาตังกินหนม' },
+  { id: '94', name: 'นั่นสิ' },
+  { id: '102', name: 'ม่ายมีความรู้' },
+  { id: '104', name: 'เอ็มส่งมา' },
+  { id: '116', name: 'Alpha C' },
+  { id: '124', name: 'ชื่อทีมไรดี' },
+  { id: '132', name: 'ถล่มบางมด' },
+  { id: '135', name: 'okrubsarbruruang' },
+  { id: '154', name: 'Tri-no-Three (TnT)' },
+  { id: '158', name: 'NUD_วอมว่อ' },
+  { id: '166', name: 'sacsade' },
+  { id: '206', name: 'Roadto30k' },
+  { id: '220', name: 'ร้านโจ๊กเจ๊หมวย' },
+  { id: '245', name: 'ใจ' },
+  { id: '264', name: 'กราบครับบ' },
+  { id: '309', name: 'Galapagos' },
+  { id: '339', name: 'PWCC' },
+  { id: '345', name: 'Banthat All Star' },
+  { id: '384', name: 'ฺBruteforce' },
+  { id: '396', name: 'Om. G' },
+  { id: '410', name: 'ฟอร์ดเรนเจอร์แร็พเตอร์' },
+  { id: '413', name: 'Kimslick' },
+  { id: '423', name: 'Namprikplatwo' },
+  { id: '425', name: 'ioio' },
+  { id: '464', name: 'เขียนโค้ดแบบดุดัน ไม่เกรงใจใคร' },
+  { id: '466', name: 'อดนอนมาแข่งโค้ด' },
+  { id: '506', name: 'TKR' },
+  { id: '578', name: 'ยุทธศาสตร์ต้มยำกุ้ง' },
+  { id: '579', name: 'BCC_3trios' },
+  { id: '583', name: 'TripleP' },
+  { id: '602', name: 'งอน coding' },
+  { id: '553', name: 'เกมเม่อ ยูทูปเบ้อ สตรีมเม่อ อินฟูเลนเซ่อ อันดับหนึ่งของประเทศไทย' },
+];
+
 // TODO: hardcoded for BMH2023
 export const RankingPage = () => {
-  const [data, setData] = useState<PublicRank[]>([]);
+  const [data, setData] = useState<any[]>([]);
 
   useEffect(() => {
     let updater: number;
 
     const update = () => fetch('/workspaces/ranking')
-      .then((response) => setData(response.data))
+      .then((response) => {
+        console.log(response.data);
+
+        setData(response.data.map((entry: any) => {
+          const expectedName = nameMap.find((e) => e.id === entry.userId)?.name;
+          return {
+            ...entry,
+            displayName: expectedName || '-',
+          };
+        }));
+      })
       .catch(() => toast.error('Cannot retrieve score data'));
 
     update();
