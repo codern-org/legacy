@@ -22,6 +22,8 @@ Codern allows the lecturer to create their study workspace for their student wit
 
 > Never stop coding, coding can change the world 🌏
 
+*We have first announced Codern for **Bangmod Hackathon 2023** (Thailand programming competition under KMUTT)* to replace the legacy autograder.
+
 ## Contributing
 
 There are many ways in which you can participate in this project to continue evolving **Codern**, making it faster and easier to use, for example:
@@ -39,11 +41,15 @@ Refer to our [Contribution guildines](https://github.com/vectier/codern/blob/mai
         <img width="100" src="https://i.imgur.com/uPdYIW7.png" alt="Vectier" />
       </a>
     </th>
+    <th>
+      <a href="https://kmutt.ac.th">
+        <img width="100" src="https://i.imgur.com/kqJD7UN.jpg" alt="KMUTT" />
+      </a>
+    </th>
   </tr>
   <tr>
-    <td align="center">
-      Vectier
-    </td>
+    <td align="center">Vectier</td>
+    <td align="center">KMUTT</td>
   </tr>
 </table>
 
