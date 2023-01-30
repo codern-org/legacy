@@ -167,16 +167,19 @@ importers:
       '@codern/shared': workspace:*
       '@headlessui/react': ^1.7.3
       '@heroicons/react': ^2.0.12
+      '@iktakahiro/markdown-it-katex': ^4.0.1
       '@monaco-editor/react': ^4.4.6
       '@preact/preset-vite': ^2.4.0
       '@tanstack/match-sorter-utils': ^8.7.2
       '@tanstack/react-table': ^8.7.4
       '@types/dompurify': ^2.3.4
-      '@types/marked': ^4.0.7
+      '@types/katex': ^0.16.0
+      '@types/markdown-it': ^12.2.3
       axios: ^1.1.3
       dompurify: ^2.4.0
       jotai: ^1.9.0
-      marked: ^4.2.0
+      katex: ^0.16.4
+      markdown-it: ^13.0.1
       monaco-editor: ^0.34.1
       preact: ^10.11.2
       preact-router: ^4.1.0
@@ -193,13 +196,15 @@ importers:
       '@codern/shared': link:../../packages/shared-all
       '@headlessui/react': 1.7.3_ive3jjn476xyi3ikfsqwmh5x74
       '@heroicons/react': 2.0.12_@preact+compat@17.1.2
+      '@iktakahiro/markdown-it-katex': 4.0.1
       '@monaco-editor/react': 4.4.6_wraufuwhvcax7nr37vxnuxhpbm
       '@tanstack/match-sorter-utils': 8.7.2
       '@tanstack/react-table': 8.7.4_ive3jjn476xyi3ikfsqwmh5x74
       axios: 1.1.3
       dompurify: 2.4.0
       jotai: 1.9.0_z7hw6gxg26aog2oz4ajrhgrmhu
-      marked: 4.2.0
+      katex: 0.16.4
+      markdown-it: 13.0.1
       monaco-editor: 0.34.1
       preact: 10.11.2
       preact-router: 4.1.0_preact@10.11.2
@@ -212,7 +217,8 @@ importers:
       '@babel/core': 7.19.6
       '@preact/preset-vite': 2.4.0_mkngqnbm6b4trbinqxm2u2jidy
       '@types/dompurify': 2.3.4
-      '@types/marked': 4.0.7
+      '@types/katex': 0.16.0
+      '@types/markdown-it': 12.2.3
       tailwind: link:../../packages/tailwind
       typescript: 4.8.4
       vite: 3.2.1
@@ -828,6 +834,12 @@ packages:
   /@humanwhocodes/object-schema/1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
+
+  /@iktakahiro/markdown-it-katex/4.0.1:
+    resolution: {integrity: sha512-kGFooO7fIOgY34PSG8ZNVsUlKhhNoqhzW2kq94TNGa8COzh73PO4KsEoPOsQVG1mEAe8tg7GqG0FoVao0aMHaw==}
+    dependencies:
+      katex: 0.12.0
+    dev: false
 
   /@jridgewell/gen-mapping/0.1.1:
     resolution: {integrity: sha512-sQXCasFk+U8lWYEe66WxRDOE9PjVz4vSM51fTu3Hw+ClTpUSQb718772vH3pyS5pShp6lvQM7SxgIDXXXmOX7w==}
@@ -1516,12 +1528,27 @@ packages:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
     dev: true
 
+  /@types/katex/0.16.0:
+    resolution: {integrity: sha512-hz+S3nV6Mym5xPbT9fnO8dDhBFQguMYpY0Ipxv06JMi1ORgnEM4M1ymWDUhUNer3ElLmT583opRo4RzxKmh9jw==}
+    dev: true
+
+  /@types/linkify-it/3.0.2:
+    resolution: {integrity: sha512-HZQYqbiFVWufzCwexrvh694SOim8z2d+xJl5UNamcvQFejLY/2YUtzXHYi3cHdI7PMlS8ejH2slRAOJQ32aNbA==}
+    dev: true
+
   /@types/long/4.0.2:
     resolution: {integrity: sha512-MqTGEo5bj5t157U6fA/BiDynNkn0YknVdh48CMPkTSpFTVmvao5UQmm7uEF6xBEo7qIMAlY/JSleYaE6VOdpaA==}
     dev: false
 
-  /@types/marked/4.0.7:
-    resolution: {integrity: sha512-eEAhnz21CwvKVW+YvRvcTuFKNU9CV1qH+opcgVK3pIMI6YZzDm6gc8o2vHjldFk6MGKt5pueSB7IOpvpx5Qekw==}
+  /@types/markdown-it/12.2.3:
+    resolution: {integrity: sha512-GKMHFfv3458yYy+v/N8gjufHO6MSZKCOXpZc5GXIWWy8uldwfmPn98vp81gZ5f9SVw8YYBctgfJ22a2d7AOMeQ==}
+    dependencies:
+      '@types/linkify-it': 3.0.2
+      '@types/mdurl': 1.0.2
+    dev: true
+
+  /@types/mdurl/1.0.2:
+    resolution: {integrity: sha512-eC4U9MlIcu2q0KQmXszyn5Akca/0jrQmwDRgpAMJai7qBWq4amIQhZyNau4VYGtCeALvW1/NtjzJJ567aZxfKA==}
     dev: true
 
   /@types/node/18.11.4:
@@ -1840,7 +1867,6 @@ packages:
 
   /argparse/2.0.1:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
-    dev: true
 
   /array-includes/3.1.5:
     resolution: {integrity: sha512-iSDYZMMyTPkiFasVqfuAQnWAYcvO/SeBSCGKePoEthjp4LEMTe4uLc7b025o4jAZpHhihh8xPo99TNWUWWkGDQ==}
@@ -2121,6 +2147,15 @@ packages:
       delayed-stream: 1.0.0
     dev: false
 
+  /commander/2.20.3:
+    resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
+    dev: false
+
+  /commander/8.3.0:
+    resolution: {integrity: sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==}
+    engines: {node: '>= 12'}
+    dev: false
+
   /commander/9.4.1:
     resolution: {integrity: sha512-5EEkTNyHNGFPD2H+c/dXXfQZYa/scCKasxWcXJaWnNJ99pnQN9Vnmqow+p+PlFPE63Q6mThaZws1T+HxfpgtPw==}
     engines: {node: ^12.20.0 || >=14}
@@ -2374,6 +2409,11 @@ packages:
       - bufferutil
       - supports-color
       - utf-8-validate
+    dev: false
+
+  /entities/3.0.1:
+    resolution: {integrity: sha512-WiyBqoomrwMdFG1e0kqvASYfnlb0lp8M5o5Fw2OFq1hNZxxcNk8Ik0Xm7LxzBhuidnZB/UtBqVCgUz3kBOP51Q==}
+    engines: {node: '>=0.12'}
     dev: false
 
   /es-abstract/1.20.4:
@@ -3488,6 +3528,20 @@ packages:
     engines: {node: '>=6'}
     hasBin: true
 
+  /katex/0.12.0:
+    resolution: {integrity: sha512-y+8btoc/CK70XqcHqjxiGWBOeIL8upbS0peTPXTvgrh21n1RiWWcIpSWM+4uXq+IAgNh9YYQWdc7LVDPDAEEAg==}
+    hasBin: true
+    dependencies:
+      commander: 2.20.3
+    dev: false
+
+  /katex/0.16.4:
+    resolution: {integrity: sha512-WudRKUj8yyBeVDI4aYMNxhx5Vhh2PjpzQw1GRu/LVGqL4m1AxwD1GcUp0IMbdJaf5zsjtj8ghP0DOQRYhroNkw==}
+    hasBin: true
+    dependencies:
+      commander: 8.3.0
+    dev: false
+
   /kolorist/1.6.0:
     resolution: {integrity: sha512-dLkz37Ab97HWMx9KTes3Tbi3D1ln9fCAy2zr2YVExJasDRPGRaKcoE4fycWNtnCAJfjFqe0cnY+f8KT2JePEXQ==}
     dev: true
@@ -3520,6 +3574,12 @@ packages:
     resolution: {integrity: sha512-9JROoBW7pobfsx+Sq2JsASvCo6Pfo6WWoUW79HuB1BCoBXD4PLWJPqDF6fNj67pqBYTbAHkE57M1kS/+L1neOg==}
     engines: {node: '>=10'}
     dev: true
+
+  /linkify-it/4.0.1:
+    resolution: {integrity: sha512-C7bfi1UZmoj8+PQx22XyeXCuBlokoyWQL5pWSP+EI6nzRylyThouddufc2c1NDIcP9k5agmN9fLpA7VNJfIiqw==}
+    dependencies:
+      uc.micro: 1.0.6
+    dev: false
 
   /locate-path/6.0.0:
     resolution: {integrity: sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==}
@@ -3590,10 +3650,19 @@ packages:
     resolution: {integrity: sha512-s8UhlNe7vPKomQhC1qFelMokr/Sc3AgNbso3n74mVPA5LTZwkB9NlXf4XPamLxJE8h0gh73rM94xvwRT2CVInw==}
     dev: true
 
-  /marked/4.2.0:
-    resolution: {integrity: sha512-1qWHjHlBKwjnDfrkxd0L3Yx4LTad/WO7+d13YsXAC/ZfKj7p0xkLV3sDXJzfWgL7GfW4IBZwMAYWaz+ifyQouQ==}
-    engines: {node: '>= 12'}
+  /markdown-it/13.0.1:
+    resolution: {integrity: sha512-lTlxriVoy2criHP0JKRhO2VDG9c2ypWCsT237eDiLqi09rmbKoUetyGHq2uOIRoRS//kfoJckS0eUzzkDR+k2Q==}
     hasBin: true
+    dependencies:
+      argparse: 2.0.1
+      entities: 3.0.1
+      linkify-it: 4.0.1
+      mdurl: 1.0.1
+      uc.micro: 1.0.6
+    dev: false
+
+  /mdurl/1.0.1:
+    resolution: {integrity: sha512-/sKlQJCBYVY9Ers9hqzKou4H6V5UWc/M59TH2dvkt+84itfnq7uFOMLpOiOS4ujvHP4etln18fmIxA5R5fll0g==}
     dev: false
 
   /merge2/1.4.1:
@@ -4816,6 +4885,10 @@ packages:
     engines: {node: '>=4.2.0'}
     hasBin: true
     dev: true
+
+  /uc.micro/1.0.6:
+    resolution: {integrity: sha512-8Y75pvTYkLJW2hWQHXxoqRgV7qb9B+9vFEtidML+7koHUFapnVJAZ6cKs+Qjz5Aw3aZWHMC6u0wJE3At+nSGwA==}
+    dev: false
 
   /unbox-primitive/1.0.2:
     resolution: {integrity: sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==}

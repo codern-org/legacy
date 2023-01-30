@@ -78,9 +78,9 @@ export const QuestionPane = ({
         ))}
       </div>
 
-      <div className="py-4 overflow-y-auto">
+      <div className="relative py-4 overflow-y-auto">
         {((currentSection === 'problem') && (questionMarkdown))
-          && (<Markdown markdown={questionMarkdown} />)
+          && (<Markdown string={questionMarkdown} />)
         }
 
         {currentSection === 'submission' && (

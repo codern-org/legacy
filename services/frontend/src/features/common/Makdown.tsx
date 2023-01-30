@@ -1,19 +1,30 @@
 import { classNames } from '@/utils/Classes';
+import { useMemo } from 'preact/hooks';
 import DOMPurify from 'dompurify';
-import { marked } from 'marked';
+import MarkdownIt from 'markdown-it';
+import KatexPlugin from '@iktakahiro/markdown-it-katex';
+
+const markdownIt = new MarkdownIt({
+  html: true,
+  linkify: true,
+}).use(KatexPlugin);
 
 type MarkdownProps = {
-  markdown: string,
+  string: string,
 };
 
 export const Markdown = ({
-  markdown,
+  string,
 }: MarkdownProps) => {
+  const markdown = useMemo(() => {
+    const dirty = markdownIt.render(string);
+    const clean = DOMPurify.sanitize(dirty);
+    return clean;
+  }, [string]);
+
   return (
     <span
-      dangerouslySetInnerHTML={{
-        __html: DOMPurify.sanitize(marked.parse(markdown))
-      }}
+      dangerouslySetInnerHTML={{ __html: markdown }}
       className={classNames(
         'prose dark:prose-invert',
         'prose-blockquote:border-neutral-300 dark:prose-blockquote:border-neutral-700',

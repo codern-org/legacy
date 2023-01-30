@@ -9,6 +9,7 @@ import { Suspense, lazy } from 'preact/compat';
 import { useEffect, useState } from 'preact/hooks';
 import { toast } from 'react-toastify';
 
+import 'katex/dist/katex.min.css';
 const EditorPane = lazy(() => import('@/features/question/EditorPane'));
 
 type QuestionPageProps = {
