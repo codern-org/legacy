@@ -40,7 +40,8 @@ export class FileService {
       }))
       .pipe(catchError((error) => {
         if (error.response) {
-          throw new HttpException(error.response.statusText, error.response.status);
+          const message = `${error.response.statusText} /${filerPath}`;
+          throw new HttpException(message, error.response.status);
         } else {
           this.logger.error(error, error, 'FileStreamingError');
           throw new HttpException('Something went wrong on streaming from file system', 500);
