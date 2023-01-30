@@ -2,7 +2,7 @@ import { defaultLanguageData, editorCodeAtom, editorRefAtom, editorSettingsAtom 
 import { useAtom } from 'jotai';
 import { useEffect, useReducer } from 'preact/hooks';
 import { MojiBunMascot } from '@/features/common/MojiBunMascot';
-import { classNames } from '@/utils/Classes';
+import { classNames } from '@/utils/Common';
 import { useTheme } from '@/hooks/useTheme';
 import { MonacoEditorOptions, MonacoEditor, Monaco, MonacoEditorComponent } from '@/utils/Monaco';
 

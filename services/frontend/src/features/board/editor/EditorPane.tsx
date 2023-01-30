@@ -1,6 +1,6 @@
 import { Button } from '@/features/common/Button';
-import { Editor } from '@/features/question/Editor';
-import { EditorSettingsButton } from '@/features/question/EditorSettingsButton';
+import { Editor } from '@/features/board/editor/Editor';
+import { EditorSettingsButton } from '@/features/board/editor/EditorSettingsButton';
 import { useEditor } from '@/hooks/useEditor';
 import { isSupportedEditorLanguage } from '@/stores/EditorStore';
 import { lastSubmissionIdAtom, questionPaneAtom, submissionsAtom } from '@/stores/PaneStore';

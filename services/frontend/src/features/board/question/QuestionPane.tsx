@@ -1,10 +1,10 @@
 import { Button } from '@/features/common/Button';
 import { Markdown } from '@/features/common/Makdown';
 import { Text } from '@/features/common/Text';
-import { SubmissionSection } from '@/features/question/submission/SubmissionSection';
+import { SubmissionSection } from '@/features/board/submission/SubmissionSection';
 import { QuestionStatusBadge } from '@/features/workspace/QuestionStatusBadge';
 import { questionPaneAtom } from '@/stores/PaneStore';
-import { numberWithCommas } from '@/utils/Classes';
+import { numberWithCommas } from '@/utils/Common';
 import { fetch } from '@/utils/Fetch';
 import { PublicQuestion } from '@codern/external';
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';

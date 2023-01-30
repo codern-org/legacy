@@ -1,5 +1,5 @@
 import { Text } from '@/features/common/Text';
-import { classNames } from '@/utils/Classes';
+import { classNames } from '@/utils/Common';
 import { PublicResult, PublicResultStatus } from '@codern/external';
 
 type SubmissionStatusBadgeProps = {

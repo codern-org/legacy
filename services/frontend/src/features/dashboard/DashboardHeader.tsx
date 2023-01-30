@@ -1,7 +1,7 @@
 import { MojiBunMascot } from '@/features/common/MojiBunMascot';
 import { Text } from '@/features/common/Text';
 import { DashboardHeaderCard } from '@/features/dashboard/DashboardHeaderCard';
-import { classNames } from '@/utils/Classes';
+import { classNames } from '@/utils/Common';
 import { PublicWorkspace } from '@codern/external';
 
 type DashboardHeaderProps = {

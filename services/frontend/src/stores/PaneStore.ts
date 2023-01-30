@@ -1,4 +1,4 @@
-import { QuestionPaneSection } from '@/features/question/QuestionPane';
+import { QuestionPaneSection } from '@/features/board/question/QuestionPane';
 import { PublicSubmission } from '@codern/external';
 import { atom } from 'jotai';
 

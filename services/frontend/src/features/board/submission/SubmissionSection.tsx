@@ -1,7 +1,7 @@
 import { useSocket } from '@/contexts/SocketContext';
 import { Text } from '@/features/common/Text';
-import { SubmissionList } from '@/features/question/submission/SubmissionList';
-import { SubmissionListSkeleton } from '@/features/question/submission/SubmissionListSkeleton';
+import { SubmissionList } from '@/features/board/submission/SubmissionList';
+import { SubmissionListSkeleton } from '@/features/board/submission/skeleton/SubmissionListSkeleton';
 import { lastSubmissionIdAtom, submissionsAtom } from '@/stores/PaneStore';
 import { fetch } from '@/utils/Fetch';
 import { PublicSubmission } from '@codern/external';

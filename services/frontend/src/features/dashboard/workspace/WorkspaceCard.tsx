@@ -1,6 +1,6 @@
 import { ProgressBar } from '@/features/common/ProgressBar';
 import { Text } from '@/features/common/Text';
-import { classNames } from '@/utils/Classes';
+import { classNames } from '@/utils/Common';
 import { route } from 'preact-router';
 
 const MAX_PROFILE_DISPLAY = 5;

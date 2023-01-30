@@ -1,7 +1,7 @@
 import { Text } from '@/features/common/Text';
-import { SubmissionResult } from '@/features/question/submission/SubmissionResult';
-import { SubmissionStatusBadge } from '@/features/question/submission/SubmissionStatusBadge';
-import { classNames } from '@/utils/Classes';
+import { SubmissionResult } from '@/features/board/submission/SubmissionResult';
+import { SubmissionStatusBadge } from '@/features/board/submission/SubmissionStatusBadge';
+import { classNames } from '@/utils/Common';
 import { PublicLanguage, PublicResult } from '@codern/external';
 import { Timestamp } from '@codern/shared';
 import { Disclosure, Transition } from '@headlessui/react';

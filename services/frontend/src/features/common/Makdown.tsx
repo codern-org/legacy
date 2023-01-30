@@ -1,4 +1,4 @@
-import { classNames } from '@/utils/Classes';
+import { classNames } from '@/utils/Common';
 import { useMemo } from 'preact/hooks';
 import DOMPurify from 'dompurify';
 import MarkdownIt from 'markdown-it';

@@ -1,6 +1,6 @@
 import { Spinner } from '@/features/common/Spinner';
 import { Text } from '@/features/common/Text';
-import { classNames, numberWithCommas } from '@/utils/Classes';
+import { classNames, numberWithCommas } from '@/utils/Common';
 import { PublicResult, PublicResultStatus } from '@codern/external';
 import DOMPurify from 'dompurify';
 

@@ -1,4 +1,4 @@
-import { classNames } from '@/utils/Classes';
+import { classNames } from '@/utils/Common';
 import { ComponentChildren } from 'preact';
 
 type TextProps = {

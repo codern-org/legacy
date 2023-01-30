@@ -1,6 +1,6 @@
 import { Text } from '@/features/common/Text';
 import { useTheme } from '@/hooks/useTheme';
-import { classNames } from '@/utils/Classes';
+import { classNames } from '@/utils/Common';
 import { route } from 'preact-router';
 
 type CodernLogoProps = {

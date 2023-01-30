@@ -1,5 +1,5 @@
 import { Text } from '@/features/common/Text';
-import { classNames } from '@/utils/Classes';
+import { classNames } from '@/utils/Common';
 import { PublicQuestion } from '@codern/external';
 
 const getColorByStatus = (status: PublicQuestion['status']) => ({

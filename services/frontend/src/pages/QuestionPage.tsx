@@ -1,8 +1,8 @@
 import { Copyright } from '@/features/common/Copyright';
 import { Navbar } from '@/features/common/navbar/Navbar';
-import { EditorPaneSkeleton } from '@/features/question/EditorPaneSkeleton';
-import { QuestionPane } from '@/features/question/QuestionPane';
-import { QuestionPaneSkeleton } from '@/features/question/QuestionPaneSkeleton';
+import { EditorPaneSkeleton } from '@/features/board/editor/skeleton/EditorPaneSkeleton';
+import { QuestionPane } from '@/features/board/question/QuestionPane';
+import { QuestionPaneSkeleton } from '@/features/board/question/skeleton/QuestionPaneSkeleton';
 import { fetch } from '@/utils/Fetch';
 import { PublicQuestion } from '@codern/external';
 import { Suspense, lazy } from 'preact/compat';
@@ -10,7 +10,7 @@ import { useEffect, useState } from 'preact/hooks';
 import { toast } from 'react-toastify';
 
 import 'katex/dist/katex.min.css';
-const EditorPane = lazy(() => import('@/features/question/EditorPane'));
+const EditorPane = lazy(() => import('@/features/board/editor/EditorPane'));
 
 type QuestionPageProps = {
   workspaceId: string,

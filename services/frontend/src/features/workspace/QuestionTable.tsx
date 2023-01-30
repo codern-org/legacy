@@ -1,7 +1,7 @@
 import { DebouncedInput } from '@/features/common/DebouncedInput';
 import { Text } from '@/features/common/Text';
 import { QuestionStatusBadge } from '@/features/workspace/QuestionStatusBadge';
-import { classNames } from '@/utils/Classes';
+import { classNames } from '@/utils/Common';
 import { PublicQuestion } from '@codern/external';
 import { Timestamp } from '@codern/shared';
 import { MagnifyingGlassIcon, ArrowSmallDownIcon, ArrowSmallUpIcon } from '@heroicons/react/24/outline';
