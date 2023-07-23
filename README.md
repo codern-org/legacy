@@ -22,11 +22,23 @@ Codern allows the lecturer to create their study workspace for their student wit
 
 > Never stop coding, coding can change the world 🌏
 
-*We have first announced Codern for **Bangmod Hackathon 2023** (Thailand programming competition under KMUTT)* to replace the legacy autograder.
+## Frontend Preview
+
+Some user interfaces preview from **1.0.0-alpha.3**.  
+Special thanks to mockup questions and advertise from Bangmod Hackathon 2023.
+
+| Workspace List Page                                                                       | Question List Page                                                                        | Login Page                                                                            |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| <img width="500" src="https://i.imgur.com/P8UCQxE.png" alt="Workspaces page of Codern" /> | <img width="500"  src="https://i.imgur.com/GJACfeS.png" alt="Questions page of Codern" /> | <img width="500"  src="https://i.imgur.com/dfjUzQe.png" alt="Login page of Codern" /> |
+
+| Question & Editor Page                                                                 | Submissions & Editor Page                                                                 |
+| -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| <img src="https://i.imgur.com/Aui8GeY.png" alt="Question and editor page of Codern" /> | <img src="https://i.imgur.com/hehSbIb.png" alt="Submissions and editor page of Codern" /> |
 
 ## Contributing
 
 There are many ways in which you can participate in this project to continue evolving **Codern**, making it faster and easier to use, for example:
+
 - [Submit bugs and feature request](https://github.com/vectier/codern/issues)
 - Fixing issues and contributing directly to the code base by [submitting pull requests](https://github.com/vectier/codern/pulls)
 
