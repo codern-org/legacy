@@ -1,6 +1,6 @@
 import {
   Controller, Inject, Get,
-  UseGuards, Param,
+  UseGuards, Param, Headers, Post,
 } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { firstValueFrom, forkJoin, map } from 'rxjs';
@@ -8,6 +8,7 @@ import {
   PublicUser, PublicWorkspaceWithParticipants, PublicQuestion,
   PublicWorkspace,
 } from '@codern/external';
+import { QuestionLevel } from '@codern/internal';
 import { WorkspaceService } from '@/services/WorkspaceService';
 import { User } from '@/utils/decorators/AuthDecorator';
 import { AuthGuard } from '@/utils/guards/AuthGuard';
@@ -18,6 +19,8 @@ import {
   workspaceWithParticipants,
 } from '@/utils/Serializer';
 import { GradingService } from '@/services/GradingService';
+import { WorkspaceOwnerGuard } from '@/utils/guards/WorkspaceOwnerGuard';
+import { FileGuard } from '@/utils/guards/FileGuard';
 
 @Controller('/workspaces')
 export class WorkspaceController {
@@ -110,6 +113,47 @@ export class WorkspaceController {
       }),
     );
     return publicQuestions([question], questionSummaries)[0];
+  }
+
+  @Post('/:workspaceId/questions')
+  @UseGuards(AuthGuard, WorkspaceOwnerGuard)
+  @UseGuards(FileGuard)
+  public async createQuestion(
+    // TODO: headers validation
+    @Param('workspaceId') workspaceId: number,
+    @Headers('question-name') name: string,
+    @Headers('question-description') description: string,
+    @Headers('question-memory-limit') memoryLimit: number,
+    @Headers('question-time-limit') timeLimit: number,
+    @Headers('question-level') level: QuestionLevel,
+    @Headers('question-score') score: number,
+  ): Promise<unknown> {
+    const { question: createdWorkspaceQuestion } = await firstValueFrom(
+      this.workspaceService.createWorkspaceQuestion({
+        question: {
+          workspaceId,
+          name,
+          description,
+          timeLimit,
+          memoryLimit,
+          level,
+        },
+      }),
+    );
+
+    const { question: createdGradingQuestion } = await firstValueFrom(
+      this.gradingService.createGradingQuestion({
+        question: {
+          questionId: createdWorkspaceQuestion.id,
+          workspaceId,
+          timeLimit,
+          memoryLimit,
+          score,
+        },
+      }),
+    );
+
+    return { createdWorkspaceQuestion, createdGradingQuestion };
   }
 
 }
