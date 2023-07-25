@@ -1,7 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { ExpectedNotFoundError, ExpectedForbiddenError, WorkspaceWithParticipants } from '@codern/internal';
+import {
+  ExpectedNotFoundError,
+  ExpectedForbiddenError,
+  WorkspaceWithParticipants,
+  CreateWorkspaceQuestionRequest,
+} from '@codern/internal';
 import { Workspace, Question } from '@prisma/client';
 import { ConfigService } from '@nestjs/config';
+import { Timestamp } from '@codern/shared/src/time';
 import { QuestionRepository } from '@/repositories/QuestionRepository';
 import { WorkspaceRepository } from '@/repositories/WorkspaceRepository';
 import { WorkspaceError } from '@/utils/errors/WorkspaceError';
@@ -75,6 +81,30 @@ export class WorkspaceService {
     const question = await this.questionRepository.getQuestionById(id);
     if (!question) throw new ExpectedNotFoundError(QuestionError.NotFoundFromQuestionId);
     return this.toPublicQuestionDetailUrl(question);
+  }
+
+  public async createQuestion(question: CreateWorkspaceQuestionRequest['question']): Promise<Question> {
+    const createdQuestion = await this.questionRepository.createQuestion({
+      name: question.name,
+      description: question.description,
+      timeLimit: question.timeLimit,
+      memoryLimit: question.memoryLimit,
+      level: question.level,
+      detailPath: '',
+      createdAt: Timestamp.now(),
+      workspace: {
+        connect: {
+          id: question.workspaceId,
+        },
+      },
+    });
+
+    const updatedPathQuestion = await this.questionRepository.updateQuestionById(
+      createdQuestion.id,
+      { detailPath: `workspaces/${question.workspaceId}/questions/${createdQuestion.id}/question.md` },
+    );
+
+    return updatedPathQuestion;
   }
 
 }
