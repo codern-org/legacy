@@ -31,3 +31,13 @@ message Question {
   int32 workspaceId = 8;
   uint64 createdAt = 9;
 }
+
+// Omit<Question, 'id' | 'detailPath' | 'createdAt'>,
+message CreateWorkspaceQuestion {
+  string name = 1;
+  string description = 2;
+  double memoryLimit = 3;
+  double timeLimit  = 4;
+  string level = 5;
+  int32 workspaceId = 6;
+}

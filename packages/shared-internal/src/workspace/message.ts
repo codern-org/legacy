@@ -1,4 +1,6 @@
-import { WorkspaceWithParticipants, Workspace, Question } from './entity';
+import {
+  WorkspaceWithParticipants, Workspace, Question,
+} from './entity';
 
 export type ValidateUserInWorkspaceRequest = {
   userId: string,
@@ -39,5 +41,13 @@ export type GetQuestionByIdRequest = {
 };
 
 export type GetQuestionByIdResponse = {
+  question: Question,
+};
+
+export type CreateWorkspaceQuestionRequest = {
+  question: Omit<Question, 'id' | 'detailPath' | 'createdAt'>,
+};
+
+export type CreateWorkspaceQuestionResponse = {
   question: Question,
 };

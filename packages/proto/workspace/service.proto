@@ -11,4 +11,5 @@ service WorkspaceService {
   rpc GetWorkspaceById(GetWorkspaceByIdRequest) returns (GetWorkspaceByIdResponse);
   rpc GetQuestionsByWorkspaceId(GetQuestionsByWorkspaceIdRequest) returns (GetQuestionsByWorkspaceIdResponse);
   rpc GetQuestionById(GetQuestionByIdRequest) returns (GetQuestionByIdResponse);
+  rpc CreateWorkspaceQuestion(CreateWorkspaceQuestionRequest) returns (CreateWorkspaceQuestionResponse);
 }

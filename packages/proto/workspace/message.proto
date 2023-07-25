@@ -43,3 +43,11 @@ message GetQuestionByIdRequest {
 message GetQuestionByIdResponse {
   Question question = 1;
 }
+
+message CreateWorkspaceQuestionRequest {
+  CreateWorkspaceQuestion question = 1;
+}
+
+message CreateWorkspaceQuestionResponse {
+  Question question = 1;
+}
