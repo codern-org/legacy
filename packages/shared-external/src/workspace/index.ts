@@ -13,3 +13,5 @@ export type PublicQuestion = Omit<Question, 'workspaceId'> & {
   lastSubmitted: number,
   status: QuestionStatus,
 };
+
+export type PublicCreatedQuestion = Question & { score: number };

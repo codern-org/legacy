@@ -7,6 +7,7 @@ import { firstValueFrom, forkJoin, map } from 'rxjs';
 import {
   PublicUser, PublicWorkspaceWithParticipants, PublicQuestion,
   PublicWorkspace,
+  PublicCreatedQuestion,
 } from '@codern/external';
 import { WorkspaceService } from '@/services/WorkspaceService';
 import { User } from '@/utils/decorators/AuthDecorator';
@@ -120,7 +121,7 @@ export class WorkspaceController {
   public async createQuestion(
     @Param('workspaceId') workspaceId: number,
     @RequestHeader(CreateQuestionDto) headers: CreateQuestionDto,
-  ): Promise<unknown> {
+  ): Promise<PublicCreatedQuestion> {
     const {
       name, description, timeLimit, memoryLimit, level, score,
     } = headers;
@@ -150,7 +151,10 @@ export class WorkspaceController {
       }),
     );
 
-    return { createdWorkspaceQuestion, createdGradingQuestion };
+    return {
+      ...createdWorkspaceQuestion,
+      score: createdGradingQuestion.score,
+    };
   }
 
 }
