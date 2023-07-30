@@ -1,12 +1,7 @@
-![Codern](https://i.imgur.com/eWR1Duq.png)
-
 <div align="center">
-  <h1>Codern</h1>
-  
-  <a href="https://codern.vectier.co">Production</a>
-  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-  <a href="https://beta.codern.vectier.co">Beta</a>
-
+  <img src="https://github.com/codern-org/legacy/assets/17198802/8769ae3d-34f3-40ad-ac7f-66a606dc7a96" width="128" />
+  <h1>Codern Legacy Version</h1>
+  <p>A prototype for the first release. Visit main stream <a href="https://github.com/codern-org/codern">here</a></p>
   <hr />
 </div>
 
