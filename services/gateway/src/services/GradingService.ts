@@ -1,4 +1,6 @@
 import {
+  CreateGradingQuestionRequest,
+  CreateGradingQuestionResponse,
   GetQuestionSummaryByIdsRequest, GetQuestionSummaryByIdsResponse,
   GetRankingResponse,
   GetSubmissionsByQuestionIdRequest, GetSubmissionsByQuestionIdResponse, GradeRequest,
@@ -24,5 +26,9 @@ export interface GradingService {
   ): Observable<GetQuestionSummaryByIdsResponse>;
 
   getRanking(any: unknown): Observable<GetRankingResponse>;
+
+  createGradingQuestion(
+    data: CreateGradingQuestionRequest,
+  ): Observable<CreateGradingQuestionResponse>;
 
 }

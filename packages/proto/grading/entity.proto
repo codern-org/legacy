@@ -27,6 +27,15 @@ message QuestionSummary {
   string status = 3;
 }
 
+message CreateGradingQuestion {
+  int32 questionId = 1;
+  int32 workspaceId = 2;
+  int32 score = 3;
+  string name = 4;
+  double memoryLimit = 5;
+  double timeLimit  = 6;
+}
+
 // TODO: hardcoded for BMH2023
 message Rank {
   string userId = 1;

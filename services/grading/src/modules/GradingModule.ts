@@ -9,6 +9,7 @@ import { GradingService } from '@/services/GradingService';
 import { QueueSerivce } from '@/services/QueueService';
 import { TestcaseRepository } from '@/repositories/TestcaseRepository';
 import { ResultRepository } from '@/repositories/ResultRepository';
+import { QuestionRepository } from '@/repositories/QuestionRepository';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { ResultRepository } from '@/repositories/ResultRepository';
     ResultRepository,
     SubmissionRepository,
     TestcaseRepository,
+    QuestionRepository,
 
     QueueSerivce,
     GradingService,

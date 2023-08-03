@@ -1,12 +1,13 @@
 import {
   Controller, Inject, Get,
-  UseGuards, Param,
+  UseGuards, Param, Post,
 } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { firstValueFrom, forkJoin, map } from 'rxjs';
 import {
   PublicUser, PublicWorkspaceWithParticipants, PublicQuestion,
   PublicWorkspace,
+  PublicCreatedQuestion,
 } from '@codern/external';
 import { WorkspaceService } from '@/services/WorkspaceService';
 import { User } from '@/utils/decorators/AuthDecorator';
@@ -18,6 +19,9 @@ import {
   workspaceWithParticipants,
 } from '@/utils/Serializer';
 import { GradingService } from '@/services/GradingService';
+import { CreateQuestionDto } from '@/utils/dtos/QuestionDtos';
+import { RequestHeader } from '@/utils/decorators/HeaderDecorator';
+import { WorkspaceOwnerGuard } from '@/utils/guards/WorkspaceOwnerGuard';
 
 @Controller('/workspaces')
 export class WorkspaceController {
@@ -110,6 +114,47 @@ export class WorkspaceController {
       }),
     );
     return publicQuestions([question], questionSummaries)[0];
+  }
+
+  @Post('/:workspaceId/questions')
+  @UseGuards(AuthGuard, WorkspaceOwnerGuard)
+  public async createQuestion(
+    @Param('workspaceId') workspaceId: number,
+    @RequestHeader(CreateQuestionDto) headers: CreateQuestionDto,
+  ): Promise<PublicCreatedQuestion> {
+    const {
+      name, description, timeLimit, memoryLimit, level, score,
+    } = headers;
+
+    const { question: createdWorkspaceQuestion } = await firstValueFrom(
+      this.workspaceService.createWorkspaceQuestion({
+        question: {
+          workspaceId,
+          name,
+          description,
+          timeLimit,
+          memoryLimit,
+          level,
+        },
+      }),
+    );
+
+    const { question: createdGradingQuestion } = await firstValueFrom(
+      this.gradingService.createGradingQuestion({
+        question: {
+          questionId: createdWorkspaceQuestion.id,
+          workspaceId,
+          timeLimit,
+          memoryLimit,
+          score,
+        },
+      }),
+    );
+
+    return {
+      ...createdWorkspaceQuestion,
+      score: createdGradingQuestion.score,
+    };
   }
 
 }

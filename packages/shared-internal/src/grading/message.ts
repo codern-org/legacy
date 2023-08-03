@@ -56,6 +56,18 @@ export type GetQuestionSummaryByIdsResponse = {
   questionSummaries: QuestionSummary[],
 };
 
+export type CreateGradingQuestionRequest = {
+  question: {
+    questionId: number,
+    workspaceId: number,
+    score: number,
+    timeLimit: number,
+    memoryLimit: number,
+  }
+};
+
+export type CreateGradingQuestionResponse = CreateGradingQuestionRequest;
+
 // TODO: hardcoded for BMH2023
 export type GetRankingResponse = {
   ranks: Rank[],

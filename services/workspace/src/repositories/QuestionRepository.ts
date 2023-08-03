@@ -23,4 +23,14 @@ export class QuestionRepository {
     return this.prismaService.question.findUnique({ where: { id } });
   }
 
+  public updateQuestionById(
+    questionId: number,
+    question: Prisma.QuestionUpdateInput,
+  ): Promise<Question> {
+    return this.prismaService.question.update({
+      data: question,
+      where: { id: questionId },
+    });
+  }
+
 }

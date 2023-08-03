@@ -6,6 +6,8 @@ import {
   GetWorkspaceByIdRequest, GetWorkspaceByIdResponse, ValidateUserInWorkspaceRequest,
   ValidateQuestionInWorkspaceRequest,
   Question,
+  CreateWorkspaceQuestionRequest,
+  CreateWorkspaceQuestionResponse,
 } from '@codern/internal';
 import { WorkspaceService } from '@/services/WorkspaceService';
 
@@ -57,6 +59,14 @@ export class WorkspaceController {
   @GrpcMethod('WorkspaceService')
   public async getQuestionById(data: GetQuestionByIdRequest): Promise<GetQuestionByIdResponse> {
     const question = await this.workspaceService.getQuestionByIdOrThrow(data.id);
+    return { question: question as Question };
+  }
+
+  @GrpcMethod('WorkspaceService')
+  public async createWorkspaceQuestion(
+    data: CreateWorkspaceQuestionRequest,
+  ): Promise<CreateWorkspaceQuestionResponse> {
+    const question = await this.workspaceService.createQuestion(data.question);
     return { question: question as Question };
   }
 

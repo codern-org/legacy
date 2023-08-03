@@ -49,6 +49,14 @@ message GetQuestionSummaryByIdsResponse {
   repeated QuestionSummary questionSummaries = 1;
 }
 
+message CreateGradingQuestionRequest {
+  CreateGradingQuestion question = 1;
+}
+
+message CreateGradingQuestionResponse {
+  CreateGradingQuestion question = 1;
+}
+
 // TODO: hardcoded for BMH2023
 message GetRankingResponse {
   repeated Rank ranks = 1;

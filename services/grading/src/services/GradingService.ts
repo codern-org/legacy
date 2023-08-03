@@ -3,7 +3,7 @@ import {
   ExpectedNotFoundError, SubmitResponse, Language,
   QuestionSummary, QuestionStatus, ExpectedInvalidError,
   ResultStatus, SubmissionWithResults, Result,
-  ResultMetadata, Rank,
+  ResultMetadata, Rank, CreateGradingQuestionRequest,
 } from '@codern/internal';
 import { Timestamp } from '@codern/shared';
 import { Submission } from '@prisma/client';
@@ -14,6 +14,7 @@ import { GradingFile, QueueSerivce } from '@/services/QueueService';
 import { TestcaseRepository } from '@/repositories/TestcaseRepository';
 import { GradingError } from '@/utils/errors/GradingError';
 import { ResultRepository } from '@/repositories/ResultRepository';
+import { QuestionRepository } from '@/repositories/QuestionRepository';
 
 type SubmissionWithQuestionStatus = Submission & { questionStatus: QuestionStatus };
 type QuestionStatusWeightMap = { [status in QuestionStatus]: number };
@@ -27,6 +28,7 @@ export class GradingService {
   private readonly submissionRepository: SubmissionRepository;
   private readonly testcaseRepository: TestcaseRepository;
   private readonly resultRepository: ResultRepository;
+  private readonly questionRepository: QuestionRepository;
 
   public constructor(
     configService: ConfigService,
@@ -35,6 +37,7 @@ export class GradingService {
     submissionRepository: SubmissionRepository,
     testcaseRepository: TestcaseRepository,
     resultRepository: ResultRepository,
+    questionRepository: QuestionRepository,
   ) {
     this.configService = configService;
     this.httpService = httpService;
@@ -42,6 +45,7 @@ export class GradingService {
     this.submissionRepository = submissionRepository;
     this.testcaseRepository = testcaseRepository;
     this.resultRepository = resultRepository;
+    this.questionRepository = questionRepository;
   }
 
   public async submit(
@@ -244,6 +248,32 @@ export class GradingService {
   public getSubmissionsByQuestionId(id: number, userId?: string): Promise<SubmissionWithResults[]> {
     return this.submissionRepository
       .getSubmissionsWithResultsByQuestionId(id, userId) as Promise<SubmissionWithResults[]>;
+  }
+
+  public async createGradingQuestion(
+    question: CreateGradingQuestionRequest['question'],
+  ): Promise<CreateGradingQuestionRequest['question']> {
+    const createdQuestion = await this.questionRepository.createQuestion({
+      id: question.questionId,
+      workspaceId: question.workspaceId,
+      memoryLimit: question.memoryLimit,
+      score: question.score,
+      timeLimit: question.timeLimit,
+    });
+
+    await this.testcaseRepository.createTestcaseByQuestionId({
+      filePath: `/workspaces/${question.workspaceId}/questions/${question.questionId}/testcase.zip`,
+      question: {
+        connect: {
+          id: question.questionId,
+        },
+      },
+    });
+
+    return {
+      ...createdQuestion,
+      questionId: question.questionId,
+    };
   }
 
   // TODO: hardcoded for BMH2023

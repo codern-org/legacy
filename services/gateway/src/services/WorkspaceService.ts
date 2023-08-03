@@ -1,4 +1,6 @@
 import {
+  CreateWorkspaceQuestionRequest,
+  CreateWorkspaceQuestionResponse,
   GetAllWorkspacesByUserIdRequest, GetAllWorkspacesByUserIdResponse, GetQuestionByIdRequest,
   GetQuestionByIdResponse, GetQuestionsByWorkspaceIdRequest, GetQuestionsByWorkspaceIdResponse,
   GetWorkspaceByIdRequest, GetWorkspaceByIdResponse, ValidateQuestionInWorkspaceRequest,
@@ -23,5 +25,9 @@ export interface WorkspaceService {
   ): Observable<GetQuestionsByWorkspaceIdResponse>;
 
   getQuestionById(data: GetQuestionByIdRequest): Observable<GetQuestionByIdResponse>;
+
+  createWorkspaceQuestion(
+    data: CreateWorkspaceQuestionRequest
+  ): Observable<CreateWorkspaceQuestionResponse>;
 
 }
